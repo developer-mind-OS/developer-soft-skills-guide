@@ -1,0 +1,1738 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>思考，快与慢 偏差心智审计工作坊 | 开发者心智系统 developer-mind-OS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* =====================================================================
+           Morandi "Steel Blue & Terracotta" Theme Colors & Premium Styling
+           ===================================================================== */
+        :root {
+            --bg-color: #F3F5F7;
+            --sidebar-bg: #FFFFFF;
+            --card-bg: #FFFFFF;
+            --text-main: #2D3748;
+            --text-muted: #718096;
+            
+            /* Theme Color Codes */
+            --sys1-red: #A76565;    /* Morandi Terracotta for System 1 (Fast/Intuitive) */
+            --sys2-blue: #4E6E8F;   /* Morandi Steel Blue for System 2 (Slow/Calculative) */
+            
+            --border: #E2E8F0;
+            --accent-light: #F7FAFC;
+            --accent-blue-light: #EBF8FF;
+            --accent-red-light: #FFF5F5;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.02);
+            --radius: 12px;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Reset & Base */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft YaHei", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 300px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border);
+            padding: 24px 20px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            overflow-y: auto;
+        }
+
+        .sidebar-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--sys2-blue);
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-subtitle {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
+        }
+
+        .nav-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .nav-category {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-top: 16px;
+            margin-bottom: 6px;
+            padding: 4px 8px;
+            border-bottom: 1px dashed var(--border);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-category:first-of-type {
+            margin-top: 0;
+        }
+
+        .nav-item {
+            padding: 9px 12px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-muted);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-item:hover {
+            background-color: var(--accent-light);
+            color: var(--sys2-blue);
+        }
+
+        .nav-item.active {
+            background-color: var(--accent-blue-light);
+            color: var(--sys2-blue);
+            font-weight: 600;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 20px;
+            font-size: 11px;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        /* Main Content */
+        .content {
+            margin-left: 300px;
+            flex-grow: 1;
+            padding: 40px 60px;
+            max-width: 1150px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top Centered Header */
+        .header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .book-meta {
+            font-family: 'Outfit', sans-serif;
+            font-size: 11px;
+            color: var(--sys1-red);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+        }
+
+        .title {
+            font-size: 25px;
+            font-weight: 800;
+            color: var(--sys2-blue);
+            letter-spacing: -0.5px;
+        }
+
+        /* Top Horizontal Category Pills */
+        .category-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            background-color: #FFFFFF;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.01);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .category-btn:hover {
+            border-color: var(--sys2-blue);
+            color: var(--sys2-blue);
+        }
+
+        .category-btn.active {
+            background-color: var(--sys2-blue);
+            color: #FFFFFF;
+            border-color: var(--sys2-blue);
+            box-shadow: 0 4px 10px rgba(78, 110, 143, 0.15);
+        }
+
+        /* Utility Actions Bar */
+        .actions-bar {
+            display: flex;
+            gap: 10px;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            background-color: #FFFFFF;
+            color: var(--text-main);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn:hover {
+            border-color: var(--text-main);
+            background-color: var(--bg-color);
+        }
+
+        .btn-primary {
+            background-color: var(--sys2-blue);
+            color: #FFFFFF;
+            border-color: var(--sys2-blue);
+        }
+
+        .btn-primary:hover {
+            background-color: #3B5673;
+            border-color: #3B5673;
+        }
+
+        .btn-accent {
+            background-color: var(--sys1-red);
+            color: #FFFFFF;
+            border-color: var(--sys1-red);
+        }
+
+        .btn-accent:hover {
+            background-color: #8C4F4F;
+            border-color: #8C4F4F;
+        }
+
+        /* Cards & Sections */
+        .template-section {
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        .template-section.active {
+            display: block;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin-bottom: 24px;
+        }
+
+        .card-header {
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--bg-color);
+            padding-bottom: 12px;
+        }
+
+        .card-tag {
+            font-size: 10px;
+            color: var(--sys1-red);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--sys2-blue);
+        }
+
+        .card-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        /* Form Controls */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .form-desc {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 70px;
+            padding: 10px 12px;
+            font-size: 12px;
+            font-family: inherit;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            resize: vertical;
+            color: var(--text-main);
+            transition: var(--transition);
+            background-color: #FAFAFA;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--sys2-blue);
+            background-color: #FFFFFF;
+            box-shadow: 0 0 0 3px rgba(78, 110, 143, 0.1);
+        }
+
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 8px 12px;
+            font-size: 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-main);
+            transition: var(--transition);
+            background-color: #FAFAFA;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: var(--sys2-blue);
+            background-color: #FFFFFF;
+        }
+
+        /* Checklist */
+        .checklist {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background-color: #FAFAFA;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .check-item:hover {
+            border-color: var(--text-muted);
+            background-color: #FFFFFF;
+        }
+
+        .check-item input[type="checkbox"] {
+            margin-top: 3px;
+            accent-color: var(--sys2-blue);
+            width: 14px;
+            height: 14px;
+        }
+
+        .check-label {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        /* Sliders */
+        .slider-item {
+            margin-bottom: 14px;
+        }
+
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .slider-val {
+            font-weight: 700;
+            color: var(--sys2-blue);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--sys2-blue);
+            height: 5px;
+            border-radius: 9999px;
+            background-color: var(--border);
+            outline: none;
+        }
+
+        /* Outputs & Diagnostics */
+        .declaration-box {
+            background-color: #FFFDF5;
+            border: 1px dashed #FCD34D;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 18px;
+            position: relative;
+        }
+
+        .declaration-quote {
+            font-size: 13px;
+            font-style: italic;
+            color: #78350F;
+            font-weight: 500;
+        }
+
+        .declaration-fill {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #78350F;
+            color: #78350F;
+            font-weight: 700;
+            font-size: 13px;
+            padding: 0 4px;
+            text-align: center;
+            outline: none;
+        }
+
+        .diagnostic-box {
+            padding: 14px;
+            border-radius: 8px;
+            background-color: #FFF5F5;
+            border: 1px solid #FED7D7;
+            margin-top: 18px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--sys1-red);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            line-height: 1.5;
+        }
+
+        .diagnostic-box.safe {
+            background-color: #F0FDF4;
+            border-color: #BBF7D0;
+            color: #166534;
+        }
+
+        /* Layout columns */
+        .double-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        @media (max-width: 768px) {
+            .double-column {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Print Media Styles */
+        @media print {
+            body {
+                background-color: #FFFFFF;
+                color: #000000;
+                display: block;
+                font-size: 11pt;
+            }
+
+            .sidebar, .category-nav, .actions-bar {
+                display: none !important;
+            }
+
+            .content {
+                margin-left: 0 !important;
+                padding: 0 !important;
+                max-width: 100% !important;
+            }
+
+            .card {
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+                margin-bottom: 0 !important;
+                page-break-inside: avoid;
+            }
+            
+            textarea, input[type="text"], input[type="number"], select {
+                background-color: #FFFFFF !important;
+                border: 1px solid #000000 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Left Navigation -->
+    <div class="sidebar">
+        <div class="sidebar-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10"/></svg>
+            思考，快与慢
+        </div>
+        <div class="sidebar-subtitle">
+            中信出版社 · 胡晓姣等译本对齐
+        </div>
+        
+        <ul class="nav-list">
+            <div class="nav-category">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+                双系统与负荷控制
+            </div>
+            <li class="nav-item active" onclick="switchTemplate(0)">
+                1. [M1/M10] 双系统与自我损耗审计
+            </li>
+            <li class="nav-item" onclick="switchTemplate(1)">
+                2. [M2] 认知放松与决策警觉
+            </li>
+            <li class="nav-item" onclick="switchTemplate(2)">
+                3. [M3] 启动效应与暗示过滤
+            </li>
+
+            <div class="nav-category">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 8v8"/></svg>
+                统计直觉与大数法则
+            </div>
+            <li class="nav-item" onclick="switchTemplate(3)">
+                4. [M6/A5] 小数定律与因果叙事防御
+            </li>
+            <li class="nav-item" onclick="switchTemplate(4)">
+                5. [A4] 锚定效应与相反证据
+            </li>
+            <li class="nav-item" onclick="switchTemplate(5)">
+                6. [M5] 可得性偏差与曝光焦虑
+            </li>
+            <li class="nav-item" onclick="switchTemplate(6)">
+                7. [M4/M9] 典型性偏差与概率矫正
+            </li>
+
+            <div class="nav-category">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20M12 2v20"/><circle cx="12" cy="12" r="10"/></svg>
+                过度自信与预测校准
+            </div>
+            <li class="nav-item" onclick="switchTemplate(7)">
+                8. [A6] 事后聪明偏差与决策日志
+            </li>
+            <li class="nav-item" onclick="switchTemplate(8)">
+                9. [A7/A8] 规划谬误与外部预测
+            </li>
+
+            <div class="nav-category">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                选择风险与两个自我
+            </div>
+            <li class="nav-item" onclick="switchTemplate(9)">
+                10. [R1/R2] 前景理论与禀赋测算
+            </li>
+            <li class="nav-item" onclick="switchTemplate(10)">
+                11. [T1] 框架效应解构与中立重构
+            </li>
+            <li class="nav-item" onclick="switchTemplate(11)">
+                12. [T3/T4] 体验与记忆自我峰终定律
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            Antigravity Disassembly Engine
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="content">
+        <!-- Top Header (Title centered) -->
+        <div class="header">
+            <div class="book-meta">Thinking, Fast and Slow · Decision Workshop</div>
+            <h1 class="title">《思考，快与慢》双系统与偏差心智审计工作坊</h1>
+        </div>
+
+        <!-- Category Pill Navigation (Centered) -->
+        <div class="category-nav">
+            <button class="category-btn active" id="cat-btn-0" onclick="switchCategory(0)">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24M14.8 14.8l.01-.01"/></svg>
+                双系统负荷
+            </button>
+            <button class="category-btn" id="cat-btn-1" onclick="switchCategory(1)">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24M14.8 14.8l.01-.01"/></svg>
+                大数法则校准
+            </button>
+            <button class="category-btn" id="cat-btn-2" onclick="switchCategory(2)">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24M14.8 14.8l.01-.01"/></svg>
+                过度自信校准
+            </button>
+            <button class="category-btn" id="cat-btn-3" onclick="switchCategory(3)">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24M14.8 14.8l.01-.01"/></svg>
+                选择与自我
+            </button>
+        </div>
+
+        <!-- Global Utility Actions -->
+        <div class="actions-bar">
+            <button class="btn" onclick="window.print()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                打印当前页面
+            </button>
+            <button class="btn btn-accent" onclick="resetAll()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8M3 3v5h5"/></svg>
+                重置工作坊数据
+            </button>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- TEMPLATE SECTION 1: Dual System & Ego Depletion -->
+        <!-- ================================================================= -->
+        <div class="template-section active" id="section-0">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">第一部分 · 系统 1 与系统 2 负荷控制</div>
+                    <div class="card-title">模板 1 [M1/M10]：双系统心智负荷与自我损耗审计表</div>
+                    <div class="card-desc">评估系统 2 是否已陷入严重认知资源耗竭 (Ego Depletion) 状态，规避向系统 1 直觉惯性妥协 (中信出版社第31-32页)。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="t1-desc">当前决策上下文描述</label>
+                    <div class="form-desc">描述你当前面临的需要权衡计算的重要决定。</div>
+                    <textarea id="t1-desc" placeholder="请输入核心决定内容..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">自我损耗信号自查 (勾选符合项目)</label>
+                    <div class="checklist">
+                        <label class="check-item">
+                            <input type="checkbox" id="t1-chk-0" onchange="updateT1Score()">
+                            <span class="check-label">我感到眼球疲劳、太阳穴发紧，或有瞳孔放大感 (源自第23页，多任务分配引起瞳孔扩张)</span>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" id="t1-chk-1" onchange="updateT1Score()">
+                            <span class="check-label">刚才经历了一段需要“强行克制情绪、控制面部表情或抵制诱惑”的过程 (源自第31页)</span>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" id="t1-chk-2" onchange="updateT1Score()">
+                            <span class="check-label">脑中出现明显的决策瘫痪，且高度渴望糖分或热量食物 (源自第32页，葡萄糖含量降低)</span>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" id="t1-chk-3" onchange="updateT1Score()">
+                            <span class="check-label">面对复杂的算术或参数时，产生了强烈的惰性拖延或闭眼逃避冲动 (源自第25页)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="double-column">
+                    <div class="slider-item">
+                        <div class="slider-header">
+                            <span>当前脑力专注度 (Attention Allocation)</span>
+                            <span class="slider-val" id="t1-val-0-txt">5</span>
+                        </div>
+                        <input type="range" id="t1-val-0" min="1" max="10" value="5" oninput="updateT1Score()">
+                    </div>
+                    <div class="slider-item">
+                        <div class="slider-header">
+                            <span>工作记忆槽位占用 (Working Memory)</span>
+                            <span class="slider-val" id="t1-val-1-txt">5</span>
+                        </div>
+                        <input type="range" id="t1-val-1" min="1" max="10" value="5" oninput="updateT1Score()">
+                    </div>
+                </div>
+
+                <div class="diagnostic-box" id="t1-diag">
+                    正在计算心智负载指数...
+                </div>
+            </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- TEMPLATE SECTION 2: Cognitive Ease -->
+        <!-- ================================================================= -->
+        <div class="template-section" id="section-1">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">第一部分 · 系统 1 与系统 2 负荷控制</div>
+                    <div class="card-title">模板 2 [M2]：认知放松度与决策警觉审计表</div>
+                    <div class="card-desc">评估面对顺滑、熟悉、精美的提案时，心智是否因“认知放松”产生虚假安全感 (中信出版社第53-55页)。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="t2-proposal">论点或方案内容描述</label>
+                    <textarea id="t2-proposal" placeholder="请输入被评估的商业方案或宣传观点..."></textarea>
+                </div>
+
+                <div class="double-column">
+                    <div class="slider-item">
+                        <div class="slider-header">
+                            <span>视觉清晰度 (Clear Print / 易读性)</span>
+                            <span class="slider-val" id="t2-val-0-txt">2</span>
+                        </div>
+                        <input type="range" id="t2-val-0" min="0" max="5" value="2" oninput="updateT2Score()">
+                    </div>
+                    <div class="slider-item">
+                        <div class="slider-header">
+                            <span>语言熟悉度 (Familiarity / 高频听到)</span>
+                            <span class="slider-val" id="t2-val-1-txt">2</span>
+                        </div>
+                        <input type="range" id="t2-val-1" min="0" max="5" value="2" oninput="updateT2Score()">
+                    </div>
+                    <div class="slider-item">
+                        <div class="slider-header">
+                            <span>情绪连贯性 (Good Mood / 令人身心愉悦)</span>
+                            <span class="slider-val" id="t2-val-2-txt">2</span>
+                        </div>
+                        <input type="range" id="t2-val-2" min="0" max="5" value="2" oninput="updateT2Score()">
+                    </div>
+                    <div class="slider-item">
+                        <div class="slider-header">
+                            <span>认知顺滑度 (Rhyming / 押韵警句度)</span>
+                            <span class="slider-val" id="t2-val-3-txt">2</span>
+                        </div>
+                        <input type="range" id="t2-val-3" min="0" max="5" value="2" oninput="updateT2Score()">
+                    </div>
+                </div>
+
+                <div class="declaration-box">
+                    <div class="declaration-quote">
+                        “我发现这个方案在心智放松审计中拿到了较高的分数。为了消除认知放松带来的偏见，我强制大脑启动【反认知放松】红队防御动作：我决定寻找它的相反证据，并将其排版强行改造成难看的粗劣劣质黑白排版，激活系统 2 产生认知紧张 (Cognitive Strain) 以深入逻辑核查。”
+                    </div>
+                </div>
+
+                <div class="diagnostic-box" id="t2-diag">
+                    正在核算放松得分...
+                </div>
+            </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- TEMPLATE SECTION 3: Priming Effect -->
+        <!-- ================================================================= -->
+        <div class="template-section" id="section-2">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">第一部分 · 系统 1 与系统 2 负荷控制</div>
+                    <div class="card-title">模板 3 [M3]：启动效应与暗示偏离防护表</div>
+                    <div class="card-desc">评估谈判或决策场景下的物理要素是否在潜意识启动 (Priming) 你的行为偏离中轨 (中信出版社第40-44页)。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="t3-context">决策物理环境描述</label>
+                    <textarea id="t3-context" placeholder="描述当前的物理场所(如：挂满业绩指标的商务套房)..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">潜在启动线索检测 (勾选符合项目)</label>
+                    <div class="checklist">
+                        <label class="check-item">
+                            <input type="checkbox" id="t3-chk-0" onchange="updateT3Reflect()">
+                            <span class="check-label">视线或场域内存在钞票、豪车、理财百分比等“金钱概念启动符号” (启动自私、自立与抗拒协作偏向，第43页)</span>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" id="t3-chk-1" onchange="updateT3Reflect()">
+                            <span class="check-label">谈判前刚经历了对“老年、疾病、痛苦或死亡”等负重议题的讨论 (启动行为迟缓与威权依附，第41页)</span>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" id="t3-chk-2" onchange="updateT3Reflect()">
+                            <span class="check-label">身体处于被迫迎合、频繁点头或拥挤狭窄座舱的非自然姿态下 (身体动作启动心理顺从，第44页)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="declaration-box" id="t3-decl-container" style="display:none;">
+                    <div class="declaration-quote">
+                        🚨 <strong>启动效应偏离声明：</strong><br><br>
+                        “我注意到在 <span id="t3-out-context" style="text-decoration: underline; font-weight: 700;">该决策环境</span> 中存在高度活跃的暗示符号，我的系统 1 已经被提前启动。为保护独立决策权，我强制做出如下对冲预案：<span id="t3-out-action" style="font-weight: 700; color:#A76565;">[等待评估]</span>。”
+                    </div>
+                </div>
+
+                <div class="diagnostic-box" id="t3-diag">
+                    请选择符合项以诊断启动效应威胁。
+                </div>
+            </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- TEMPLATE SECTION 4: Law of Small Numbers -->
+        <!-- ================================================================= -->
+        <div class="template-section" id="section-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">第二部分 · 统计直觉与大数法则校准</div>
+                    <div class="card-title">模板 4 [M6/A5]：小数定律与强行因果叙事防御表</div>
+                    <div class="card-desc">阻断系统 1 对极小样本偏差强行拼凑因果解释的本能，运用统计学冷静降温 (中信出版社第101-103页)。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="t4-event">观察到的异常概率或数据现象</label>
+                    <textarea id="t4-event" placeholder="例如：新版发布后连续3个用户给出负评，或某个小规模分公司业绩突然暴增..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="t4-explanation">系统 1 直觉生成的因果叙事说明</label>
+                    <textarea id="t4-explanation" placeholder="例如：觉得是由于系统稳定性彻底崩溃，或者由于该分公司总经理有神效..."></textarea>
+                </div>
+
+                <div class="double-column">
+                    <div class="form-group">
+                        <label class="form-label" for="t4-n">观察样本量 (N)</label>
+                        <input type="number" id="t4-n" min="1" value="5" oninput="updateT4Calib()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="t4-baserate">大样本基准率 (Base Rate, %)</label>
+                        <input type="number" id="t4-baserate" min="0" max="100" value="2" oninput="updateT4Calib()">
+                    </div>
+                </div>
+
+                <div class="diagnostic-box" id="t4-diag">
+                    正在核实样本量与统计分布...
+                </div>
+            </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- TEMPLATE SECTION 5: Anchoring Effect -->
+        <!-- ================================================================= -->
+        <div class="template-section" id="section-4">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">第二部分 · 统计直觉与大数法则校准</div>
+                    <div class="card-title">模板 5 [A4]：锚定效应偏离与相反证据校准表</div>
+                    <div class="card-desc">评估谈判、估值、限购等初始数值对你的系统 1 的认知吸附作用，利用反向调节对冲锚定偏差 (中信出版社第111-118页)。</div>
+                </div>
+
+                <div class="double-column">
+                    <div class="form-group">
+                        <label class="form-label" for="t5-anchor">抛出的初始锚定值 (Anchor)</label>
+                        <input type="number" id="t5-anchor" value="1200" oninput="updateT5Calib()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="t5-baseprice">我方心智基准预期值 (Base Price)</label>
+                        <input type="number" id="t5-baseprice" value="800" oninput="updateT5Calib()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="t5-compromise">受该锚点动摇后的拟定出价 (New Offer)</label>
+                        <input type="number" id="t5-compromise" value="1000" oninput="updateT5Calib()">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="t5-reverse1">相反证据 ① (指向对方价格的不合理物理参数)</label>
+                    <textarea id="t5-reverse1" placeholder="列举对冲该高价/低价的客观硬件缺点..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="t5-reverse2">相反证据 ② (同类可替代选项的极低基准)</label>
+                    <textarea id="t5-reverse2" placeholder="列举同类大盘基准或市场客观中线数据..."></textarea>
+                </div>
+
+                <div class="declaration-box">
+                    <div class="declaration-quote">
+                        🚨 <strong>反锚定拦截宣告：</strong><br><br>
+                        “我判定对方给出的数值 <span id="t5-out-anchor" style="font-weight: 700; text-decoration: underline;">0</span> 是一个操纵性诱导。为了对冲磁力线，我拒绝在其诱导范围进行常规让步。我将直接从负向磁铁端抛出反制极限值 <span id="t5-out-counter" style="font-weight: 700; color: #A76565;">[待计算]</span>，重塑估值中轴线！”
+                    </div>
+                </div>
+
+                <div class="diagnostic-box" id="t5-diag">
+                    正在核实锚定偏差比例...
+                </div>
+            </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- TEMPLATE SECTION 6: Availability Heuristic -->
+        <!-- ================================================================= -->
+        <div class="template-section" id="section-5">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">第二部分 · 统计直觉与大数法则校准</div>
+                    <div class="card-title">模板 6 [M5]：可得性偏差与高曝光风险焦虑审计表</div>
+                    <div class="card-desc">评估对某些危机焦虑投入防卫资金的实际必要，过滤因为记忆鲜活和可得性级联产生的虚假高估 (中信出版社第120-129页)。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="t6-danger">目前担忧的重大潜在危机</label>
+                    <textarea id="t6-danger" placeholder="描述担忧发生的特定黑天鹅事件或灾难事件..."></textarea>
+                </div>
+
+                <div class="double-column">
+                    <div class="slider-item">
+                        <div class="slider-header">
+                            <span>近期媒体或同业高频曝光率 (Media Exposure)</span>
+                            <span class="slider-val" id="t6-val-0-txt">2</span>
+                        </div>
+                        <input type="range" id="t6-val-0" min="0" max="5" value="2" oninput="updateT6Calib()">
+                    </div>
+                    <div class="slider-item">
+                        <div class="slider-header">
+                            <span>脑海中灾难画面鲜活程度 (Vividness in Memory)</span>
+                            <span class="slider-val" id="t6-val-1-txt">2</span>
+                        </div>
+                        <input type="range" id="t6-val-1" min="0" max="5" value="2" oninput="updateT6Calib()">
+                    </div>
+                    <div class="slider-item">
+                        <div class="slider-header">
+                            <span>情感共鸣与情绪撕裂深度 (Emotional Resonance)</span>
+                            <span class="slider-val" id="t6-val-2-txt">2</span>
+                        </div>
+                        <input type="range" id="t6-val-2" min="0" max="5" value="2" oninput="updateT6Calib()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="t6-realprob">行业统计历史发生年概率 (%)</label>
+                        <input type="number" id="t6-realprob" min="0" max="100" step="0.001" value="0.1" oninput="updateT6Calib()">
+                    </div>
+                </div>
+
+                <div class="diagnostic-box" id="t6-diag">
+                    正在计算可得性曝光焦虑度...
+                </div>
+            </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- TEMPLATE SECTION 7: Representativeness -->
+        <!-- ================================================================= -->
+        <div class="template-section" id="section-6">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">第二部分 · 统计直觉与大数法则校准</div>
+                    <div class="card-title">模板 7 [M4/M9]：典型性偏差与人口学基础概率矫正表</div>
+                    <div class="card-desc">当一个人/项目极其契合脑中的某种典型画像时，强制调用基础比率 (Base Rates) 阻断直觉的偏颇 (中信出版社第138-148页)。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="t7-char">目标人物/项目具备的典型画像特征</label>
+                    <textarea id="t7-char" placeholder="例如：少言寡语，谦恭有礼，做事井井有条，关注细节 (中信第12页)..."></textarea>
+                </div>
+
+                <div class="double-column">
+                    <div class="form-group">
+                        <label class="form-label" for="t7-cat-a">直觉猜测它属于的“小类别 A” (如图书管理员)</label>
+                        <input type="text" id="t7-cat-a" value="图书管理员" oninput="updateT7Calib()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="t7-cat-b">基数极大的常规“大类别 B” (如农业劳动者)</label>
+                        <input type="text" id="t7-cat-b" value="农民" oninput="updateT7Calib()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="t7-ratio-a">类别 A 在社会中的真实概率占比 (%)</label>
+                        <input type="number" id="t7-ratio-a" step="0.01" value="1" oninput="updateT7Calib()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="t7-ratio-b">类别 B 在社会中的真实概率占比 (%)</label>
+                        <input type="number" id="t7-ratio-b" step="0.01" value="20" oninput="updateT7Calib()">
+                    </div>
+                </div>
+
+                <div class="diagnostic-box" id="t7-diag">
+                    正在计算基础比率偏差纠正值...
+                </div>
+            </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- TEMPLATE SECTION 8: Hindsight Bias -->
+        <!-- ================================================================= -->
+        <div class="template-section" id="section-7">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">第三部分 · 过度自信与预测校准</div>
+                    <div class="card-title">模板 8 [A6]：事后聪明偏差与决策改写复盘表</div>
+                    <div class="card-desc">通过对历史真实估算的强行调阅，瓦解事后脑改写的“早就知道”确定感，保护下一次的正确冒险 (中信出版社第185-187页)。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="t8-event">已发生的重大成果/风险失控结果</label>
+                    <textarea id="t8-event" placeholder="例如：新版发布遭遇致命BUG，或某个理财产品暴雷..."></textarea>
+                </div>
+
+                <div class="double-column">
+                    <div class="form-group">
+                        <label class="form-label" for="t8-est-pre">事件发生前，我留存记录预测其发生的真实概率 (%)</label>
+                        <input type="number" id="t8-est-pre" value="30" oninput="updateT8Calib()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="t8-est-post">结果出炉后，我主观感觉上“我好像早就预知到”的预判概率 (%)</label>
+                        <input type="number" id="t8-est-post" value="95" oninput="updateT8Calib()">
+                    </div>
+                </div>
+
+                <div class="declaration-box">
+                    <div class="declaration-quote">
+                        “我接纳现实并向自己声明：该事件发生前我的真实研判只有 <span id="t8-out-pre" style="font-weight: 700; text-decoration: underline;">0</span>%。目前脑中 100% 的悔恨或狂傲完全是事后聪明偏差产生的心理虚妄，下一次我的预测将坚决以历史白纸黑字写下的评估基准为准，不改写历史逻辑。”
+                    </div>
+                </div>
+
+                <div class="diagnostic-box" id="t8-diag">
+                    正在核实事后改写系数...
+                </div>
+            </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- TEMPLATE SECTION 9: Planning Fallacy -->
+        <!-- ================================================================= -->
+        <div class="template-section" id="section-8">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">第三部分 · 过度自信与预测校准</div>
+                    <div class="card-title">模板 9 [A7/A8]：规划谬误与乐观偏差外部基准预测表</div>
+                    <div class="card-desc">阻断自我项目乐观的“内部意见”，强制拉平至行业同类项目的“外部意见”进行物理防御 (中信出版社第225-235页)。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="t9-project">新项目/新计划简介</label>
+                    <textarea id="t9-project" placeholder="描述你当前制定的工作计划或开发预估..."></textarea>
+                </div>
+
+                <div class="double-column">
+                    <div class="form-group">
+                        <label class="form-label" for="t9-time-in">内部团队预估耗时 (月)</label>
+                        <input type="number" id="t9-time-in" value="3" oninput="updateT9Calib()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="t9-budget-in">内部团队预估预算 (万元)</label>
+                        <input type="number" id="t9-budget-in" value="50" oninput="updateT9Calib()">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">行业 5 个同类型客观完工项目基准线记录</label>
+                    <div class="double-column">
+                        <div>
+                            <label class="form-label">历史项目工期真实值 (月)</label>
+                            <div style="display:flex; flex-direction:column; gap:6px;">
+                                <input type="number" class="t9-hist-time" value="6" oninput="updateT9Calib()">
+                                <input type="number" class="t9-hist-time" value="8" oninput="updateT9Calib()">
+                                <input type="number" class="t9-hist-time" value="5" oninput="updateT9Calib()">
+                                <input type="number" class="t9-hist-time" value="9" oninput="updateT9Calib()">
+                                <input type="number" class="t9-hist-time" value="7" oninput="updateT9Calib()">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label">历史项目预算真实值 (万元)</label>
+                            <div style="display:flex; flex-direction:column; gap:6px;">
+                                <input type="number" class="t9-hist-bud" value="120" oninput="updateT9Calib()">
+                                <input type="number" class="t9-hist-bud" value="95" oninput="updateT9Calib()">
+                                <input type="number" class="t9-hist-bud" value="150" oninput="updateT9Calib()">
+                                <input type="number" class="t9-hist-bud" value="80" oninput="updateT9Calib()">
+                                <input type="number" class="t9-hist-bud" value="110" oninput="updateT9Calib()">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="diagnostic-box" id="t9-diag">
+                    正在测算乐观偏倚超标系数与校准基准...
+                </div>
+            </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- TEMPLATE SECTION 10: Prospect Theory -->
+        <!-- ================================================================= -->
+        <div class="template-section" id="section-9">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">第四部分 · 选择、风险与两个自我</div>
+                    <div class="card-title">模板 10 [R1/R2]：前景理论损失厌恶与禀赋效应测算</div>
+                    <div class="card-desc">评估面临输赢赌局时的损失厌恶系数，以及当你拥有某件物品时产生的不理性自恋高估 (中信出版社第252-267页)。</div>
+                </div>
+
+                <div class="double-column">
+                    <div class="form-group">
+                        <label class="form-label" for="t10-loss">考虑一个扔硬币赌局：正面你将损失多少元？</label>
+                        <input type="number" id="t10-loss" value="100" oninput="updateT10Calib()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="t10-win">背面朝上，你要求至少能赢回多少元，才愿意冒此风险？</label>
+                        <input type="number" id="t10-win" value="220" oninput="updateT10Calib()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="t10-buy">【禀赋效应自测】不曾拥有该商品时，我最高愿意购买价 (元)</label>
+                        <input type="number" id="t10-buy" value="150" oninput="updateT10Calib()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="t10-sell">【禀赋效应自测】已经持有该资产，别人购买我愿意最低脱售价 (元)</label>
+                        <input type="number" id="t10-sell" value="280" oninput="updateT10Calib()">
+                    </div>
+                </div>
+
+                <div class="diagnostic-box" id="t10-diag">
+                    正在测算行为心理损失偏好系数...
+                </div>
+            </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- TEMPLATE SECTION 11: Framing Effect -->
+        <!-- ================================================================= -->
+        <div class="template-section" id="section-10">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">第四部分 · 选择、风险与两个自我</div>
+                    <div class="card-title">模板 11 [T1]：框架效应解构与中立重构审计表</div>
+                    <div class="card-desc">剥离同样信息下“存活”与“死亡”等描述词汇带来的情绪操控，运用数学等价框架回归物理中线 (中信出版社第329-331页)。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="t11-raw">接收到的带有框架的陈述 (Framed Statement)</label>
+                    <textarea id="t11-raw" placeholder="例如：使用此药后，一个月内存活率高达 90% (正向收益引导) 或者是：该业务有 10% 的可能彻底打水漂..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="t11-type">当前话术性质归属</label>
+                    <select id="t11-type" onchange="updateT11Calib()">
+                        <option value="positive">正向收益框架 (激发逃避风险偏好，引导保守)</option>
+                        <option value="negative">负向损失框架 (激发追求风险偏好，引导冒险)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="t11-reverse">反向等价框架话术重构 (强制翻译)</label>
+                    <textarea id="t11-reverse" placeholder="例如：使用此药一个月内，依然有 10% 的患者会面临死亡风险..."></textarea>
+                </div>
+
+                <div class="declaration-box">
+                    <div class="declaration-quote">
+                        🚨 <strong>中性概率框架解构式：</strong><br><br>
+                        “我不为叙事框架买单。该事实客观表述为：该业务/决策执行后，有 <span id="t11-out-pos" style="font-weight:700;">[等待]</span>% 的概率达成理想状态，同时有 <span id="t11-out-neg" style="font-weight:700;">[等待]</span>% 的概率跌入负面损耗。基于这种中立对齐，我做出的决策是：__________”
+                    </div>
+                </div>
+
+                <div class="diagnostic-box" id="t11-diag">
+                    正在解构话术暗示倾向...
+                </div>
+            </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- TEMPLATE SECTION 12: Peak-End Rule -->
+        <!-- ================================================================= -->
+        <div class="template-section" id="section-11">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">第四部分 · 选择、风险与两个自我</div>
+                    <div class="card-title">模板 12 [T3/T4]：体验自我 vs 记忆自我峰终定律表</div>
+                    <div class="card-desc">揭示大脑对长周期的忽略，纠偏“峰终定律” (Peak-End Rule) 给记忆自我造成的虚假满意度 (中信出版社第339-342页)。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="t12-desc">经历的项目或阶段描述</label>
+                    <textarea id="t12-desc" placeholder="例如：历时6个月的项目开发周期，或者一周的跟团旅游经历..."></textarea>
+                </div>
+
+                <div class="double-column">
+                    <div class="form-group">
+                        <label class="form-label" for="t12-duration">总历时时长 (T / 天或小时)</label>
+                        <input type="number" id="t12-duration" value="30" oninput="updateT12Calib()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="t12-pre回忆">主观回忆分 (0-10分，回忆中这段经历快乐/好评程度)</label>
+                        <input type="number" id="t12-pre" min="0" max="10" value="8" oninput="updateT12Calib()">
+                    </div>
+                </div>
+
+                <div class="double-column">
+                    <div class="slider-item">
+                        <div class="slider-header">
+                            <span>经历中最痛苦/快乐极值体验 (Peak Value, -10至10)</span>
+                            <span class="slider-val" id="t12-val-0-txt">0</span>
+                        </div>
+                        <input type="range" id="t12-val-0" min="-10" max="10" value="0" oninput="updateT12Calib()">
+                    </div>
+                    <div class="slider-item">
+                        <div class="slider-header">
+                            <span>临近完结瞬间体验状态值 (End Value, -10至10)</span>
+                            <span class="slider-val" id="t12-val-1-txt">0</span>
+                        </div>
+                        <input type="range" id="t12-val-1" min="-10" max="10" value="0" oninput="updateT12Calib()">
+                    </div>
+                </div>
+
+                <div class="diagnostic-box" id="t12-diag">
+                    正在核准峰终记忆偏离度...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Interaction Logic -->
+    <script>
+        // Mapping of 12 templates to 4 horizontal category buttons
+        const categoryMapping = [
+            0, 0, 0,       // T1, T2, T3 -> Cat 0
+            1, 1, 1, 1,    // T4, T5, T6, T7 -> Cat 1
+            2, 2,          // T8, T9 -> Cat 2
+            3, 3, 3        // T10, T11, T12 -> Cat 3
+        ];
+        
+        const categoryStarts = [0, 3, 7, 9];
+
+        // Switch active template
+        function switchTemplate(index) {
+            // Update Active template sections
+            document.querySelectorAll('.template-section').forEach((el, i) => {
+                if (i === index) el.classList.add('active');
+                else el.classList.remove('active');
+            });
+
+            // Update Left sidebar nav items
+            document.querySelectorAll('.nav-item').forEach((el, i) => {
+                if (i === index) el.classList.add('active');
+                else el.classList.remove('active');
+            });
+
+            // Update Top category pills based on mapping
+            const catIndex = categoryMapping[index];
+            document.querySelectorAll('.category-btn').forEach((el, i) => {
+                if (i === catIndex) el.classList.add('active');
+                else el.classList.remove('active');
+            });
+        }
+
+        // Switch category from top pills (selects first template under that category)
+        function switchCategory(catIndex) {
+            const firstTemplateIndex = categoryStarts[catIndex];
+            switchTemplate(firstTemplateIndex);
+        }
+
+        // =====================================================================
+        // Dynamic Computations per Template
+        // =====================================================================
+
+        // T1 Ego Depletion
+        function updateT1Score() {
+            let chkCount = 0;
+            if (document.getElementById('t1-chk-0').checked) chkCount++;
+            if (document.getElementById('t1-chk-1').checked) chkCount++;
+            if (document.getElementById('t1-chk-2').checked) chkCount++;
+            if (document.getElementById('t1-chk-3').checked) chkCount++;
+
+            const val0 = parseInt(document.getElementById('t1-val-0').value);
+            const val1 = parseInt(document.getElementById('t1-val-1').value);
+
+            document.getElementById('t1-val-0-txt').innerText = val0;
+            document.getElementById('t1-val-1-txt').innerText = val1;
+
+            const score = (chkCount * 20) + (val0 + val1) * 2;
+            const diag = document.getElementById('t1-diag');
+
+            if (score > 60) {
+                diag.className = "diagnostic-box";
+                diag.innerHTML = `⚠️ <strong>自我损耗高度警报 (得分: ${score} / 100)：</strong>系统 2 资源接近耗竭！你的意志力已被先前克制行为/专注力过度征用。此时你的直觉偏差将极易偏信虚假因果、做出冲动决策。<strong>防守动作：</strong>强制阻断重大合同签订，迅速补充葡萄糖或睡眠，静止决策至少 15 分钟！`;
+            } else {
+                diag.className = "diagnostic-box safe";
+                diag.innerHTML = `✅ <strong>心智负载安全 (得分: ${score} / 100)：</strong>系统 2 尚有足够剩余能量，可以调用注意力核验眼前的复杂事实。`;
+            }
+            saveData();
+        }
+
+        // T2 Cognitive Ease
+        function updateT2Score() {
+            const val0 = parseInt(document.getElementById('t2-val-0').value);
+            const val1 = parseInt(document.getElementById('t2-val-1').value);
+            const val2 = parseInt(document.getElementById('t2-val-2').value);
+            const val3 = parseInt(document.getElementById('t2-val-3').value);
+
+            document.getElementById('t2-val-0-txt').innerText = val0;
+            document.getElementById('t2-val-1-txt').innerText = val1;
+            document.getElementById('t2-val-2-txt').innerText = val2;
+            document.getElementById('t2-val-3-txt').innerText = val3;
+
+            const total = val0 + val1 + val2 + val3;
+            const diag = document.getElementById('t2-diag');
+
+            if (total > 12) {
+                diag.className = "diagnostic-box";
+                diag.innerHTML = `⚠️ <strong>认知放松高警剔 (得分: ${total} / 20)：</strong>由于视觉易读、概念熟悉或情绪舒适，你的大脑系统 2 正在偷懒！警防将“顺耳熟悉”等同于“逻辑正确”。<strong>红队自救：</strong>请将内容转换为最难看、难以认清的劣质草稿纸，激活认知紧张！`;
+            } else {
+                diag.className = "diagnostic-box safe";
+                diag.innerHTML = `✅ <strong>认知警觉适度 (得分: ${total} / 20)：</strong>心智放松度较低，能够较清晰地维持审慎和客观判断。`;
+            }
+            saveData();
+        }
+
+        // T3 Priming Filter
+        function updateT3Reflect() {
+            const context = document.getElementById('t3-context').value || '当前物理环境';
+            const chk0 = document.getElementById('t3-chk-0').checked;
+            const chk1 = document.getElementById('t3-chk-1').checked;
+            const chk2 = document.getElementById('t3-chk-2').checked;
+
+            document.getElementById('t3-out-context').innerText = context;
+            const actionEl = document.getElementById('t3-out-action');
+            const container = document.getElementById('t3-decl-container');
+            const diag = document.getElementById('t3-diag');
+
+            let warnings = [];
+            let defenseActions = [];
+
+            if (chk0) {
+                warnings.push("金钱概念启动 (诱导自私抗拒合作)");
+                defenseActions.push("在脑海中刻意回忆温馨的家人聚餐或中性科学实验");
+            }
+            if (chk1) {
+                warnings.push("死亡/疾病启动 (诱导向权威保守服从)");
+                defenseActions.push("强制洗手洗脸，重新梳理客观的核心物理资产");
+            }
+            if (chk2) {
+                warnings.push("动作反馈启动 (非自主性点头诱导)");
+                defenseActions.push("强制耸肩、改变坐姿，向后仰并深呼吸");
+            }
+
+            if (warnings.length > 0) {
+                container.style.display = "block";
+                actionEl.innerText = defenseActions.join("；并且 ");
+                diag.className = "diagnostic-box";
+                diag.innerHTML = `⚠️ <strong>启动效应当场入侵：</strong>检测到 ${warnings.length} 项明显的潜意识暗示线索 (${warnings.join(", ")})。请变换决策环境，并彻底清空桌面的钞票等启动引线！`;
+            } else {
+                container.style.display = "none";
+                diag.className = "diagnostic-box safe";
+                diag.innerHTML = `✅ <strong>环境对齐安全：</strong>没有发现明显干扰独立性的启动触发线索。`;
+            }
+            saveData();
+        }
+
+        // T4 Law of Small Numbers
+        function updateT4Calib() {
+            const event = document.getElementById('t4-event').value || '统计现象';
+            const explanation = document.getElementById('t4-explanation').value || '直觉因果';
+            const n = parseInt(document.getElementById('t4-n').value) || 0;
+            const baserate = parseFloat(document.getElementById('t4-baserate').value) || 0;
+
+            const diag = document.getElementById('t4-diag');
+
+            if (n < 100) {
+                diag.className = "diagnostic-box";
+                diag.innerHTML = `⚠️ <strong>小数定律极高危 (N = ${n})：</strong>在极小样本下，大盘基准 ${baserate}% 极易发生随机性极端摆动。你为【${event}】编撰的因果解释【${explanation}】大概率是脑部强行拼凑的叙事谬误。<strong>防守宣告：</strong>强制冻结针对此结果的资源分配！直到 N 扩大至 100 以上。`;
+            } else {
+                diag.className = "diagnostic-box safe";
+                diag.innerHTML = `✅ <strong>大数样本支撑 (N = ${n})：</strong>样本规模达到统计基准，此概率偏差偏向宏观系统原因，而非随机波动。`;
+            }
+            saveData();
+        }
+
+        // T5 Anchoring
+        function updateT5Calib() {
+            const anchor = parseFloat(document.getElementById('t5-anchor').value) || 0;
+            const baseprice = parseFloat(document.getElementById('t5-baseprice').value) || 1;
+            const compromise = parseFloat(document.getElementById('t5-compromise').value) || 0;
+
+            const deviation = ((compromise - baseprice) / baseprice * 100).toFixed(1);
+            
+            document.getElementById('t5-out-anchor').innerText = anchor;
+            
+            // Calculate opposite extreme anchor to pull back the balance center
+            const diff = anchor - baseprice;
+            const counterAnchor = baseprice - diff;
+            document.getElementById('t5-out-counter').innerText = counterAnchor;
+
+            const diag = document.getElementById('t5-diag');
+
+            if (Math.abs(compromise - baseprice) > 0.01) {
+                diag.className = "diagnostic-box";
+                diag.innerHTML = `⚠️ <strong>锚定磁吸偏离度: ${deviation}%：</strong>你的妥协出价已经朝抛出锚点偏离！<strong>纠偏自救：</strong>拒绝顺应对方逻辑，强制扔出相反极值 ${counterAnchor} 冲刷原磁力场。`;
+            } else {
+                diag.className = "diagnostic-box safe";
+                diag.innerHTML = `✅ <strong>防锚状态安全：</strong>拟定价格没有受到初始高/低数值的干扰，与我方基准客观水平咬合。`;
+            }
+            saveData();
+        }
+
+        // T6 Availability Heuristic
+        function updateT6Calib() {
+            const danger = document.getElementById('t6-danger').value || '风险';
+            const val0 = parseInt(document.getElementById('t6-val-0').value);
+            const val1 = parseInt(document.getElementById('t6-val-1').value);
+            const val2 = parseInt(document.getElementById('t6-val-2').value);
+            const realprob = parseFloat(document.getElementById('t6-realprob').value) || 0.001;
+
+            document.getElementById('t6-val-0-txt').innerText = val0;
+            document.getElementById('t6-val-1-txt').innerText = val1;
+            document.getElementById('t6-val-2-txt').innerText = val2;
+
+            const index = val0 + val1 + val2;
+            const diag = document.getElementById('t6-diag');
+
+            if (index > 8) {
+                diag.className = "diagnostic-box";
+                diag.innerHTML = `⚠️ <strong>可得性级联偏倚 (焦虑曝光得分: ${index} / 15)：</strong>你担忧的【${danger}】之所以引起极度不安，是因为高曝光及脑海中鲜活画面的易得性。然而该危机真实历史概率仅为 ${realprob}%。<strong>决策抗噪：</strong>拒绝为假性可得性记忆过度购买保险！将预算调回客观比重。`;
+            } else {
+                diag.className = "diagnostic-box safe";
+                diag.innerHTML = `✅ <strong>风险过滤安全 (得分: ${index} / 15)：</strong>你对该风险的评估未受到外部报道的过度渲染。`;
+            }
+            saveData();
+        }
+
+        // T7 Representativeness
+        function updateT7Calib() {
+            const char = document.getElementById('t7-char').value || '某画像';
+            const catA = document.getElementById('t7-cat-a').value || '小类别A';
+            const catB = document.getElementById('t7-cat-b').value || '大类别B';
+            const ratioA = parseFloat(document.getElementById('t7-ratio-a').value) || 0.01;
+            const ratioB = parseFloat(document.getElementById('t7-ratio-b').value) || 1.0;
+
+            const baseRatioMultiplier = (ratioB / ratioA).toFixed(1);
+            const diag = document.getElementById('t7-diag');
+
+            diag.className = "diagnostic-box";
+            diag.innerHTML = `⚠️ <strong>典型性直觉警醒：</strong>虽然该目标具有特征“${char}”，完美契合 ${catA} 的画像原型，但由于常规大类别 ${catB} 在大盘总体中的基数是其 <strong>${baseRatioMultiplier} 倍</strong>，在统计学上他依然更大概率是个普通的【${catB}】！忽视基础比率 (Base Rates) 必致判断大败。请理性校正预测。`;
+            
+            saveData();
+        }
+
+        // T8 Hindsight Bias
+        function updateT8Calib() {
+            const pre = parseFloat(document.getElementById('t8-est-pre').value) || 0;
+            const post = parseFloat(document.getElementById('t8-est-post').value) || 0;
+
+            const diff = post - pre;
+            document.getElementById('t8-out-pre').innerText = pre;
+            const diag = document.getElementById('t8-diag');
+
+            if (diff > 10) {
+                diag.className = "diagnostic-box";
+                diag.innerHTML = `⚠️ <strong>事后聪明改写偏差: +${diff}%：</strong>结果出来后，你的记忆自我已经篡改了你原有的模糊研判，产生了“我早就知道”的盲目掌控感。<strong>决策反思：</strong>停止不公正地苛求团队或自我，当时该发生的本就在概率迷雾中。`;
+            } else {
+                diag.className = "diagnostic-box safe";
+                diag.innerHTML = `✅ <strong>决策改写偏差安全：</strong>事后评定与事前真实研判的一致性较好，没有表现出事后聪明偏差。`;
+            }
+            saveData();
+        }
+
+        // T9 Planning Fallacy
+        function updateT9Calib() {
+            const timeIn = parseFloat(document.getElementById('t9-time-in').value) || 1;
+            const budgetIn = parseFloat(document.getElementById('t9-budget-in').value) || 1;
+
+            const times = Array.from(document.querySelectorAll('.t9-hist-time')).map(el => parseFloat(el.value) || 0);
+            const buds = Array.from(document.querySelectorAll('.t9-hist-bud')).map(el => parseFloat(el.value) || 0);
+
+            const avgTime = times.reduce((a, b) => a + b, 0) / times.length;
+            const avgBud = buds.reduce((a, b) => a + b, 0) / buds.length;
+
+            const timeMultiplier = (avgTime / timeIn).toFixed(2);
+            const budMultiplier = (avgBud / budgetIn).toFixed(2);
+
+            const finalTime = (timeIn * timeMultiplier).toFixed(1);
+            const finalBud = (budgetIn * budMultiplier).toFixed(1);
+
+            const diag = document.getElementById('t9-diag');
+
+            diag.className = "diagnostic-box";
+            diag.innerHTML = `🚨 <strong>规划谬误外部意见校准结论：</strong><br><br>
+                · 行业同类历史均值 (外部意见)：工期 ${avgTime.toFixed(1)} 月 / 预算 ${avgBud.toFixed(1)} 万元。<br>
+                · 乐观偏差校准因子：工期偏低 ${timeMultiplier} 倍 / 预算偏低 ${budMultiplier} 倍。<br><br>
+                <strong>💡 校准后物理完工参数 (科学完备版)：工期 ${finalTime} 个月 / 预算 ${finalBud} 万元。</strong><br>
+                请以此对齐大盘预算，并留出足够的现金流缓冲带！`;
+
+            saveData();
+        }
+
+        // T10 Prospect Theory
+        function updateT10Calib() {
+            const loss = parseFloat(document.getElementById('t10-loss').value) || 1;
+            const win = parseFloat(document.getElementById('t10-win').value) || 1;
+            const buy = parseFloat(document.getElementById('t10-buy').value) || 1;
+            const sell = parseFloat(document.getElementById('t10-sell').value) || 1;
+
+            const lossAversion = (win / loss).toFixed(2);
+            const endowmentRatio = (sell / buy).toFixed(2);
+
+            const diag = document.getElementById('t10-diag');
+
+            diag.className = "diagnostic-box";
+            let content = `<strong>行为偏好量化结果：</strong><br><br>
+                · <strong>损失厌恶系数 (Loss Aversion Ratio): ${lossAversion} 倍</strong> (代表面临损失 1 个点时，需要获得 ${lossAversion} 倍的潜在收益才肯行动。`;
+
+            if (lossAversion > 2.5) {
+                content += ` 🚨高保守态势，可能因规避微小损失而放弃重大的长期投资机会)；<br>`;
+            } else if (lossAversion < 1.2) {
+                content += ` 🚨高病态冒险状态，容易出现不理性的赌徒狂热)；<br>`;
+            } else {
+                content += ` 正常理性均衡状态)；<br>`;
+            }
+
+            content += `· <strong>禀赋效应溢价 (Endowment Premium): ${endowmentRatio} 倍</strong> (代表仅仅因为“属于我”，就把资产卖价抬高了 ${endowmentRatio} 倍。`;
+
+            if (endowmentRatio > 1.5) {
+                content += ` 🚨高禀赋自恋。请在与交易对手谈判前，强行剔除“我的”滤镜，回归买入估价物理对齐！)。`;
+            } else {
+                content += ` 正常交易偏离度)。`;
+            }
+
+            diag.innerHTML = content;
+            saveData();
+        }
+
+        // T11 Framing Effect
+        function updateT11Calib() {
+            const type = document.getElementById('t11-type').value;
+            const diag = document.getElementById('t11-diag');
+
+            let pos = 90;
+            let neg = 10;
+            
+            // Try to extract any percentage in the raw text
+            const rawText = document.getElementById('t11-raw').value;
+            const matched = rawText.match(/(\d+)\s*%/);
+            if (matched) {
+                const parsedVal = parseInt(matched[1]);
+                if (parsedVal >= 0 && parsedVal <= 100) {
+                    if (type === "positive") {
+                        pos = parsedVal;
+                        neg = 100 - parsedVal;
+                    } else {
+                        neg = parsedVal;
+                        pos = 100 - parsedVal;
+                    }
+                }
+            }
+
+            document.getElementById('t11-out-pos').innerText = pos;
+            document.getElementById('t11-out-neg').innerText = neg;
+
+            if (type === "positive") {
+                diag.className = "diagnostic-box";
+                diag.innerHTML = `⚠️ <strong>收益正向框架暗示：</strong>当前描述偏向突出“存活/成功率 ${pos}%”。系统 1 会本能地偏向于【保守保平】决策。请在反向框架文本框中查看对等“死亡/亏损率 ${neg}%”描述，解除系统 1 恐惧锁。`;
+            } else {
+                diag.className = "diagnostic-box";
+                diag.innerHTML = `⚠️ <strong>损失负向框架暗示：</strong>当前描述偏向突出“死亡/亏损率 ${neg}%”。系统 1 会本能地偏向于【孤注一掷】冒险决策。请强行将注意力拉回“存活/成功率 ${pos}%”的中性客观评估上。`;
+            }
+            saveData();
+        }
+
+        // T12 Peak-End Rule
+        function updateT12Calib() {
+            const duration = parseFloat(document.getElementById('t12-duration').value) || 1;
+            const pre = parseFloat(document.getElementById('t12-pre').value) || 0;
+            const peak = parseInt(document.getElementById('t12-val-0').value);
+            const end = parseInt(document.getElementById('t12-val-1').value);
+
+            document.getElementById('t12-val-0-txt').innerText = peak;
+            document.getElementById('t12-val-1-txt').innerText = end;
+
+            const peakEndAvg = (peak + end) / 2;
+            const diag = document.getElementById('t12-diag');
+
+            const gap = Math.abs(pre - (peakEndAvg + 10) / 2).toFixed(1); // Normalizing peak end (-10 to 10) to 0-10 scale
+
+            diag.className = "diagnostic-box";
+            diag.innerHTML = `🚨 <strong>体验与记忆自我差异诊断：</strong><br><br>
+                · <strong>记忆自我均值 (回忆感受分)：${pre} / 10 分</strong> (受过程忽视和峰终定律支配)。<br>
+                · <strong>体验自我理论分 (峰终折算): ${((peakEndAvg + 10) / 2).toFixed(1)} / 10 分</strong> (均值：峰值 ${peak}，终点 ${end}，时长忽略)。<br><br>
+                如果记忆分显著高估，会诱导你再次跳进备受折磨的长周期泥潭中；如果显著低估，则可能让你永远抛弃一项具有长期健康红利的深水业务。请以体验总和为决策参考。`;
+            
+            saveData();
+        }
+
+        // =====================================================================
+        // LocalStorage Data Saving and Draft Recovery
+        // =====================================================================
+        const storageKey = 'thinking_fast_slow_data';
+
+        function saveData() {
+            const data = {};
+            // Text inputs, selects, textareas
+            document.querySelectorAll('input[type="text"], input[type="number"], select, textarea').forEach(el => {
+                data[el.id] = el.value;
+            });
+            // Class based inputs
+            document.querySelectorAll('.t9-hist-time').forEach((el, index) => {
+                data[`t9-hist-time-${index}`] = el.value;
+            });
+            document.querySelectorAll('.t9-hist-bud').forEach((el, index) => {
+                data[`t9-hist-bud-${index}`] = el.value;
+            });
+            // Checkboxes
+            document.querySelectorAll('input[type="checkbox"]').forEach(el => {
+                data[el.id] = el.checked;
+            });
+            // Ranges
+            document.querySelectorAll('input[type="range"]').forEach(el => {
+                data[el.id] = el.value;
+            });
+            localStorage.setItem(storageKey, JSON.stringify(data));
+        }
+
+        function loadData() {
+            const raw = localStorage.getItem(storageKey);
+            if (!raw) return;
+            try {
+                const data = JSON.parse(raw);
+                // Restore values
+                document.querySelectorAll('input[type="text"], input[type="number"], select, textarea').forEach(el => {
+                    if (data[el.id] !== undefined) el.value = data[el.id];
+                });
+                // Restore class items
+                document.querySelectorAll('.t9-hist-time').forEach((el, index) => {
+                    if (data[`t9-hist-time-${index}`] !== undefined) el.value = data[`t9-hist-time-${index}`];
+                });
+                document.querySelectorAll('.t9-hist-bud').forEach((el, index) => {
+                    if (data[`t9-hist-bud-${index}`] !== undefined) el.value = data[`t9-hist-bud-${index}`];
+                });
+                // Restore checkboxes
+                document.querySelectorAll('input[type="checkbox"]').forEach(el => {
+                    if (data[el.id] !== undefined) el.checked = data[el.id];
+                });
+                // Restore ranges
+                document.querySelectorAll('input[type="range"]').forEach(el => {
+                    if (data[el.id] !== undefined) el.value = data[el.id];
+                });
+
+                // Run calculations
+                recalcAll();
+            } catch (e) {
+                console.error("Failed to recover local workbook draft: ", e);
+            }
+        }
+
+        function recalcAll() {
+            updateT1Score();
+            updateT2Score();
+            updateT3Reflect();
+            updateT4Calib();
+            updateT5Calib();
+            updateT6Calib();
+            updateT7Calib();
+            updateT8Calib();
+            updateT9Calib();
+            updateT10Calib();
+            updateT11Calib();
+            updateT12Calib();
+        }
+
+        function resetAll() {
+            if (confirm("确定要清空所有双系统及偏差审计工作坊的输入数据，重新还原为默认表格吗？")) {
+                localStorage.removeItem(storageKey);
+                // Clear text
+                document.querySelectorAll('input[type="text"], input[type="number"], select, textarea').forEach(el => {
+                    el.value = "";
+                });
+                // Reset inputs and defaults
+                document.getElementById('t1-val-0').value = 5;
+                document.getElementById('t1-val-1').value = 5;
+                document.getElementById('t2-val-0').value = 2;
+                document.getElementById('t2-val-1').value = 2;
+                document.getElementById('t2-val-2').value = 2;
+                document.getElementById('t2-val-3').value = 2;
+                document.getElementById('t6-val-0').value = 2;
+                document.getElementById('t6-val-1').value = 2;
+                document.getElementById('t6-val-2').value = 2;
+                document.getElementById('t12-val-0').value = 0;
+                document.getElementById('t12-val-1').value = 0;
+                
+                document.getElementById('t4-n').value = 5;
+                document.getElementById('t4-baserate').value = 2;
+                document.getElementById('t5-anchor').value = 1200;
+                document.getElementById('t5-baseprice').value = 800;
+                document.getElementById('t5-compromise').value = 1000;
+                document.getElementById('t6-realprob').value = 0.1;
+                document.getElementById('t7-cat-a').value = "图书管理员";
+                document.getElementById('t7-cat-b').value = "农民";
+                document.getElementById('t7-ratio-a').value = 1;
+                document.getElementById('t7-ratio-b').value = 20;
+                document.getElementById('t8-est-pre').value = 30;
+                document.getElementById('t8-est-post').value = 95;
+                document.getElementById('t9-time-in').value = 3;
+                document.getElementById('t9-budget-in').value = 50;
+                document.getElementById('t10-loss').value = 100;
+                document.getElementById('t10-win').value = 220;
+                document.getElementById('t10-buy').value = 150;
+                document.getElementById('t10-sell').value = 280;
+                document.getElementById('t11-type').value = "positive";
+                document.getElementById('t12-duration').value = 30;
+                document.getElementById('t12-pre').value = 8;
+
+                const defaultTimes = [6, 8, 5, 9, 7];
+                const defaultBuds = [120, 95, 150, 80, 110];
+                document.querySelectorAll('.t9-hist-time').forEach((el, i) => el.value = defaultTimes[i]);
+                document.querySelectorAll('.t9-hist-bud').forEach((el, i) => el.value = defaultBuds[i]);
+
+                // Reset checkboxes
+                document.querySelectorAll('input[type="checkbox"]').forEach(el => {
+                    el.checked = false;
+                });
+
+                recalcAll();
+            }
+        }
+
+        // Auto save on input change
+        document.body.addEventListener('input', saveData);
+        document.body.addEventListener('change', saveData);
+
+        window.onload = function() {
+            // Restore from save if exists
+            loadData();
+            // Trigger baseline calculation
+            recalcAll();
+        };
+    </script>
+</body>
+</html>

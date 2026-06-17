@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>权力 交互演练沙盒 | 开发者心智系统 developer-mind-OS</title>
+    <!-- Modern Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Morandi Palette and Dark/Light Variables */
+            --bg-dark: #120B0E;
+            --panel-dark: #1E1217;
+            --text-dark: #E6D9DE;
+            --border-dark: rgba(92, 61, 70, 0.25);
+            
+            --bg-light: #F7F5F6;
+            --panel-light: #FFFFFF;
+            --text-light: #2C1E23;
+            --border-light: rgba(92, 61, 70, 0.15);
+            
+            /* Theme Tokens */
+            --active-bg: var(--bg-dark);
+            --active-panel: var(--panel-dark);
+            --active-text: var(--text-dark);
+            --active-border: var(--border-dark);
+            
+            /* Morandi Brand Colors */
+            --plum: #5C3D46;       /* Theatre Plum */
+            --plum-glow: rgba(92, 61, 70, 0.15);
+            --slate: #5A6B7C;      /* Slate Grey */
+            --slate-glow: rgba(90, 107, 124, 0.15);
+            --moss: #4E6B5A;       /* Moss Green */
+            --moss-glow: rgba(78, 107, 90, 0.15);
+            --gold: #C19A6B;       /* Muted Gold */
+            --gold-glow: rgba(193, 154, 107, 0.15);
+            --terracotta: #9E5757; /* Terracotta Red */
+            --terracotta-glow: rgba(158, 87, 87, 0.15);
+            --indigo: #525B75;     /* Indigo Blue */
+            --indigo-glow: rgba(82, 91, 117, 0.15);
+            
+            --shadow: 0 10px 30px rgba(0,0,0,0.25);
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --radius: 12px;
+        }
+        
+        .light-mode {
+            --active-bg: var(--bg-light);
+            --active-panel: var(--panel-light);
+            --active-text: var(--text-light);
+            --active-border: var(--border-light);
+            --shadow: 0 10px 30px rgba(92, 61, 70, 0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--active-bg);
+            color: var(--active-text);
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            transition: var(--transition);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+        
+        /* Top Navigation Header */
+        header {
+            background-color: var(--active-panel);
+            border-bottom: 1px solid var(--active-border);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: var(--transition);
+        }
+        
+        .header-title-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .header-logo {
+            width: 8px;
+            height: 24px;
+            background-color: var(--gold);
+            border-radius: 4px;
+        }
+        
+        header h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+        
+        .theme-toggle-btn {
+            background: none;
+            border: 1px solid var(--active-border);
+            padding: 6px 14px;
+            border-radius: 20px;
+            color: var(--active-text);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .theme-toggle-btn:hover {
+            border-color: var(--gold);
+            background-color: rgba(193, 154, 107, 0.1);
+        }
+        
+        /* Main Page Layout */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            width: 100%;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 30px;
+            flex-grow: 1;
+        }
+        
+        /* Sidebar Navigation */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            position: sticky;
+            top: 90px;
+            height: fit-content;
+        }
+        
+        .sidebar-btn {
+            background-color: transparent;
+            border: 1px solid transparent;
+            color: var(--active-text);
+            padding: 12px 18px;
+            border-radius: var(--radius);
+            text-align: left;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            opacity: 0.7;
+        }
+        
+        .sidebar-btn:hover {
+            opacity: 1;
+            background-color: rgba(255,255,255,0.03);
+            border-color: var(--active-border);
+        }
+        
+        .light-mode .sidebar-btn:hover {
+            background-color: rgba(0,0,0,0.02);
+        }
+        
+        .sidebar-btn.active {
+            opacity: 1;
+            background-color: var(--active-panel);
+            border-color: var(--active-border);
+            box-shadow: var(--shadow);
+            font-weight: 700;
+            border-left: 4px solid var(--gold);
+        }
+        
+        /* Tabs Workspace Container */
+        .workspace {
+            background-color: var(--active-panel);
+            border: 1px solid var(--active-border);
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Grid Layouts inside Workspace */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        
+        .panel-box {
+            background-color: rgba(255,255,255,0.02);
+            border: 1px solid var(--active-border);
+            border-radius: 8px;
+            padding: 20px;
+            height: 100%;
+        }
+        
+        .light-mode .panel-box {
+            background-color: rgba(0,0,0,0.01);
+        }
+        
+        .box-header {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* UI Form Elements */
+        label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            opacity: 0.9;
+        }
+        
+        .input-group {
+            margin-bottom: 16px;
+        }
+        
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 6px;
+            border: 1px solid var(--active-border);
+            background-color: rgba(0,0,0,0.15);
+            color: var(--active-text);
+            font-family: inherit;
+            font-size: 0.88rem;
+            transition: var(--transition);
+        }
+        
+        .light-mode input[type="text"], .light-mode textarea, .light-mode select {
+            background-color: rgba(0,0,0,0.02);
+        }
+        
+        input[type="text"]:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--gold);
+            background-color: rgba(0,0,0,0.25);
+        }
+        
+        .light-mode input[type="text"]:focus, .light-mode textarea:focus, .light-mode select:focus {
+            background-color: rgba(0,0,0,0.04);
+        }
+        
+        /* Dynamic Sliders styling */
+        .slider-container {
+            margin-bottom: 22px;
+        }
+        
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .slider-val-tag {
+            color: var(--gold);
+            font-weight: 700;
+        }
+        
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 5px;
+            border-radius: 3px;
+            background: var(--active-border);
+            outline: none;
+            margin: 8px 0;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--gold);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.25);
+            box-shadow: 0 0 10px var(--gold-glow);
+        }
+        
+        /* Interactive Calculator Result Banner */
+        .audit-banner {
+            padding: 16px 20px;
+            border-radius: 8px;
+            border-left: 5px solid transparent;
+            margin-top: 15px;
+            font-size: 0.88rem;
+            line-height: 1.5;
+        }
+        
+        .audit-banner.submissive {
+            background-color: var(--plum-glow);
+            border-left-color: var(--plum);
+        }
+        
+        .audit-banner.balanced {
+            background-color: var(--moss-glow);
+            border-left-color: var(--moss);
+        }
+        
+        .audit-banner.dominant {
+            background-color: var(--terracotta-glow);
+            border-left-color: var(--terracotta);
+        }
+        
+        /* Buttons styling */
+        .btn-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .btn {
+            padding: 9px 18px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .btn-primary {
+            background-color: var(--gold);
+            color: #1A1114;
+        }
+        
+        .btn-primary:hover {
+            background-color: #E2B27D;
+            box-shadow: 0 5px 15px var(--gold-glow);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            border-color: var(--active-border);
+            color: var(--active-text);
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(255,255,255,0.03);
+            border-color: var(--active-text);
+        }
+        
+        .light-mode .btn-secondary:hover {
+            background-color: rgba(0,0,0,0.02);
+        }
+        
+        /* Script Generator Output Box */
+        .script-output {
+            background-color: rgba(0,0,0,0.25);
+            border: 1px dashed var(--gold);
+            border-radius: 6px;
+            padding: 15px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            min-height: 100px;
+            white-space: pre-wrap;
+            position: relative;
+        }
+        
+        .light-mode .script-output {
+            background-color: rgba(0,0,0,0.03);
+        }
+        
+        /* Timeline timeline styling */
+        .timeline {
+            position: relative;
+            padding-left: 25px;
+            border-left: 2px dashed var(--active-border);
+            margin: 10px 0 20px 10px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -32px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--active-panel);
+            border: 2px solid var(--active-border);
+            transition: var(--transition);
+        }
+        
+        .timeline-item.active::before {
+            border-color: var(--gold);
+            background-color: var(--gold);
+            box-shadow: 0 0 8px var(--gold);
+        }
+        
+        .time-tag {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+        
+        /* Presets layout */
+        .presets-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .preset-btn {
+            background-color: rgba(0,0,0,0.15);
+            border: 1px solid var(--active-border);
+            color: var(--active-text);
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.78rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .light-mode .preset-btn {
+            background-color: rgba(0,0,0,0.03);
+        }
+        
+        .preset-btn:hover {
+            border-color: var(--gold);
+            background-color: rgba(193, 154, 107, 0.08);
+        }
+        
+        /* Rehearsal timer box */
+        .timer-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            background-color: rgba(0,0,0,0.15);
+            border: 1px solid var(--active-border);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .light-mode .timer-box {
+            background-color: rgba(0,0,0,0.02);
+        }
+        
+        .timer-display {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: var(--gold);
+            width: 140px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-title-container">
+            <div class="header-logo"></div>
+            <h1>《权力》地位博弈与剧本演练沙盒</h1>
+        </div>
+        <button class="theme-toggle-btn" onclick="toggleTheme()">
+            <span id="theme-icon">☀️</span> <span id="theme-text">明亮模式</span>
+        </button>
+    </header>
+
+    <div class="container">
+        <!-- Sidebar Menu -->
+        <div class="sidebar">
+            <button class="sidebar-btn active" onclick="switchTab('tab-adjuster', this)">
+                <span>🎭</span> 地位姿态模拟器
+            </button>
+            <button class="sidebar-btn" onclick="switchTab('tab-builder', this)">
+                <span>✍️</span> Assertive 剧本生成器
+            </button>
+            <button class="sidebar-btn" onclick="switchTab('tab-rehearsal', this)">
+                <span>⏱️</span> 临场演练去中心助手
+            </button>
+            <button class="sidebar-btn" onclick="switchTab('tab-audit', this)">
+                <span>🧭</span> T2 舞台剧本规划表
+            </button>
+        </div>
+        
+        <!-- Tab Workspace -->
+        <div class="workspace">
+            
+            <!-- TAB 1: STATUS ADJUSTER -->
+            <div id="tab-adjuster" class="tab-content active">
+                <h2 style="font-family:'Outfit',sans-serif; font-size:1.4rem; font-weight:800; margin-bottom:10px;">🎭 地位姿态即时模拟器</h2>
+                <p style="opacity:0.8; font-size:0.9rem; margin-bottom:25px;">滑动滑块调整您或互动方的日常身体与非言语行为指数。算法将即时映射其权力姿态状态，并提供动态改善建议。</p>
+                
+                <div class="two-col">
+                    <div>
+                        <!-- Sliders -->
+                        <div class="slider-container">
+                            <div class="slider-header">
+                                <span>1. 物理空间占用 (Space Occupation)</span>
+                                <span class="slider-val-tag" id="val-space">2</span>
+                            </div>
+                            <input type="range" min="0" max="5" value="2" id="slide-space" oninput="updateSliders()">
+                            <p style="font-size:0.75rem; opacity:0.6;" id="desc-space">自然落座，双腿基本平行，双手自然摆放。</p>
+                        </div>
+                        
+                        <div class="slider-container">
+                            <div class="slider-header">
+                                <span>2. 微动作频次 (Micro-motions Frequency)</span>
+                                <span class="slider-val-tag" id="val-actions">2</span>
+                            </div>
+                            <input type="range" min="0" max="5" value="2" id="slide-actions" oninput="updateSliders()">
+                            <p style="font-size:0.75rem; opacity:0.6;" id="desc-actions">偶尔进行调整，手势在讲话时自然配合。</p>
+                        </div>
+                        
+                        <div class="slider-container">
+                            <div class="slider-header">
+                                <span>3. 声音与语速控制 (Voice & Tempo)</span>
+                                <span class="slider-val-tag" id="val-voice">2</span>
+                            </div>
+                            <input type="range" min="0" max="5" value="2" id="slide-voice" oninput="updateSliders()">
+                            <p style="font-size:0.75rem; opacity:0.6;" id="desc-voice">中等语速，普通商务述职音调。</p>
+                        </div>
+                        
+                        <div class="slider-container">
+                            <div class="slider-header">
+                                <span>4. 眼神与面部表情 (Eye Contact & Expression)</span>
+                                <span class="slider-val-tag" id="val-eye">2</span>
+                            </div>
+                            <input type="range" min="0" max="5" value="2" id="slide-eye" oninput="updateSliders()">
+                            <p style="font-size:0.75rem; opacity:0.6;" id="desc-eye">平静对视，在适当时有微笑点头互动。</p>
+                        </div>
+                        
+                        <div class="slider-container">
+                            <div class="slider-header">
+                                <span>5. 语言沟通结构 (Language Structure)</span>
+                                <span class="slider-val-tag" id="val-lang">2</span>
+                            </div>
+                            <input type="range" min="0" max="5" value="2" id="slide-lang" oninput="updateSliders()">
+                            <p style="font-size:0.75rem; opacity:0.6;" id="desc-lang">正常陈述业务事实，少有越界或过度修饰。</p>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <!-- Dynamic Result Panel -->
+                        <div class="panel-box" style="display:flex; flex-direction:column; justify-content:space-between;">
+                            <div>
+                                <div class="box-header">📊 权力身位结算档案</div>
+                                <div style="text-align:center; padding:20px 0;">
+                                    <div style="font-size:0.8rem; opacity:0.7; text-transform:uppercase; font-weight:700;">自评身位总分</div>
+                                    <div style="font-family:'Outfit',sans-serif; font-size:4.5rem; font-weight:800; color:var(--gold);" id="audit-score">10</div>
+                                </div>
+                                
+                                <div class="audit-banner submissive" id="audit-banner-box">
+                                    <div style="font-weight:700; font-size:0.95rem; margin-bottom:5px;" id="banner-title">个人状态：动态平衡区间 (最佳)</div>
+                                    <div id="banner-text">您目前处于最佳的地位表现状态，能根据社交和谈判情境灵活调节高低姿态，亲和力与威信保持共存。</div>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-top:20px;">
+                                <div style="font-size:0.8rem; font-weight:700; margin-bottom:8px; opacity:0.8;">💡 姿态校准动作建议：</div>
+                                <ul style="font-size:0.8rem; line-height:1.5; padding-left:16px; opacity:0.85;" id="audit-advices">
+                                    <li>姿态正常，无需特殊修正。在商务沟通中保持得体即可。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TAB 2: ASSERTIVE SCRIPT BUILDER -->
+            <div id="tab-builder" class="tab-content">
+                <h2 style="font-family:'Outfit',sans-serif; font-size:1.4rem; font-weight:800; margin-bottom:10px;">✍️ Assertive 沟通剧本生成器</h2>
+                <p style="opacity:0.8; font-size:0.9rem; margin-bottom:25px;">使用权力地位博弈的核心公式，剔除受害者负面情绪，生成专业客观的强边界沟通话术。</p>
+                
+                <div class="presets-row">
+                    <span style="font-size:0.8rem; font-weight:700; padding:5px 0; opacity:0.8;">典型冲突模板一键套用：</span>
+                    <button class="preset-btn" onclick="applyPreset(1)">拒绝夜间非紧急任务</button>
+                    <button class="preset-btn" onclick="applyPreset(2)">对抗会议公开言语羞辱</button>
+                    <button class="preset-btn" onclick="applyPreset(3)">抵制合作方账期随意拖延</button>
+                </div>
+                
+                <div class="two-col">
+                    <div>
+                        <div class="input-group">
+                            <label for="input-target">对话方称呼 (如: 李总/合作方)</label>
+                            <input type="text" id="input-target" placeholder="例如：李总" onkeyup="generateScript()">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="input-facts">1. 客观观察事实 (Facts)</label>
+                            <textarea id="input-facts" rows="3" placeholder="写明具体发生的数据或事实，不带主观情绪评价。例：这周您已连续三次在半夜12点发来非紧急报表任务。" onkeyup="generateScript()"></textarea>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="input-benefit">2. 集体/交付效益原因 (Benefit)</label>
+                            <textarea id="input-benefit" rows="3" placeholder="说明你采取边界动作是为了集体、项目交付质量或客观效益。例：为了能保证白天的开发质量，以及我个人的正常工作交付状态。" onkeyup="generateScript()"></textarea>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="input-redline">3. 个人红线动作 (Red-line Boundary)</label>
+                            <textarea id="input-redline" rows="3" placeholder="明确声明你今后将执行的客观行动边界。例：非特急事项，我将统一在次日工作时间内处理。" onkeyup="generateScript()"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="panel-box" style="display:flex; flex-direction:column; justify-content:space-between;">
+                            <div>
+                                <div class="box-header">💬 生成的 Assertive 博弈话术</div>
+                                <div class="script-output" id="script-output-text">李总，非常愿意为项目全力以赴。
+
+但这周您已连续三次在半夜12点发来非紧急报表任务。为了能保证白天的开发质量，以及我个人的正常工作交付状态，非特急事项，我将统一在次日工作时间内处理。
+
+请您理解。</div>
+                            </div>
+                            
+                            <div class="btn-row">
+                                <button class="btn btn-primary" onclick="copyScript()">📋 一键复制剧本</button>
+                                <button class="btn btn-secondary" onclick="resetScript()">🔄 重置清空</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TAB 3: STAGE REHEARSAL -->
+            <div id="tab-rehearsal" class="tab-content">
+                <h2 style="font-family:'Outfit',sans-serif; font-size:1.4rem; font-weight:800; margin-bottom:10px;">⏱️ 临场大型发言“去中心化”助手</h2>
+                <p style="opacity:0.8; font-size:0.9rem; margin-bottom:25px;">利用意念去中心化模型（De-centering），在上台发言/高管汇报前切断自我生理关注焦躁环路，恢复冷静专业气场。</p>
+                
+                <div class="two-col">
+                    <div>
+                        <div class="timer-box">
+                            <div style="font-size:0.8rem; font-weight:700; opacity:0.8;">演练倒计时</div>
+                            <div class="timer-display" id="timer-time">02:00:00</div>
+                            <div style="display:flex; gap:5px;">
+                                <button class="preset-btn" onclick="setTimer(120)">120m</button>
+                                <button class="preset-btn" onclick="setTimer(60)">60m</button>
+                                <button class="preset-btn" onclick="setTimer(10)">10m</button>
+                            </div>
+                        </div>
+                        
+                        <div class="presets-row">
+                            <button class="btn btn-primary" onclick="startTimer()">▶ 开始倒计时</button>
+                            <button class="btn btn-secondary" onclick="stopTimer()">⏸ 暂停</button>
+                        </div>
+                        
+                        <div class="input-group" style="margin-top:20px;">
+                            <label for="decenter-text">🧠 【意念去中心化】写下听众的痛点与您的核心利他使命：</label>
+                            <textarea id="decenter-text" rows="4" placeholder="台下的听众今天正面临什么实际痛点？我本场汇报能够带给他们什么价值？（写下这句话，把注意力完全移开自己的“手抖/忘词面子问题”，锁定利他使命。）"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="timeline">
+                            <div class="timeline-item active" id="time-step-1">
+                                <span class="time-tag" style="background-color:var(--indigo-glow); color:var(--indigo);">T-2 小时</span>
+                                <h4 style="font-size:0.9rem; font-weight:700; margin:3px 0;">生理平抑（Calming）</h4>
+                                <p style="font-size:0.75rem; opacity:0.75; line-height:1.4; margin-top:3px;">
+                                    <input type="checkbox" id="check-1-1"> 缓慢吐气，平复肾上腺素激起。<br>
+                                    <input type="checkbox" id="check-1-2"> 仅喝温开水，禁绝咖啡因以防手抖恶化。<br>
+                                    <input type="checkbox" id="check-1-3"> 物理隔绝杂乱邮件，锁定2小时无打扰窗口。
+                                </p>
+                            </div>
+                            
+                            <div class="timeline-item" id="time-step-2">
+                                <span class="time-tag" style="background-color:var(--gold-glow); color:var(--gold);">T-1 小时</span>
+                                <h4 style="font-size:0.9rem; font-weight:700; margin:3px 0;">意念去中心化（De-centering）</h4>
+                                <p style="font-size:0.75rem; opacity:0.75; line-height:1.4; margin-top:3px;">
+                                    <input type="checkbox" id="check-2-1"> 填写左侧意念转化框，明确演讲的利他使命。<br>
+                                    <input type="checkbox" id="check-2-2"> 自省：彻底放弃“完美个人表现期望”，只求对听众有用。
+                                </p>
+                            </div>
+                            
+                            <div class="timeline-item" id="time-step-3">
+                                <span class="time-tag" style="background-color:var(--moss-glow); color:var(--moss);">T-10 分钟</span>
+                                <h4 style="font-size:0.9rem; font-weight:700; margin:3px 0;">角色热身入戏（Priming）</h4>
+                                <p style="font-size:0.75rem; opacity:0.75; line-height:1.4; margin-top:3px;">
+                                    <input type="checkbox" id="check-3-1"> 物理舒展肩背，做出扩张的高姿态热身动作。<br>
+                                    <input type="checkbox" id="check-3-2"> 暗示自己：“现在我穿上了公司总监的专业戏服角色。”
+                                </p>
+                            </div>
+                            
+                            <div class="timeline-item" id="time-step-4">
+                                <span class="time-tag" style="background-color:var(--terracotta-glow); color:var(--terracotta);">T-0 分钟</span>
+                                <h4 style="font-size:0.9rem; font-weight:700; margin:3px 0;">登台第一声威（First Voice）</h4>
+                                <p style="font-size:0.75rem; opacity:0.75; line-height:1.4; margin-top:3px;">
+                                    <input type="checkbox" id="check-4-1"> 锁定台下一位面带微笑点头的听众（眼神抓点）。<br>
+                                    <input type="checkbox" id="check-4-2"> 第一句开头三个字声音洪亮、主动提高音量。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TAB 4: WORKSPACE AUDIT FORM -->
+            <div id="tab-audit" class="tab-content">
+                <h2 style="font-family:'Outfit',sans-serif; font-size:1.4rem; font-weight:800; margin-bottom:10px;">🧭 T2 舞台剧本规划与授权审计</h2>
+                <p style="opacity:0.8; font-size:0.9rem; margin-bottom:25px;">为下一个关键商务谈判或重大会议制定战术剧本。填写下列审计项后即可导出一份标准的 MarkDown 职场实战博弈剧本。</p>
+                
+                <div class="input-group">
+                    <label for="audit-project">1. 本场汇报/重大会议项目名称：</label>
+                    <input type="text" id="audit-project" placeholder="例如：Q2 季度研发项目技术评审会">
+                </div>
+                
+                <div class="two-col">
+                    <div>
+                        <div class="input-group">
+                            <label for="audit-q1">🔑 明确当前角色的信托资产与红线：</label>
+                            <textarea id="audit-q1" rows="4" placeholder="本场舞台上，集体（公司）托付给我的核心资源、交付质量以及我必须坚守的红线指标是什么？我如何履行这笔受托责任？"></textarea>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="audit-q2">🎭 情境姿态调节动作规划：</label>
+                            <textarea id="audit-q2" rows="4" placeholder="本场中，我需要在什么时候强行使用高姿态以确立规则与纪律？又在什么时候切换为低姿态（如交出聚光灯、坐在后排记录）以吸纳真实意见？"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="input-group">
+                            <label for="audit-q3">🛡️ 盘点团队的心理安全垫机制：</label>
+                            <textarea id="audit-q3" rows="4" placeholder="本场及执行期，团队成员若发现逻辑漏洞或发生交付失误，他们是否有无风险的反馈通道？我如何保证不发生无权感支配的残暴霸凌？"></textarea>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="audit-q4">🤝 继任者与角色接棒授权规划：</label>
+                            <textarea id="audit-q4" rows="4" placeholder="本场舞台落幕后，我的哪些决策特权或发言权将被移交和赋能下去？我是否做好了移交部分特权、支持下一代人平稳入戏的后勤准备？"></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="btn-row">
+                    <button class="btn btn-primary" onclick="exportMarkdown()">📥 导出 Markdown 博弈剧本</button>
+                    <button class="btn btn-secondary" onclick="saveAuditDraft()">💾 保存草稿至本地</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- UI Logic Script -->
+    <script>
+        // Toggle light/dark themes
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            document.getElementById('theme-icon').innerText = isLight ? '🌙' : '☀️';
+            document.getElementById('theme-text').innerText = isLight ? '暗黑模式' : '明亮模式';
+            localStorage.setItem('power_sandbox_theme', isLight ? 'light' : 'dark');
+        }
+        
+        // Restore theme on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('power_sandbox_theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+                document.getElementById('theme-icon').innerText = '🌙';
+                document.getElementById('theme-text').innerText = '暗黑模式';
+            }
+            
+            // Load audit drafts
+            const savedAudit = localStorage.getItem('power_audit_draft');
+            if (savedAudit) {
+                const data = JSON.parse(savedAudit);
+                document.getElementById('audit-project').value = data.project || '';
+                document.getElementById('audit-q1').value = data.q1 || '';
+                document.getElementById('audit-q2').value = data.q2 || '';
+                document.getElementById('audit-q3').value = data.q3 || '';
+                document.getElementById('audit-q4').value = data.q4 || '';
+            }
+            
+            updateSliders();
+        });
+
+        // Tab Switching
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.sidebar-btn').forEach(b => {
+                b.classList.remove('active');
+            });
+            
+            document.getElementById(tabId).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        // Sliders Descriptions Mapping
+        const descriptions = {
+            space: [
+                "双腿缩拢，手臂紧贴身体，身体蜷缩占用极少物理面积（极其防御的低姿态）。",
+                "姿势有些局促，身体倾向于低头，收敛个人空间占用。",
+                "自然落座，双腿基本平行，双手自然摆放（正常中性）。",
+                "坐姿舒展，双臂放置于桌面或扶手上，占据较为开阔的空间。",
+                "身体舒展扩张，双手平放桌上，肩背挺拔占用充足物理宽度。"
+            ],
+            actions: [
+                "频繁碎动作：抓耳、摸脖子、调整衣角、推眼镜，透露心理极度防御焦虑（低姿态）。",
+                "动作稍显紧凑，偶有摸脸或抓手动作。",
+                "动作稳定，仅有少量与说话配合的手势动作（正常中性）。",
+                "动作极少而沉稳，静止感强，眼神对视长久，少有防御小动作。",
+                "身体保持极度沉稳静止，完全消除任何碎动作，散发出极强掌控威信。"
+            ],
+            voice: [
+                "语速极快，音调高亢颤抖，句尾多带试探性的疑问声（弱势姿态）。",
+                "说话速度较快，缺乏断句的威严停顿。",
+                "语速音调正常，符合一般职场述职（中性区间）。",
+                "音调沉稳，语速刻意放慢一倍，说话有重点重音和得体语气。",
+                "深沉腹式发声，语速极其缓慢而有力，核心逻辑句后强行停顿2秒（极大支配姿态）。"
+            ],
+            eye: [
+                "眼神频繁闪躲，低头不看对方，露出防御性讨好的仓促微笑（弱姿态）。",
+                "眼神接触稍短，不敢与高位者进行长时间直视。",
+                "平静正视对方，在适当时候微笑点头互动（正常中性）。",
+                "长时间平静直视对方，眼神坚毅不回避，微笑极少。",
+                "平静扫视全场，敢于与任何人长时间进行极其威严的平静直视（强势高姿态）。"
+            ],
+            lang: [
+                "多用弱势疑问句“是不是”、“这行吗”、“您看行不行”，极多乞求与过度顺从口吻。",
+                "语言多有客套话，倾向于附和与小心迎合他人。",
+                "客观陈述事实，不偏激，少有过度讨好或攻击（正常中性）。",
+                "多用主导性肯定的句式下达业务指令，明确责任划定。",
+                "多用强力肯定句、命令句，频繁打断他人陈述，下达绝对时限的拍板指令（强势支配）。"
+            ]
+        };
+
+        // Sliders Dynamic Calculation
+        function updateSliders() {
+            const vSpace = parseInt(document.getElementById('slide-space').value);
+            const vActions = parseInt(document.getElementById('slide-actions').value);
+            const vVoice = parseInt(document.getElementById('slide-voice').value);
+            const vEye = parseInt(document.getElementById('slide-eye').value);
+            const vLang = parseInt(document.getElementById('slide-lang').value);
+            
+            // Map values to 0-4 arrays safely
+            const indexSpace = Math.min(4, vSpace);
+            const indexActions = Math.min(4, vActions);
+            const indexVoice = Math.min(4, vVoice);
+            const indexEye = Math.min(4, vEye);
+            const indexLang = Math.min(4, vLang);
+            
+            document.getElementById('val-space').innerText = vSpace;
+            document.getElementById('val-actions').innerText = vActions;
+            document.getElementById('val-voice').innerText = vVoice;
+            document.getElementById('val-eye').innerText = vEye;
+            document.getElementById('val-lang').innerText = vLang;
+            
+            document.getElementById('desc-space').innerText = descriptions.space[indexSpace];
+            document.getElementById('desc-actions').innerText = descriptions.actions[indexActions];
+            document.getElementById('desc-voice').innerText = descriptions.voice[indexVoice];
+            document.getElementById('desc-eye').innerText = descriptions.eye[indexEye];
+            document.getElementById('desc-lang').innerText = descriptions.lang[indexLang];
+            
+            // Compute sum (0-25)
+            const score = vSpace + vActions + vVoice + vEye + vLang;
+            document.getElementById('audit-score').innerText = score;
+            
+            // Render Result Banner
+            const banner = document.getElementById('audit-banner-box');
+            const title = document.getElementById('banner-title');
+            const text = document.getElementById('banner-text');
+            const advices = document.getElementById('audit-advices');
+            
+            banner.className = "audit-banner";
+            advices.innerHTML = "";
+            
+            if (score <= 10) {
+                banner.classList.add('submissive');
+                title.innerText = "个人身位：过度顺从区间 (Power Submissive)";
+                text.innerText = "您目前的得分极低，日常行为倾向于讨好、顺从与防御。这会使您在职场中容易被边缘化、丧失威信，陷入被动接受压榨的受害者剧本中。建议立刻启动高姿态修正。";
+                
+                advices.innerHTML = `
+                    <li><b>空间校准</b>：坐立时将双臂展开，双脚平放在地上，强制扩张物理姿态，占据多20%的桌面空间。</li>
+                    <li><b>语言校准</b>：禁止使用“对不起”、“没关系”等过度的软弱开场白，使用“事实+红线”的 Assertive 句式明确划定界线。</li>
+                    <li><b>声音校准</b>：把说话速度放慢一倍，音量适度提高，讲完论点后强制停顿2秒，承受住沉默的压力。</li>
+                `;
+            } else if (score >= 20) {
+                banner.classList.add('dominant');
+                title.innerText = "个人身位：过度支配区间 (Power Dominant)";
+                text.innerText = "您的得分偏高，姿态和语言带点极强侵略性。这容易导致团队陷入噤若寒蝉的恐怖氛围，挫伤同理心，形成严重的信息茧房。极易退化为“内心无力”的暴虐狂怒恶霸。建议立刻启动低姿态回缩。";
+                
+                advices.innerHTML = `
+                    <li><b>交出聚光灯</b>：在脑暴会或技术评审会上，坐到最后一排，交出发言主控权，至少在 80% 的时间里保持单纯的倾听。</li>
+                    <li><b>身体回缩</b>：身体微微前倾，微微歪头，在下属发言完毕后点头并真诚提问：“这方面你才是专家，能详细讲讲原因吗？”</li>
+                    <li><b>分享脆弱</b>：在适当时候主动向团队承认自己曾犯过的某些典型失误，拉近信任距离。</li>
+                `;
+            } else {
+                banner.classList.add('balanced');
+                title.innerText = "个人身位：动态中性区间 (Situational Leader)";
+                text.innerText = "您处于最健康的动态身位状态。具备根据谈判和情境需要敏捷地在权威（高姿态）与亲和力（低姿态）之间切换的能力。行使受托信托责权力，同理心与工作威信完美并存。";
+                
+                advices.innerHTML = `
+                    <li><b>保持现状</b>：继续保持对情境的细致观察，在遇到规则失守或安全事故时果断高姿态接管，在创意期或跨部门合作时主动扮演支持性配角。</li>
+                `;
+            }
+        }
+
+        // Script presets mapping
+        const presets = {
+            1: {
+                target: "李总",
+                facts: "本周我已经连续三次在半夜12点收到您的非紧急报表任务安排。",
+                benefit: "为了保证白天核心项目的交付质量，以及我个人的身心健康状态，",
+                redline: "今后非特急紧急事项，我将统一在次日的工作时间内进行处理。"
+            },
+            2: {
+                target: "王总",
+                facts: "在刚才的周会上，您当着全体同事的面对我提出了“愚蠢且没长脑子”的人身指责描述。",
+                benefit: "为了能保证团队沟通的职业规范性，以及我们能继续聚焦在解决业务问题本身，",
+                redline: "我必须表明：我不接受任何针对个人人格的羞辱话语。请您使用客观的数据事实来指出我的交付缺陷。"
+            },
+            3: {
+                target: "合作方对接人",
+                facts: "贵司已连续两个季度比合同约定时间推迟了 15 天才完成本期账款结算支付。",
+                benefit: "为了保证我们现金流的安全以及我司技术团队对贵司后续服务的持续高标准投入，",
+                redline: "今后账期必须严格按合同执行。如若再次拖延，我司将不得不依据条款暂停对该业务的技术维护。"
+            }
+        };
+
+        // Apply presets in Tab 2
+        function applyPreset(id) {
+            const data = presets[id];
+            document.getElementById('input-target').value = data.target;
+            document.getElementById('input-facts').value = data.facts;
+            document.getElementById('input-benefit').value = data.benefit;
+            document.getElementById('input-redline').value = data.redline;
+            generateScript();
+        }
+
+        // Auto Generate script in Tab 2
+        function generateScript() {
+            const target = document.getElementById('input-target').value || "[对话方称呼]";
+            const facts = document.getElementById('input-facts').value || "[客观事实]";
+            const benefit = document.getElementById('input-benefit').value || "[集体/交付效益原因]";
+            const redline = document.getElementById('input-redline').value || "[个人红线边界]";
+            
+            const script = `${target}，我非常愿意为了工作/合作全力以赴。\n\n但是，${facts}。为了${benefit}，${redline}。\n\n请您理解。`;
+            document.getElementById('script-output-text').innerText = script;
+        }
+
+        // Reset inputs in Tab 2
+        function resetScript() {
+            document.getElementById('input-target').value = "";
+            document.getElementById('input-facts').value = "";
+            document.getElementById('input-benefit').value = "";
+            document.getElementById('input-redline').value = "";
+            generateScript();
+        }
+
+        // Copy generated script
+        function copyScript() {
+            const text = document.getElementById('script-output-text').innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert("剧本已成功复制到剪贴板！可以直接发送。");
+            }).catch(err => {
+                alert("复制失败，请手动选择复制。");
+            });
+        }
+
+        // Rehearsal timer variables
+        let timerInterval = null;
+        let totalSeconds = 120 * 60; // default 120 minutes
+
+        function setTimer(minutes) {
+            stopTimer();
+            totalSeconds = minutes * 60;
+            updateTimerDisplay();
+            updateTimelineState(minutes);
+        }
+
+        function updateTimerDisplay() {
+            const hrs = Math.floor(totalSeconds / 3600);
+            const mins = Math.floor((totalSeconds % 3600) / 60);
+            const secs = totalSeconds % 60;
+            
+            const format = (num) => String(num).padStart(2, '0');
+            document.getElementById('timer-time').innerText = `${format(hrs)}:${format(mins)}:${format(secs)}`;
+        }
+
+        function startTimer() {
+            if (timerInterval) return;
+            timerInterval = setInterval(() => {
+                if (totalSeconds > 0) {
+                    totalSeconds--;
+                    updateTimerDisplay();
+                    
+                    const minutesLeft = totalSeconds / 60;
+                    updateTimelineState(minutesLeft);
+                } else {
+                    stopTimer();
+                    alert("发言时间已到！请扮演好您的专家角色，第一句话音量提高，自信登台入戏！");
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+        }
+
+        function updateTimelineState(minutes) {
+            document.querySelectorAll('.timeline-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            if (minutes > 60) {
+                document.getElementById('time-step-1').classList.add('active');
+            } else if (minutes > 10) {
+                document.getElementById('time-step-2').classList.add('active');
+            } else if (minutes > 0) {
+                document.getElementById('time-step-3').classList.add('active');
+            } else {
+                document.getElementById('time-step-4').classList.add('active');
+            }
+        }
+
+        // T2 Save draft to LocalStorage
+        function saveAuditDraft() {
+            const data = {
+                project: document.getElementById('audit-project').value,
+                q1: document.getElementById('audit-q1').value,
+                q2: document.getElementById('audit-q2').value,
+                q3: document.getElementById('audit-q3').value,
+                q4: document.getElementById('audit-q4').value
+            };
+            
+            localStorage.setItem('power_audit_draft', JSON.stringify(data));
+            alert("草稿已安全保存至您的本地浏览器缓存！下次打开将自动加载。");
+        }
+
+        // T2 Export Markdown file
+        function exportMarkdown() {
+            const project = document.getElementById('audit-project').value || "未命名博弈重大会议";
+            const q1 = document.getElementById('audit-q1').value || "暂无描述";
+            const q2 = document.getElementById('audit-q2').value || "暂无描述";
+            const q3 = document.getElementById('audit-q3').value || "暂无描述";
+            const q4 = document.getElementById('audit-q4').value || "暂无描述";
+            
+            const date = new Date().toISOString().split('T')[0];
+            const markdown = `# 《权力》职场舞台剧本规划与授权审计：${project}\n` +
+                             `*生成时间：${date} | 使用方法：按此剧本进行关键会议博弈演练*\n\n` +
+                             `## 🔑 1. 明确当前角色的信托资产与红线\n` +
+                             `> 本场舞台上，集体托付给我的核心资源、交付质量以及决策边界是什么？\n\n` +
+                             `${q1}\n\n` +
+                             `## 🎭 2. 情境姿态调节动作规划\n` +
+                             `> 本场谈判或会议中，我在何时使用高姿态立下规矩？在何时扮演低姿态的倾听支持配角？\n\n` +
+                             `${q2}\n\n` +
+                             `## 🛡️ 3. 盘点团队的心理安全垫机制\n` +
+                             `> 团队成员若发现交付漏洞，是否拥有无风险的反馈通道？我如何约束自我支配欲望、防止无权者霸凌？\n\n` +
+                             `${q3}\n\n` +
+                             `## 🤝 4. 继任者与角色接棒授权规划\n` +
+                             `> 本场结束后，我将交出哪些聚光灯给骨干成员？我准备如何赋能继任者接捧？\n\n` +
+                             `${q4}\n\n` +
+                             `--- \n` +
+                             `*SOP：德博拉·格林菲尔德《权力：为什么有些人有，有些人没有》行动实践工具。*`;
+                             
+            const blob = new Blob([markdown], { type: 'text/markdown;charset=utf-8;' });
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", `权力博弈剧本-${project.replace(/\s+/g, '_')}.md`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>

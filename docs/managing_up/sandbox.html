@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>向上管理 互动演练沙盒 | 开发者心智系统 developer-mind-OS</title>
+    <!-- Modern Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Dark Theme Variables */
+            --bg-dark: #121413;
+            --panel-dark: #1C201E;
+            --text-dark: #E2E8F0;
+            --border-dark: rgba(78, 107, 90, 0.25);
+            
+            /* Light Theme Variables */
+            --bg-light: #F4F6F5;
+            --panel-light: #FFFFFF;
+            --text-light: #1E293B;
+            --border-light: rgba(78, 107, 90, 0.15);
+            
+            /* Theme Tokens */
+            --active-bg: var(--bg-dark);
+            --active-panel: var(--panel-dark);
+            --active-text: var(--text-dark);
+            --active-border: var(--border-dark);
+            
+            /* Morandi Palette */
+            --moss: #4E6B5A;       /* Sage Green */
+            --moss-glow: rgba(78, 107, 90, 0.15);
+            --slate: #5A6B7C;      /* Steel Grey */
+            --slate-glow: rgba(90, 107, 124, 0.15);
+            --plum: #5C3D46;       /* Theatre Plum */
+            --plum-glow: rgba(92, 61, 70, 0.15);
+            --gold: #C19A6B;       /* Muted Gold */
+            --gold-glow: rgba(193, 154, 107, 0.15);
+            --terracotta: #9E5757; /* Terracotta Red */
+            --terracotta-glow: rgba(158, 87, 87, 0.15);
+            --indigo: #525B75;     /* Indigo Blue */
+            --indigo-glow: rgba(82, 91, 117, 0.15);
+            
+            --shadow: 0 10px 30px rgba(0,0,0,0.3);
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --radius: 12px;
+        }
+        
+        .light-mode {
+            --active-bg: var(--bg-light);
+            --active-panel: var(--panel-light);
+            --active-text: var(--text-light);
+            --active-border: var(--border-light);
+            --shadow: 0 10px 30px rgba(78, 107, 90, 0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--active-bg);
+            color: var(--active-text);
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            transition: var(--transition);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+        
+        /* Top Navigation Header */
+        header {
+            background-color: var(--active-panel);
+            border-bottom: 1px solid var(--active-border);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: var(--transition);
+        }
+        
+        .header-title-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .header-logo {
+            width: 8px;
+            height: 24px;
+            background-color: var(--moss);
+            border-radius: 4px;
+        }
+        
+        header h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+        
+        .theme-toggle-btn {
+            background: none;
+            border: 1px solid var(--active-border);
+            padding: 6px 14px;
+            border-radius: 20px;
+            color: var(--active-text);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .theme-toggle-btn:hover {
+            border-color: var(--moss);
+            background-color: rgba(78, 107, 90, 0.1);
+        }
+        
+        /* Main Page Layout */
+        .container {
+            max-width: 1280px;
+            margin: 30px auto;
+            width: 100%;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 30px;
+            flex-grow: 1;
+        }
+        
+        /* Sidebar Navigation */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            position: sticky;
+            top: 90px;
+            height: fit-content;
+        }
+        
+        .sidebar-btn {
+            background-color: transparent;
+            border: 1px solid transparent;
+            color: var(--active-text);
+            padding: 12px 18px;
+            border-radius: var(--radius);
+            text-align: left;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            opacity: 0.7;
+        }
+        
+        .sidebar-btn:hover {
+            opacity: 1;
+            background-color: rgba(255,255,255,0.03);
+            border-color: var(--active-border);
+        }
+        
+        .light-mode .sidebar-btn:hover {
+            background-color: rgba(0,0,0,0.02);
+        }
+        
+        .sidebar-btn.active {
+            opacity: 1;
+            background-color: var(--active-panel);
+            border-color: var(--active-border);
+            box-shadow: var(--shadow);
+            font-weight: 700;
+            border-left: 4px solid var(--moss);
+        }
+        
+        /* Tabs Workspace Container */
+        .workspace {
+            background-color: var(--active-panel);
+            border: 1px solid var(--active-border);
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .tab-panel {
+            display: none;
+        }
+        
+        .tab-panel.active {
+            display: block;
+            animation: fadeIn 0.35s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Typography Elements */
+        h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            border-bottom: 2px solid var(--active-border);
+            padding-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .subtitle {
+            font-size: 0.95rem;
+            opacity: 0.6;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        
+        p, li {
+            line-height: 1.6;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+        }
+        
+        strong {
+            color: var(--moss);
+            font-weight: 600;
+        }
+        
+        .light-mode strong {
+            color: #2E503C;
+        }
+        
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: rgba(0,0,0,0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        .light-mode code {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        /* Math styling */
+        .math-block {
+            background-color: rgba(255,255,255,0.02);
+            border-left: 3px solid var(--moss);
+            padding: 10px 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+        
+        .math-inline {
+            font-family: 'Courier New', monospace;
+            background-color: rgba(0,0,0,0.15);
+            padding: 1px 4px;
+            border-radius: 3px;
+        }
+        
+        /* Box/Card Layouts */
+        .ladder-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .ladder-card {
+            border: 1px solid var(--active-border);
+            border-radius: var(--radius);
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.01) 0%, rgba(255,255,255,0.03) 100%);
+        }
+        
+        .ladder-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            background-color: var(--moss);
+            color: #FFF;
+        }
+        
+        /* Epistemic Filter Grid */
+        .ef-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .ef-card {
+            border: 1px solid var(--active-border);
+            border-radius: var(--radius);
+            padding: 20px;
+            background-color: rgba(255,255,255,0.01);
+        }
+        
+        .ef-card-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--moss);
+        }
+        
+        /* Table / Matrix styling */
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+        }
+        
+        .matrix-table th, .matrix-table td {
+            border: 1px solid var(--active-border);
+            padding: 12px 15px;
+            text-align: left;
+            line-height: 1.5;
+        }
+        
+        .matrix-table th {
+            background-color: rgba(255,255,255,0.02);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            color: var(--moss);
+        }
+        
+        .light-mode .matrix-table th {
+            background-color: rgba(0,0,0,0.01);
+        }
+        
+        /* Card Grid System */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .card {
+            border: 1px solid var(--active-border);
+            border-radius: var(--radius);
+            background-color: rgba(255,255,255,0.01);
+            overflow: hidden;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+        }
+        
+        .card-header {
+            padding: 15px 20px;
+            color: #FFF;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+        
+        .card-badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 10px;
+            background-color: rgba(255,255,255,0.2);
+            text-transform: uppercase;
+        }
+        
+        .card-body {
+            padding: 20px;
+            font-size: 0.85rem;
+            flex-grow: 1;
+        }
+        
+        .moss-header { background-color: var(--moss); }
+        .slate-header { background-color: var(--slate); }
+        .plum-header { background-color: var(--plum); }
+        .gold-header { background-color: var(--gold); }
+        .terracotta-header { background-color: var(--terracotta); }
+        .indigo-header { background-color: var(--indigo); }
+        
+        .card.moss-border { border-color: var(--moss-glow); }
+        .card.slate-border { border-color: var(--slate-glow); }
+        .card.plum-border { border-color: var(--plum-glow); }
+        .card.gold-border { border-color: var(--gold-glow); }
+        .card.terracotta-border { border-color: var(--terracotta-glow); }
+        .card.indigo-border { border-color: var(--indigo-glow); }
+        
+        /* Filter Control Bar */
+        .filter-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-pill {
+            background-color: transparent;
+            border: 1px solid var(--active-border);
+            color: var(--active-text);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .filter-pill:hover, .filter-pill.active {
+            background-color: var(--moss);
+            border-color: var(--moss);
+            color: #FFF;
+        }
+        
+        /* Sandbox Tools styling */
+        .sandbox-tool {
+            border: 1px solid var(--active-border);
+            border-radius: var(--radius);
+            padding: 25px;
+            background-color: rgba(255,255,255,0.01);
+            margin-bottom: 30px;
+        }
+        
+        .sandbox-tool-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--moss);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            opacity: 0.85;
+        }
+        
+        select, input, textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 6px;
+            border: 1px solid var(--active-border);
+            background-color: var(--active-bg);
+            color: var(--active-text);
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        
+        select:focus, input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--moss);
+            box-shadow: 0 0 0 3px var(--moss-glow);
+        }
+        
+        .btn {
+            background-color: var(--moss);
+            color: #FFF;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        
+        .sandbox-output {
+            background-color: rgba(0,0,0,0.15);
+            border: 1px solid var(--active-border);
+            padding: 20px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-top: 20px;
+            min-height: 80px;
+            position: relative;
+        }
+        
+        .light-mode .sandbox-output {
+            background-color: rgba(0,0,0,0.02);
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--active-bg);
+            border: 1px solid var(--active-border);
+            color: var(--active-text);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .copy-btn:hover {
+            border-color: var(--moss);
+        }
+        
+        .checklist-group {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            cursor: pointer;
+        }
+        
+        .checklist-item input[type="checkbox"] {
+            width: auto;
+            margin-top: 4px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px;
+            font-size: 0.8rem;
+            opacity: 0.5;
+            border-top: 1px solid var(--active-border);
+            margin-top: auto;
+        }
+        
+        .grid-2col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-title-container">
+            <div class="header-logo"></div>
+            <h1>《向上管理》自评量表与互动演练沙盒</h1>
+        </div>
+        <button class="theme-toggle-btn" id="theme-toggle" onclick="toggleTheme()">
+            🌙 暗色模式
+        </button>
+    </header>
+
+    <div class="container">
+        <div class="sidebar">
+            <button class="sidebar-btn active" onclick="switchTab(this, 'tab-zonet')">🗺️ Zone T 演练工具</button>
+            <button class="sidebar-btn" onclick="switchTab(this, 'tab-sandbox')">🛠️ 向上管理互动沙盒</button>
+        </div>
+
+        <div class="workspace">
+            <!-- Zone T Tab -->
+            <div class="tab-panel active" id="tab-zonet">
+                <h2>🗺️ Zone T: 心智模式与演练升级</h2>
+                <div class="subtitle">通过量表、模板与跨书对照，对自己的向上管理模式进行全方位的审计与跨越：</div>
+                
+                <div class="sandbox-tool" style="margin-bottom: 25px;">
+                    <div class="sandbox-tool-title">T1. 向上管理行为姿态自评量表</div>
+                    <div class="subtitle">在下表中评估您与直属领导的协作契合度：</div>
+                    <table class="matrix-table" style="font-size: 0.85rem;">
+                        <thead>
+                            <tr>
+                                <th style="width: 15%;">协作指标</th>
+                                <th style="width: 25%;">低契合姿态 (⚠)</th>
+                                <th style="width: 25%;">中性姿态 (✓)</th>
+                                <th style="width: 25%;">高契合姿态 (★)</th>
+                                <th style="width: 10%;">自评 (1-5)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr>
+                                <td><strong>期望对齐</strong></td>
+                                <td>闭门造车，全凭主观猜测领导的意图与目标。</td>
+                                <td>定期开会时听取指示，但从不主动核对六大期望。</td>
+                                <td>每次项目前后均与领导核准期望与交付边界。</td>
+                                <td><input type="number" min="1" max="5" class="t1-input" oninput="calculateT1Score()" style="padding: 4px 8px; width: 60px; text-align: center;" placeholder="-"></td>
+                            </tr>
+                            
+                            <tr>
+                                <td><strong>沟通适配</strong></td>
+                                <td>读者型领导只做口头汇报；听众型领导发长文案。</td>
+                                <td>使用标准格式邮件，但缺乏针对领导偏好的微调。</td>
+                                <td>严格适配文字或面对面通道，辅以微表情解码。</td>
+                                <td><input type="number" min="1" max="5" class="t1-input" oninput="calculateT1Score()" style="padding: 4px 8px; width: 60px; text-align: center;" placeholder="-"></td>
+                            </tr>
+                            
+                            <tr>
+                                <td><strong>汇报频次</strong></td>
+                                <td>完工后才汇报，中间过程处于暗盒失控状态。</td>
+                                <td>遇到瓶颈时才汇报，常规进展缺乏体系。</td>
+                                <td>定期汇报关键节点，给领导提供完全的控制感。</td>
+                                <td><input type="number" min="1" max="5" class="t1-input" oninput="calculateT1Score()" style="padding: 4px 8px; width: 60px; text-align: center;" placeholder="-"></td>
+                            </tr>
+                            
+                            <tr>
+                                <td><strong>意见分歧</strong></td>
+                                <td>公开场合据理力争，引发领导的权威安全焦虑。</td>
+                                <td>表面顺从但在实际执行中采解消极怠工。</td>
+                                <td>扬善于公庭，规过于私室，并携带多套预案。</td>
+                                <td><input type="number" min="1" max="5" class="t1-input" oninput="calculateT1Score()" style="padding: 4px 8px; width: 60px; text-align: center;" placeholder="-"></td>
+                            </tr>
+                            
+                            <tr>
+                                <td><strong>资源借力</strong></td>
+                                <td>视领导为对立剥削者，畏惧接触，拒绝借力。</td>
+                                <td>被动接受安排的预算与人脉，不主动索求杠杆。</td>
+                                <td>将领导的发展同轴化，合理索取授权与核心推荐。</td>
+                                <td><input type="number" min="1" max="5" class="t1-input" oninput="calculateT1Score()" style="padding: 4px 8px; width: 60px; text-align: center;" placeholder="-"></td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                    
+                    <!-- T1 自评智能诊断反馈 -->
+                    <div class="sandbox-output" id="t1-eval-output">
+                        <strong>自评总分</strong>：- 分<br><br>
+                        <strong>整体协作形态评价</strong>：请在上方自评栏中，为每项输入 1-5 之间的评分以获取智能诊断与行动方案。
+                    </div>
+                </div>
+
+                <div class="grid-2col">
+                    <div class="sandbox-tool">
+                        <div class="sandbox-tool-title">T2. 突发危机应急脚本模板</div>
+                        <div style="font-size: 0.85rem;"><p>当遭遇工作搞砸、被误解或突发变故时，请按照以下“逆商重塑五步流程”设计汇报脚本：</p>
+<br>
+<div class='list-num-item'><strong>1.</strong> <strong>第一步：主责担起 (Ownership)</strong>：</div>
+<p><em> </em>禁止台词*：“这主要是外部原因/因为同事不配合，我其实……”</p>
+<p><em> </em>标准模板*：“领导，本次 [项目名称] 出现 [具体失误表现]，作为直接责任人，我难辞其咎，目前我已启动应急止损方案。”</p>
+<div class='list-num-item'><strong>2.</strong> <strong>第二步：事实呈交 (Facts Only)</strong>：</div>
+<p><em> </em>汇报规范*：摒弃情绪化形容词，只讲具体时间、数据与受损范围（页 141 被误解澄清技术）。</p>
+<div class='list-num-item'><strong>3.</strong> <strong>第三步：预案展示 (Contingency Plans)</strong>：</div>
+<li>必须当场给出三套补救预案（页 131 补救预案制）：</li>
+<li><strong>方案 A（即时止损）</strong>：[低风险，高确定性，但可能仅收回 80% 成果]；</li>
+<li><strong>方案 B（资源补位）</strong>：[需要额外部分支持，但能完全挽回损失]；</li>
+<li><strong>方案 C（战略微调）</strong>：[在现有损失基础上，转换赛道达成第二目标]。</li>
+<div class='list-num-item'><strong>4.</strong> <strong>第四步：控制感交还 (Control)</strong>：</div>
+<p><em> </em>标准台词*：“为了把影响降到最低，我个人建议倾向于执行方案 [X]，因为该方案具备 [核心理由]。请您决断，我立刻执行。”</p>
+<div class='list-num-item'><strong>5.</strong> <strong>第五步：经验吸取 (Learning)</strong>：</div>
+<li>简要说明如何升级防御机制（页 131 吃一堑长一智），绝不让同类事件二次发生。</li>
+<br>
+<p>---</p></div>
+                    </div>
+                    
+                    <div class="sandbox-tool">
+                        <div class="sandbox-tool-title">T3. 跨书冲突与协同矩阵</div>
+                        <table class="matrix-table" style="font-size: 0.8rem;">
+                            <thead>
+                                <tr>
+                                    <th>协同点</th>
+                                    <th>向上管理</th>
+                                    <th>影响力</th>
+                                    <th>反脆弱</th>
+                                    <th>跨书协同执行策略</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <tr>
+                                    <td><strong>权威认知</strong></td>
+                                    <td>职位不平等人格平等，视权威为可合作的人类。</td>
+                                    <td>**权威原理**：人们倾向于盲目服从权威的符号，产生认知惰性。</td>
+                                    <td>视“专家权威”为脆弱性的源头，鼓励对其过度干预保持警惕。</td>
+                                    <td>尊重领导职位但以“智慧忠诚”过滤盲目服从，以专业事实提供决策安全垫。</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td><strong>人际交往</strong></td>
+                                    <td>用钥匙理论释放真诚，寻找共同兴趣，建立高端圈子。</td>
+                                    <td>**喜好原理**：人们容易对真诚赞美、有相似背景的人产生顺从。</td>
+                                    <td>通过社交网络的冗余建立高容错性（人脉广）。</td>
+                                    <td>谈论领导感兴趣的事，真诚赞美其优点，建立多维链接并使自身人脉网络具备反脆弱性。</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td><strong>逆境转化</strong></td>
+                                    <td>将错误与逆境（AQ）当做向领导证明责任与吸取教训的良机。</td>
+                                    <td>**承诺一致原理**：人们对公开做出的选择具有维持的一致性。</td>
+                                    <td>危机和随机性挫折是提升系统健壮度的燃料，错误是进化加速器。</td>
+                                    <td>一旦犯错，通过信守补救承诺（一致性）展示超凡逆商，将错误转化为与领导互锁的高光时刻。</td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Sandbox Tab -->
+            <div class="tab-panel" id="tab-sandbox">
+                <h2>🛠️ 向上管理互动沙盒</h2>
+                <div class="subtitle">将《向上管理》的心理模型与实践技巧转化为可交互的实操工具，帮助您在线起草应对方案：</div>
+
+                <!-- Tool 1: Situational Leadership Simulator -->
+                <div class="sandbox-tool">
+                    <div class="sandbox-tool-title">🌐 领导风格与下属情境匹配模拟器</div>
+                    <div class="subtitle">根据保罗·赫塞情境领导模型，输入领导的管理风格和您面临的任务情境，评估匹配度并获取行动建议：</div>
+                    
+                    <div class="grid-2col">
+                        <div class="form-group">
+                            <label for="lead-style">1. 直属领导的管理风格 (S1-S4):</label>
+                            <select id="lead-style" onchange="runLeadershipSim()">
+                                <option value="S1">S1 告知型 (高指导/低支持：命令发布、死盯细节过程)</option>
+                                <option value="S2">S2 推销型 (高指导/高支持：解释决策原因、倾听员工见解)</option>
+                                <option value="S3">S3 参与型 (低指导/高支持：征询意见、鼓励员工自我思考)</option>
+                                <option value="S4">S4 授权型 (低指导/低支持：无为而治、仅给愿景目标)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="task-maturity">2. 下属对于当前任务的成熟度 (R1-R4):</label>
+                            <select id="task-maturity" onchange="runLeadershipSim()">
+                                <option value="R1">R1 能力低/意愿低 (初次接触此项工作、心生退缩抗拒)</option>
+                                <option value="R2">R2 能力低/意愿高 (渴望迎接挑战、但技术与方法欠缺)</option>
+                                <option value="R3">R3 能力高/意愿低 (有能力胜任、但焦虑迷茫或缺乏激励)</option>
+                                <option value="R4">R4 能力高/意愿高 (完全胜任、并具备独立承担的自信)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="sandbox-output" id="lead-sim-output">
+                        <strong>匹配度评估</strong>：请选择上方条件以进行实时情境运算。
+                    </div>
+                </div>
+
+                <!-- Tool 2: Soft Rejection Script Builder -->
+                <div class="sandbox-tool">
+                    <div class="sandbox-tool-title">💬 委婉拒绝与“不”软着陆脚本生成器</div>
+                    <div class="subtitle">根据书中拒绝的艺术（Card 08），在私下场合以诚恳的态度和精炼语言生成合理合规的说“不”替代方案：</div>
+                    
+                    <div class="grid-2col">
+                        <div class="form-group">
+                            <label for="rej-type">1. 需拒绝的诉求类型:</label>
+                            <select id="rej-type">
+                                <option value="overload">本职工作严重超载 (强行追加任务)</option>
+                                <option value="non-skill">缺乏某项技能/不擅长的紧急挑战</option>
+                                <option value="extra-favor">私人/本职范围外的非原则杂活</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="rej-reason">2. 核心客观困难 (力求简明，简明更具说服力):</label>
+                            <input type="text" id="rej-reason" placeholder="例如：手头重大项目本周五需紧急交付，无法分心">
+                        </div>
+                    </div>
+                    <div class="grid-2col">
+                        <div class="form-group">
+                            <label for="rej-alt">3. 建设性替代方案 (推荐其他人选/新工期/高效工具):</label>
+                            <input type="text" id="rej-alt" placeholder="例如：推荐擅长此业务的李工协助，或者建议下周一启动">
+                        </div>
+                    </div>
+                    
+                    <button class="btn" onclick="buildRejectionScript()">✨ 生成软着陆口头脚本</button>
+                    
+                    <div class="sandbox-output" id="rej-output">
+                        <button class="copy-btn" onclick="copyToClipboard('rej-output-text')">复制</button>
+                        <span id="rej-output-text">输入困难和方案，点击上方按钮一键生成。</span>
+                    </div>
+                </div>
+
+                <!-- Tool 3: Crisis Recovery Prep Builder (T2) -->
+                <div class="sandbox-tool">
+                    <div class="sandbox-tool-title">⚡ 犯错自救与 3 套补救预案生成器</div>
+                    <div class="subtitle">搞砸工作后绝不隐瞒（Card 20），在 15 分钟内梳理出三套经过可行性精算的补救预案，起草 T2 汇报脚本：</div>
+                    
+                    <div class="form-group">
+                        <label for="crisis-desc">1. 发生了何种纰漏/危机 (Facts Only - 只讲事实，丢弃情绪宣泄):</label>
+                        <input type="text" id="crisis-desc" placeholder="例如：华东区大客户交付的软件版本出现核心接口故障，影响其正常上线进度">
+                    </div>
+                    
+                    <div class="grid-2col">
+                        <div class="form-group">
+                            <label for="plan-a">2. 预案 A (即时止损 - 低风险/高确定性/80%交付):</label>
+                            <input type="text" id="plan-a" placeholder="例如：立刻部署上一代稳定版本回滚，优先恢复基本服务">
+                        </div>
+                        <div class="form-group">
+                            <label for="plan-b">3. 预案 B (资源补位 - 完全挽回损失/需要授权支持):</label>
+                            <input type="text" id="plan-b" placeholder="例如：调配后台开发骨干2人组成攻坚小组，在12小时内发布热修复补丁">
+                        </div>
+                        <div class="form-group">
+                            <label for="plan-c">4. 预案 C (战略微调 - 转换第二赛道/延期交付弥补):</label>
+                            <input type="text" id="plan-c" placeholder="例如：接口服务延迟至周六上线，向客户免费补偿1个月的高级维保接口服务">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>5. 检查汇报前置防线 (请确认均已做到):</label>
+                        <div class="checklist-group">
+                            <label class="checklist-item"><input type="checkbox" id="chk-private"> 沟通场合为私密场合，避开公开会场与领导的心情低谷</label>
+                            <label class="checklist-item"><input type="checkbox" id="chk-own"> 主动担起责任，保证不出现“这是因为外部原因”的推脱话术</label>
+                            <label class="checklist-item"><input type="checkbox" id="chk-decide"> 已做可行性精算，备好领导可能质询的实施数据支撑</label>
+                        </div>
+                    </div>
+
+                    <button class="btn" onclick="buildCrisisScript()">⚡ 生成 T2 危机汇报标准脚本</button>
+
+                    <div class="sandbox-output" id="crisis-output">
+                        <button class="copy-btn" onclick="copyToClipboard('crisis-output-text')">复制</button>
+                        <span id="crisis-output-text">请确保防线检查通过，并点击上方按钮一键生成。</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        向上管理 Portfolio B 莫兰迪高密交互沙盒 v1.0. 萧雨《向上管理与你的领导相互成就》演练工具.
+    </footer>
+
+    <script>
+        // Theme Toggle Logic
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.getElementById('theme-toggle');
+            if (body.classList.contains('light-mode')) {
+                body.classList.remove('light-mode');
+                btn.innerHTML = '🌙 暗色模式';
+            } else {
+                body.classList.add('light-mode');
+                btn.innerHTML = '☀️ 亮色模式';
+            }
+        }
+
+        // Sidebar Tabs Switch
+        function switchTab(btnElement, tabId) {
+            const buttons = document.querySelectorAll('.sidebar-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            const panels = document.querySelectorAll('.tab-panel');
+            panels.forEach(p => p.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // Copy Clipboard
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert("已成功复制到剪贴板！");
+            }).catch(err => {
+                alert("复制失败，您的浏览器不支持此 API，请手动选中文本复制。");
+            });
+        }
+
+        // Leadership Simulator
+        function runLeadershipSim() {
+            const s = document.getElementById('lead-style').value;
+            const r = document.getElementById('task-maturity').value;
+            const out = document.getElementById('lead-sim-output');
+
+            let evalText = "";
+            let matchClass = "moss"; // default color
+            
+            const combos = {
+                'S1_R1': { match: true, desc: '【完美匹配 (S1 ↔ R1)】告知型风格完美契合能力意愿皆低的下属。指导明确，消除无方向感。建议：听话照做，详细记录领导的步骤命令，执行完毕后在下班前对称汇报。' },
+                'S1_R2': { match: false, desc: '【不匹配 (S1 ↔ R2)】意愿高但被强力单向死盯。容易压制积极性。建议：主动展现“我已知道这一步并且渴望解决下一步”，并定期展现初步成果，引导其转向S2推销互动。' },
+                'S1_R3': { match: false, desc: '【极度不匹配 (S1 ↔ R3)】对熟手进行微观管理。易引发逆反与焦虑。建议：用数据和历史业绩展示独立能力，汇报中加入自研计划，证明“我有预案，请让我放手试试”。' },
+                'S1_R4': { match: false, desc: '【灾难不匹配 (S1 ↔ R4)】完全束缚精英的微观死盯着。极其压抑。建议：用高效的交付结果做最闪亮的证明，并在私密场合说明自己能独当一面，争取授权。' },
+                
+                'S2_R1': { match: false, desc: '【不匹配 (S2 ↔ R1)】下属能力意愿极低，只倾听推销是不行的，必须强化强制命令。建议：要求领导给予更具体的执行手册和首期交付的步骤节点，别空讲愿景。' },
+                'S2_R2': { match: true, desc: '【完美匹配 (S2 ↔ R2)】推销型风格切合能力低意愿高的成长员工。解答“为什么”并进行赋能。建议：高频互动，在讨论中积极学习专业词汇和决策逻辑，跟上其节拍。' },
+                'S2_R3': { match: false, desc: '【不匹配 (S2 ↔ R3)】对熟手继续进行理念推销和强指导。会让人感觉罗唆。建议：在汇报中直接说明“怎么做”和“已经做了什么”，用成熟方案缩短其指导过程。' },
+                'S2_R4': { match: false, desc: '【不匹配 (S2 ↔ R4)】不合理的沟通负荷。建议：在工作节点上提交完全成熟的交付件，通过缩短汇报用时，推动其逐步过渡到S4完全授权。' },
+                
+                'S3_R1': { match: false, desc: '【极度不匹配 (S3 ↔ R1)】下属根本不会做，还鼓励自主决策，这会让人手足无措。建议：直接请求其给予告知式指导，别客套，带笔去记录标准流程。' },
+                'S3_R2': { match: false, desc: '【不匹配 (S3 ↔ R2)】积极员工被鼓励独立思考，容易走弯路犯错。建议：做好补救预案再请示，多问“如果发生A风险，是否有更优的前置经验？”' },
+                'S3_R3': { match: true, desc: '【完美匹配 (S3 ↔ R3)】参与型风格切合能力高但意愿低的员工。通过双向探讨和情绪赋能，调动内生动力。建议：展现口才与缜密业务逻辑，在讨论中为领导决策出谋划策，形成默契链接。' },
+                'S3_R4': { match: false, desc: '【不匹配 (S3 ↔ R4)】下属本可以独立干完，却被拉长了商讨链路。建议：多用文字预案代替低效会议沟通，直接说“方案已就绪，无异议周五即可完成”。' },
+                
+                'S4_R1': { match: false, desc: '【灾难不匹配 (S4 ↔ R1)】完全放任初学员工。大概率导致交付崩溃。建议：千万别硬撑，主动闪亮示弱，第一天就找领导或李工对齐操作手册。' },
+                'S4_R2': { match: false, desc: '【不匹配 (S4 ↔ R2)】对有热情的新兵放羊。容易干劲十足但错漏百出。建议：在开始前提交详尽的布利斯定理计划表，划好里程碑并按周对齐，防止穿帮。' },
+                'S4_R3': { match: false, desc: '【不匹配 (S4 ↔ R3)】对没热情的熟手放羊。容易导致磨洋工或消极怠工。建议：将个人发展目标与任务利益互锁，借此机会申请更好的预算或高端人脉导入。' },
+                'S4_R4': { match: true, desc: '【完美匹配 (S4 ↔ R4)】授权型风格与高成熟度精英员工的强强联手。信任与无为而治。建议：端正心态，理解其不插手细节是对大决策的聚焦；行使好权力，将愿景转化为实绩。' },
+            };
+
+            const key = `${s}_${r}`;
+            const result = combos[key];
+
+            let html = `<strong>协作匹配度状态</strong>：`;
+            if (result.match) {
+                html += `<span style="color: var(--moss); font-weight: 700;">★ 完美协同共振</span><br><br>`;
+            } else {
+                html += `<span style="color: var(--terracotta); font-weight: 700;">⚠ 风格错配，存在摩擦</span><br><br>`;
+            }
+            html += result.desc;
+            out.innerHTML = html;
+        }
+
+        // Soft Rejection Script Builder
+        function buildRejectionScript() {
+            const t = document.getElementById('rej-type').value;
+            const reason = document.getElementById('rej-reason').value || "目前项目进度非常紧张";
+            const alt = document.getElementById('rej-alt').value || "下周一优先帮您加急处理";
+            const outText = document.getElementById('rej-output-text');
+
+            let script = "";
+            if (t === "overload") {
+                script = `【软着陆沟通模板 - 应对本职工作超载】\n` +
+                         `“领导，收到您的任务指示。非常感谢您对我的信任，把这项重要的工作交给我。我也非常希望能立即帮您解决。\n` +
+                         `但是目前，因为 [${reason}]，如果我现在承接这项工作，我担心精力的稀缺会导致新旧两项工作都没法达到您的质量标准，辜负您的期望。\n` +
+                         `所以为了对成果负责，我建议 [${alt}]。这样既能保证目前项目的如期交付，也能把这件新工作高标准做完。您看这样可以吗？”`;
+            } else if (t === "non-skill") {
+                script = `【软着陆沟通模板 - 应对缺乏技能/不擅长】\n` +
+                         `“领导，我收到这件任务了。谢谢您给我挑战新业务的平台和机会，这对我很重要。\n` +
+                         `考虑到这件工作对时间节点和质量有极高要求，而我在该领域 [${reason}]，如果强行独立做，我非常担心在关键细节上出纰漏，耽误您的决策进度。\n` +
+                         `所以本着对工作质量负责的态度，我建议 [${alt}]。同时在他们操作期间，我全程打下手、观摩学习，确保下一次我能独立承担。您看这样安排行吗？”`;
+            } else {
+                script = `【软着陆沟通模板 - 应对本职外非原则杂活】\n` +
+                         `“领导，没问题。我很乐意多帮团队做一些力所能及的后勤协调。不过我目前手头的核心业务正在收尾 [${reason}]。\n` +
+                         `为了不因为杂务导致核心业务掉链子，我建议 [${alt}]。或者，我先集中花10分钟把核心业务交接好，然后再去处理这件事务。请您示下。”`;
+            }
+
+            outText.innerText = script;
+        }
+
+        // Crisis Recovery Builder
+        function buildCrisisScript() {
+            const desc = document.getElementById('crisis-desc').value || "接口版本出现核心故障";
+            const pa = document.getElementById('plan-a').value || "版本快速回滚";
+            const pb = document.getElementById('plan-b').value || "成立技术攻坚组热修复";
+            const pc = document.getElementById('plan-c').value || "向客户做延迟补偿";
+            const outText = document.getElementById('crisis-output-text');
+
+            const chk1 = document.getElementById('chk-private').checked;
+            const chk2 = document.getElementById('chk-own').checked;
+            const chk3 = document.getElementById('chk-decide').checked;
+
+            if (!chk1 || !chk2 || !chk3) {
+                outText.innerHTML = `<span style="color: var(--terracotta); font-weight:700;">⚠ 警告：前置三道防线未全部勾选确认！在没有私室沟通环境、没有做好主责承担态度、或没有精密可行性数据支撑的情况下贸然汇报，极易引发信任崩盘！</span>`;
+                return;
+            }
+
+            let script = `【T2危机汇报黄金五步标准脚本】\n` +
+                         `1. 主责担起 (Ownership)：\n` +
+                         `“领导，非常抱歉，在本次业务中出现了纰漏：[${desc}]。作为该项目的直接责任人，我没有做好前置兜底，难辞其咎，目前我已紧急协调人员采取止损措施。”\n\n` +
+                         `2. 呈报事实 (Facts Only)：\n` +
+                         `“目前的客观受损情况是：[已对故障范围、时间、损失进行精算]。我目前已制定了三套应对补偿的备用预案，特向您请示汇报：”\n\n` +
+                         `3. 预案呈送 (Contingency Plans)：\n` +
+                         `  - 预案 A (即时止损 - 低风险)：针对故障，我们将采取 [${pa}]。它的优点是10分钟内生效，缺点是仅能提供基础服务。\n` +
+                         `  - 预案 B (资源补位 - 追回损失)：我们将申请授权 [${pb}]。它的优点是能完全修复隐患，缺点是需调配部分后台开发人力，数据预估用时为 [时间数据]。\n` +
+                         `  - 预案 C (战略微调 - 替代补偿)：我们制定了折中手段 [${pc}]。它的优点是建立长线客户情感安全垫，缺点是有微小补偿财务预算支出。\n\n` +
+                         `4. 决断请示 (Control)：\n` +
+                         `“为了彻底化解危机，我建议执行【预案 B】，因为该预案不仅能保住核心质量底线，也能向客户证明我们遇到问题时的责任担当。请您指示，我立刻去落地。”\n\n` +
+                         `5. 复盘防范 (Learning)：\n` +
+                         `“这件事处理完毕后，我将在下周一提交防范复盘报告，彻底封死流程上的二次犯错漏洞。感谢领导的包容。”`;
+
+            outText.innerText = script;
+        }
+
+        // T1 Self-Evaluation Scoring and Dynamic Feedback
+        function calculateT1Score() {
+            const inputs = document.querySelectorAll('.t1-input');
+            let total = 0;
+            let completed = 0;
+            
+            inputs.forEach(input => {
+                const val = parseInt(input.value);
+                if (!isNaN(val) && val >= 1 && val <= 5) {
+                    total += val;
+                    completed++;
+                }
+            });
+            
+            const out = document.getElementById('t1-eval-output');
+            if (completed < inputs.length) {
+                out.innerHTML = `<strong>自评总分</strong>：<span style="font-size: 1.2rem; font-weight:700;">-</span> 分 (需完成全部 5 项评估，当前已评 ${completed}/5 项)<br><br>` +
+                                `<strong>整体协作形态评价</strong>：请在上方自评栏中，为每项输入 1-5 之间的评分以获取智能诊断与行动方案。`;
+                return;
+            }
+            
+            let level = "";
+            let color = "";
+            let advice = "";
+            let cards = "";
+            
+            if (total >= 21) {
+                level = "🌟 卓越协同共创者 (极高契合身位)";
+                color = "var(--moss)";
+                advice = "恭喜！您与领导建立了极高频共振的信任通道。期望、沟通和汇报都高度对齐。您不仅能高效交付，还能合理借力领导资源放大个人价值。";
+                cards = "建议复习：<strong>Card 28. (杠杆法)</strong>、<strong>Card 24. (资源借力法)</strong>，探索如何通过战略轴线与领导实现深度双赢，甚至从执行者跃升为领导的‘不可或缺的智囊’。";
+            } else if (total >= 16) {
+                level = "✓ 适配成长期下属 (良好契合身位)";
+                color = "var(--slate)";
+                advice = "良好。您基本能够匹配领导的期望与工作节奏，但在个别维度（如意见分歧或资源借力）可能还有优化空间。整体处于安全稳健的职场适配期。";
+                cards = "建议针对得分低于 4 分的项目进行精准突破，查阅相应卡片：如果沟通不足可看 <strong>Card 06</strong>；如果资源借力不够可看 <strong>Card 25</strong>。";
+            } else if (total >= 11) {
+                level = "⚠ 被动防守型执行者 (中低契合风险)";
+                color = "var(--gold)";
+                advice = "预警。您的协作形态偏向被动执行或‘闷头干活’。这种‘暗盒状态’极易导致领导产生安全焦虑，认为您掌控力不足或沟通不透明。";
+                cards = "急需破局行动：查阅 <strong>Card 27. (三道防御法)</strong> 建立汇报闭环，并查阅 <strong>Card 20. (不隐瞒原则)</strong>，主动暴露过程瓶颈，变‘被动防守’为‘主动拉齐期望’。";
+            } else {
+                level = "🚨 职场高危预警 (极低契合风险)";
+                color = "var(--terracotta)";
+                advice = "危险！您的自评结果显示您与领导处于严重的‘闭门造车’或‘公开对抗’状态。缺乏基本的信任基础与顺畅通道，随时可能面临边缘化或出局风险。";
+                cards = "必须立刻止损：查阅 <strong>Card 21. (安全岛法)</strong> 和 <strong>Card 02. (身位适配)</strong>。停止任何形式的公开争执，主动示弱并私下进行 1 对 1 的期望重置与危机对齐。";
+            }
+            
+            out.innerHTML = `<strong>自评总分</strong>：<span style="font-size: 1.4rem; font-weight:700; color: ${color};">${total}</span> 分 (总分 25 分) — <strong style="color: ${color};">${level}</strong><br><br>` +
+                            `<strong>整体协作形态评价</strong>：${advice}<br><br>` +
+                            `<strong>下一步行动指南</strong>：${cards}`;
+        }
+
+        // Initial simulator calculation
+        runLeadershipSim();
+        calculateT1Score();
+    </script>
+</body>
+</html>

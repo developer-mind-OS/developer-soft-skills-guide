@@ -1,0 +1,17 @@
+# Keep the repo clean
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Exclude LaTeX build files and scripts to protect build assets
+*.tex
+*.cls
+*.sty
+*.py
+*.log
+*.aux
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk

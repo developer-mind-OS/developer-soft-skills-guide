@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>向上管理 知识图谱速查 | 开发者心智系统 developer-mind-OS</title>
+    <!-- Modern Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Dark Theme Variables */
+            --bg-dark: #121413;
+            --panel-dark: #1C201E;
+            --text-dark: #E2E8F0;
+            --border-dark: rgba(78, 107, 90, 0.25);
+            
+            /* Light Theme Variables */
+            --bg-light: #F4F6F5;
+            --panel-light: #FFFFFF;
+            --text-light: #1E293B;
+            --border-light: rgba(78, 107, 90, 0.15);
+            
+            /* Theme Tokens */
+            --active-bg: var(--bg-dark);
+            --active-panel: var(--panel-dark);
+            --active-text: var(--text-dark);
+            --active-border: var(--border-dark);
+            
+            /* Morandi Palette */
+            --moss: #4E6B5A;       /* Sage Green */
+            --moss-glow: rgba(78, 107, 90, 0.15);
+            --slate: #5A6B7C;      /* Steel Grey */
+            --slate-glow: rgba(90, 107, 124, 0.15);
+            --plum: #5C3D46;       /* Theatre Plum */
+            --plum-glow: rgba(92, 61, 70, 0.15);
+            --gold: #C19A6B;       /* Muted Gold */
+            --gold-glow: rgba(193, 154, 107, 0.15);
+            --terracotta: #9E5757; /* Terracotta Red */
+            --terracotta-glow: rgba(158, 87, 87, 0.15);
+            --indigo: #525B75;     /* Indigo Blue */
+            --indigo-glow: rgba(82, 91, 117, 0.15);
+            
+            --shadow: 0 10px 30px rgba(0,0,0,0.3);
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --radius: 12px;
+        }
+        
+        .light-mode {
+            --active-bg: var(--bg-light);
+            --active-panel: var(--panel-light);
+            --active-text: var(--text-light);
+            --active-border: var(--border-light);
+            --shadow: 0 10px 30px rgba(78, 107, 90, 0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--active-bg);
+            color: var(--active-text);
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            transition: var(--transition);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+        
+        /* Top Navigation Header */
+        header {
+            background-color: var(--active-panel);
+            border-bottom: 1px solid var(--active-border);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: var(--transition);
+        }
+        
+        .header-title-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .header-logo {
+            width: 8px;
+            height: 24px;
+            background-color: var(--moss);
+            border-radius: 4px;
+        }
+        
+        header h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+        
+        .theme-toggle-btn {
+            background: none;
+            border: 1px solid var(--active-border);
+            padding: 6px 14px;
+            border-radius: 20px;
+            color: var(--active-text);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .theme-toggle-btn:hover {
+            border-color: var(--moss);
+            background-color: rgba(78, 107, 90, 0.1);
+        }
+        
+        /* Main Page Layout */
+        .container {
+            max-width: 1280px;
+            margin: 30px auto;
+            width: 100%;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 30px;
+            flex-grow: 1;
+        }
+        
+        /* Sidebar Navigation */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            position: sticky;
+            top: 90px;
+            height: fit-content;
+        }
+        
+        .sidebar-btn {
+            background-color: transparent;
+            border: 1px solid transparent;
+            color: var(--active-text);
+            padding: 12px 18px;
+            border-radius: var(--radius);
+            text-align: left;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            opacity: 0.7;
+        }
+        
+        .sidebar-btn:hover {
+            opacity: 1;
+            background-color: rgba(255,255,255,0.03);
+            border-color: var(--active-border);
+        }
+        
+        .light-mode .sidebar-btn:hover {
+            background-color: rgba(0,0,0,0.02);
+        }
+        
+        .sidebar-btn.active {
+            opacity: 1;
+            background-color: var(--active-panel);
+            border-color: var(--active-border);
+            box-shadow: var(--shadow);
+            font-weight: 700;
+            border-left: 4px solid var(--moss);
+        }
+        
+        /* Tabs Workspace Container */
+        .workspace {
+            background-color: var(--active-panel);
+            border: 1px solid var(--active-border);
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .tab-panel {
+            display: none;
+        }
+        
+        .tab-panel.active {
+            display: block;
+            animation: fadeIn 0.35s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Typography Elements */
+        h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            border-bottom: 2px solid var(--active-border);
+            padding-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .subtitle {
+            font-size: 0.95rem;
+            opacity: 0.6;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        
+        p, li {
+            line-height: 1.6;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+        }
+        
+        strong {
+            color: var(--moss);
+            font-weight: 600;
+        }
+        
+        .light-mode strong {
+            color: #2E503C;
+        }
+        
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: rgba(0,0,0,0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        .light-mode code {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        /* Math styling */
+        .math-block {
+            background-color: rgba(255,255,255,0.02);
+            border-left: 3px solid var(--moss);
+            padding: 10px 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+        
+        .math-inline {
+            font-family: 'Courier New', monospace;
+            background-color: rgba(0,0,0,0.15);
+            padding: 1px 4px;
+            border-radius: 3px;
+        }
+        
+        /* Box/Card Layouts */
+        .ladder-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .ladder-card {
+            border: 1px solid var(--active-border);
+            border-radius: var(--radius);
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.01) 0%, rgba(255,255,255,0.03) 100%);
+        }
+        
+        .ladder-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            background-color: var(--moss);
+            color: #FFF;
+        }
+        
+        /* Epistemic Filter Grid */
+        .ef-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .ef-card {
+            border: 1px solid var(--active-border);
+            border-radius: var(--radius);
+            padding: 20px;
+            background-color: rgba(255,255,255,0.01);
+        }
+        
+        .ef-card-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--moss);
+        }
+        
+        /* Table / Matrix styling */
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+        }
+        
+        .matrix-table th, .matrix-table td {
+            border: 1px solid var(--active-border);
+            padding: 12px 15px;
+            text-align: left;
+            line-height: 1.5;
+        }
+        
+        .matrix-table th {
+            background-color: rgba(255,255,255,0.02);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            color: var(--moss);
+        }
+        
+        .light-mode .matrix-table th {
+            background-color: rgba(0,0,0,0.01);
+        }
+        
+        /* Card Grid System */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .card {
+            border: 1px solid var(--active-border);
+            border-radius: var(--radius);
+            background-color: rgba(255,255,255,0.01);
+            overflow: hidden;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+        }
+        
+        .card-header {
+            padding: 15px 20px;
+            color: #FFF;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+        
+        .card-badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 10px;
+            background-color: rgba(255,255,255,0.2);
+            text-transform: uppercase;
+        }
+        
+        .card-body {
+            padding: 20px;
+            font-size: 0.85rem;
+            flex-grow: 1;
+        }
+        
+        .moss-header { background-color: var(--moss); }
+        .slate-header { background-color: var(--slate); }
+        .plum-header { background-color: var(--plum); }
+        .gold-header { background-color: var(--gold); }
+        .terracotta-header { background-color: var(--terracotta); }
+        .indigo-header { background-color: var(--indigo); }
+        
+        .card.moss-border { border-color: var(--moss-glow); }
+        .card.slate-border { border-color: var(--slate-glow); }
+        .card.plum-border { border-color: var(--plum-glow); }
+        .card.gold-border { border-color: var(--gold-glow); }
+        .card.terracotta-border { border-color: var(--terracotta-glow); }
+        .card.indigo-border { border-color: var(--indigo-glow); }
+        
+        /* Filter Control Bar */
+        .filter-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-pill {
+            background-color: transparent;
+            border: 1px solid var(--active-border);
+            color: var(--active-text);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .filter-pill:hover, .filter-pill.active {
+            background-color: var(--moss);
+            border-color: var(--moss);
+            color: #FFF;
+        }
+        
+        /* Sandbox Tools styling */
+        .sandbox-tool {
+            border: 1px solid var(--active-border);
+            border-radius: var(--radius);
+            padding: 25px;
+            background-color: rgba(255,255,255,0.01);
+            margin-bottom: 30px;
+        }
+        
+        .sandbox-tool-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--moss);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            opacity: 0.85;
+        }
+        
+        select, input, textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 6px;
+            border: 1px solid var(--active-border);
+            background-color: var(--active-bg);
+            color: var(--active-text);
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        
+        select:focus, input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--moss);
+            box-shadow: 0 0 0 3px var(--moss-glow);
+        }
+        
+        .btn {
+            background-color: var(--moss);
+            color: #FFF;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        
+        .sandbox-output {
+            background-color: rgba(0,0,0,0.15);
+            border: 1px solid var(--active-border);
+            padding: 20px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-top: 20px;
+            min-height: 80px;
+            position: relative;
+        }
+        
+        .light-mode .sandbox-output {
+            background-color: rgba(0,0,0,0.02);
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--active-bg);
+            border: 1px solid var(--active-border);
+            color: var(--active-text);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .copy-btn:hover {
+            border-color: var(--moss);
+        }
+        
+        .checklist-group {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            cursor: pointer;
+        }
+        
+        .checklist-item input[type="checkbox"] {
+            width: auto;
+            margin-top: 4px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px;
+            font-size: 0.8rem;
+            opacity: 0.5;
+            border-top: 1px solid var(--active-border);
+            margin-top: auto;
+        }
+        
+        .grid-2col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-title-container">
+            <div class="header-logo"></div>
+            <h1>《向上管理与你的领导相互成就》精美知识图谱与速查表</h1>
+        </div>
+        <button class="theme-toggle-btn" id="theme-toggle" onclick="toggleTheme()">
+            🌙 暗色模式
+        </button>
+    </header>
+
+    <div class="container">
+        <div class="sidebar">
+            <button class="sidebar-btn active" onclick="switchTab(this, 'tab-intro')">🧭 压缩阶梯与本质</button>
+            <button class="sidebar-btn" onclick="switchTab(this, 'tab-filter')">🌐 核心心智滤镜</button>
+            <button class="sidebar-btn" onclick="switchTab(this, 'tab-matrix')">⚔️ 反常识碰撞矩阵</button>
+            <button class="sidebar-btn" onclick="switchTab(this, 'tab-cards')">🧠 28个高密速查卡</button>
+        </div>
+
+        <div class="workspace">
+            <!-- Intro Tab -->
+            <div class="tab-panel active" id="tab-intro">
+                <h2>🧭 压缩梯 (L0-L2 极简分辨率)</h2>
+                <div class="subtitle">向上管理的核心精髓，用3层分辨率逐步递进压缩：一句话本质 (L0) -> 四句话逻辑 (L1) -> 十条博弈法则 (L2)</div>
+                
+                <div class="ladder-grid">
+                    <div class="ladder-card" style="border-left: 4px solid var(--moss);">
+                        <div class="ladder-badge" style="background-color: var(--moss);">L0 一句话本质</div>
+                        <div><p>向上管理不是逢迎谄媚，而是通过主动期望对齐、动态补位与资源互锁，将领导转化为协作杠杆，达成彼此成就与组织共赢的职业科学。</p></div>
+                    </div>
+                    <div class="ladder-card" style="border-left: 4px solid var(--slate);">
+                        <div class="ladder-badge" style="background-color: var(--slate);">L1 四句话逻辑</div>
+                        <div><div class='list-num-item'><strong>1.</strong> <strong>解码节拍</strong>：主动破译领导情境风格、信息通道与身体微动作，在安全距离内达成情感与执行的双向共振。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>身位校准</strong>：严格遵循服从天职，在言行举止中维护领导形象，用“不守规则者”逻辑主动闪亮核心优势。</div>
+<div class='list-num-item'><strong>3.</strong> <strong>拒绝对接</strong>：掌握拒绝的不起哄、软着陆技术，告别假装忙碌与讨好取悦，将忠诚转化为带方案的高质量执行。</div>
+<div class='list-num-item'><strong>4.</strong> <strong>杠杆共赢</strong>：视错误、误解为逆商淬炼场，快速用备用预案重塑信任，向领导借力资源以达成跨越式成长。</div></div>
+                    </div>
+                    <div class="ladder-card" style="border-left: 4px solid var(--plum);">
+                        <div class="ladder-badge" style="background-color: var(--plum);">L2 十条博弈法则</div>
+                        <div><div class='list-num-item'><strong>1.</strong> <strong>人格等同律</strong>：职位有高低，人格无贵贱；视领导为有局限的平等人，认可权威但不做唯唯诺诺的附庸。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>信息同轴律</strong>：区分听众型与读者型领导，用其最习惯的认知通道输入关键信息，消除沟通摩擦。</div>
+<div class='list-num-item'><strong>3.</strong> <strong>潜台词解密</strong>：听懂领导试探性提问（如“下午有事吗”）的真实诉求，将“以后再议”等同于“委婉拒绝”。</div>
+<div class='list-num-item'><strong>4.</strong> <strong>微动作阻断</strong>：当领导出现抱胸后仰等闭合语言时，立即中止陈述；在托下巴配合指尖点鼻时，快速转换话题。</div>
+<div class='list-num-item'><strong>5.</strong> <strong>弹性距离带</strong>：与领导保持安全距离，既不在非工作领域过度亲密，也不因疏离错失信任，留足弹性空间。</div>
+<div class='list-num-item'><strong>6.</strong> <strong>分寸闪亮法</strong>：渲染核心大优势，隐藏细微小成绩；时机成熟时毛遂自荐，在领导最需要处成为破局战力。</div>
+<div class='list-num-item'><strong>7.</strong> <strong>不轻易说不</strong>：面对棘手任务时用“我能行”代替“我不行”，视非本职工作为展示担当与拓宽能力边界的良机。</div>
+<div class='list-num-item'><strong>8.</strong> <strong>软着陆拒绝</strong>：拒绝时态度诚恳、言辞简练，不找过多借口，避开领导心境低谷，在私室规过并提出替代方案。</div>
+<div class='list-num-item'><strong>9.</strong> <strong>多工防火墙</strong>：用“布利斯计划定理”消除不良多工，保护大脑免受注意力残留污染，专注当下重要事务。</div>
+<div class='list-num-item'><strong>10.</strong> <strong>预案汇报制</strong>：工作发生纰漏绝不隐瞒或文过饰非，第一时间携带三套已论证预案主动请罪，用责任重塑信任。</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Epistemic Filter Tab -->
+            <div class="tab-panel" id="tab-filter">
+                <h2>🌐 底层心智滤镜 (Epistemic Filter)</h2>
+                <div class="subtitle">作者在透视职场互动与资源杠杆时的底层思维底座。包括认识论、人性观、方法论及道德直觉：</div>
+                <div class="ladder-card" style="border-top: 3px solid var(--moss); background-color: rgba(255,255,255,0.015);">
+                    <li><strong>认识论 (Epistemology) - 资源相互依赖与期望博弈</strong>：</li>
+<p>在组织生态中，职场不是单兵突击的旷野，而是由资源依赖与社会分工交织的舞台剧场。头衔不是影响力的唯一源泉，信息对称、专业稀缺度与期望契合度构成权力第一性。向上管理即在不完全信息博弈中，动态测算并管理领导对你的“沟通、服从、支持、努力、态度、成果”六大期望，使被动接受转化为主动资源互锁。</p>
+<li><strong>人性观 (Human Nature) - 领导的局限性与防御解构</strong>：</li>
+<p>领导非全知全能的机器，而是承受战略焦虑、信息隔绝与安全感缺失的普通人。下属由于“透明视觉”偏差常陷入畏惧退缩，或用“装忙”进行防御性表演，或以“老好人”取悦逃避人际冲突。通过换位思考（将心比心）与积极感恩，消除人际警戒，实现从对立戒备到命运共同体的心理共振。</p>
+<li><strong>方法论 (Methodology) - 框架透镜与可预测性构建</strong>：</li>
+<p>运用情境领导模型与九型人格对领导风格、性格开展多维解码，构建安全可靠的行为界面。应用“布利斯定理”与“四象限法则”构筑实力底座，用“CBT逆商控制模型”建立危机补救闭环，用“二八定律”精选关键人脉。所有行动均以“建立可预测性、消除失控感”为核心，让每一次汇报与交付都有备无患。</p>
+<li><strong>道德直觉/伦理 (Ethics) - 智慧忠诚与合规底线</strong>：</li>
+<p>忠诚是职场的最高优先级，但必须以“专业智慧”为支撑。溜须拍马的短视行为是对组织的渎职，毫无原则的习惯性取悦（老好人取悦）是能力贫瘠的表现。拒绝不是违抗，而是为执行风险加装的安全阀；规避“伪工作”与“不良多工”是对组织资源的最大尊重。对工作成果负终极责任，即是对领导最大的忠诚。</p>
+<br>
+<p>---</p>
+                </div>
+            </div>
+
+            <!-- Anti-Consensus Matrix Tab -->
+            <div class="tab-panel" id="tab-matrix">
+                <h2>⚔️ 反常识碰撞矩阵 (Anti-Consensus Matrix)</h2>
+                <div class="subtitle">打破常见职场误区，建立符合现实博弈规则的安全理性防线：</div>
+                
+                <table class="matrix-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">常人直觉 (⚠)</th>
+                            <th style="width: 35%;">客观解构 (✓)</th>
+                            <th style="width: 35%;">现实防线 (★)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><p>下属与领导是绝对的阶级管理关系，应保持畏惧与绝对顺从，以防被穿小鞋。</p></td><td><p>双方是围绕组织目标的资源依赖体，人格完全平等；畏惧会诱发防御性隐瞒，进而剥夺领导掌控局势的安全感。</p></td><td><p>以真诚与微笑消除畏惧，用“主动汇报进程+无条件服从非原则决策”建立信任防线，将畏惧重塑为不卑不亢的合作。</p></td></tr><tr><td><p>职场要显得勤奋敬业，必须时刻在工位摆满资料、在朋友圈晒加班，保持“我很忙”的表演状态。</p></td><td><p>假装很忙是应付性的“伪工作”，极易因成果贫瘠而穿帮；这种“不良多工”会使认知残留加重，导致效率暴跌。</p></td><td><p>用“布利斯计划定理”做事前计划，拆解可量化小任务，专注当下，用120%的交付质量和真实业绩淘汰“忙碌表演”。</p></td></tr><tr><td><p>做个有求必应的“老好人”，包揽同事与领导的一切额外杂活，人缘好才能在晋升中脱颖而出。</p></td><td><p>老好人本质是出于对冲突与拒绝的畏惧，不仅累垮自己，还会让外界认为你的劳动廉价而可有可无。</p></td><td><p>明确岗位定位，根据自身负荷和事务价值，使用“诚恳态度+简明理由+备选方案”拒绝不合理诉求，构筑尊重边界。</p></td></tr><tr><td><p>把事情搞砸后，应尽一切力量掩盖，等自己默默处理好或者风头过去后，再找机会告诉领导。</p></td><td><p>隐瞒会令问题错失最佳救援期，导致损失呈几何倍数扩大，一旦暴露会彻底摧毁领导的掌控感和对你的基本信任。</p></td><td><p>不为错误辩护，第一时间主动承认，并当场呈交三套已经深入论证的补救方案供领导决断，实现危机的“软着陆”。</p></td></tr><tr><td><p>专业技术实力强就够了，向上管理是不会做事的人搞溜须拍马那一套，有实力根本不屑为之。</p></td><td><p>沟通相处与专业硬实力同等重要，闭门造车容易使实力偏离领导和组织的期望，沦为高昂的无用功。</p></td><td><p>将领导作为最好的职业榜样和最高端的人脉资源，以工作为本进行资源整合，通过对齐期望达成相互成就。</p></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Cards Tab -->
+            <div class="tab-panel" id="tab-cards">
+                <h2>🧠 28个高密速查卡</h2>
+                <div class="subtitle">涵盖性格解码、身位适配、绩效第一性、实力底座、危机应对和共赢杠杆 6 大知识维度：</div>
+                
+                <div class="filter-bar">
+                    <button class="filter-pill active" onclick="filterCards('all', this)">全部</button>
+                    <button class="filter-pill" onclick="filterCards('模块一', this)">M1:读懂领导</button>
+                    <button class="filter-pill" onclick="filterCards('模块二', this)">M2:明确定位</button>
+                    <button class="filter-pill" onclick="filterCards('模块三', this)">M3:使命专注</button>
+                    <button class="filter-pill" onclick="filterCards('模块四', this)">M4:练好内功</button>
+                    <button class="filter-pill" onclick="filterCards('模块五', this)">M5:另辟蹊径</button>
+                    <button class="filter-pill" onclick="filterCards('模块六', this)">M6:借力打力</button>
+                </div>
+
+                <div class="cards-grid">
+                    
+                    <div class="card moss-border" data-module="模块一">
+                        <div class="card-header moss-header">
+                            <span class="card-title">Card 01. 情境领导风格剖析</span>
+                            <span class="card-badge">Model</span>
+                        </div>
+                        <div class="card-body">
+                            <li><strong>理论溯源</strong>：保罗·赫塞与布兰查德的“情境领导理论”（Situational Leadership Model）。将领导行为分为“工作行为”（指导性，发令语气与工作指导）与“关系行为”（支持性，倾听与信任构建），衍生四种基本风格。</li>
+<li><strong>风格解码</strong>：</li>
+<div class='list-num-item'><strong>1.</strong> <strong>告知型 (Telling)</strong>：高指导/低支持。领导单向命令、注重细节与过程。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>推销型 (Selling)</strong>：高指导/高支持。命令且解释原因，引导并倾听意见。</div>
+<div class='list-num-item'><strong>3.</strong> <strong>参与型 (Participating)</strong>：低指导/高支持。与员工讨论，鼓励自我思考与决策，重口才与严密逻辑。</div>
+<div class='list-num-item'><strong>4.</strong> <strong>授权型 (Delegating)</strong>：低指导/低支持。奉行“无为而治”，仅给目标愿景，全面放权给员工探索。</div>
+<li><strong>对症下药</strong>：针对前三种风格加强业务逻辑与高频对称汇报；对授权型领导要主动承担执行责任，在具体落实中行使权力。 (页 12-14)</li>
+                        </div>
+                    </div>
+                    
+                    <div class="card moss-border" data-module="模块一">
+                        <div class="card-header moss-header">
+                            <span class="card-title">Card 02. 信息认知通道破译</span>
+                            <span class="card-badge">Model</span>
+                        </div>
+                        <div class="card-body">
+                            <li><strong>通道分类</strong>：参考管理学家彼得·德鲁克的领导分类，将信息输入偏好分为：</li>
+<div class='list-num-item'><strong>1.</strong> <strong>读者型领导 (Readers)</strong>：偏好文字、图表与正式报告。面对此类领导，必须在汇报前提交严谨的书面文档、精算数据与备选方案，避免空口陈述。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>听众型领导 (Listeners)</strong>：偏好面对面交谈、口头汇报与即时语音沟通。面对此类领导，应言简意赅，先说结论再展开细节，用生动的口头陈述吸引其注意力。</div>
+<li><strong>执行防线</strong>：不要强行使用自己习惯的沟通方式，根据领导在日常工作中的交互习惯动态切换输入界面，消除认知通道摩擦。 (页 14)</li>
+                        </div>
+                    </div>
+                    
+                    <div class="card moss-border" data-module="模块一">
+                        <div class="card-header moss-header">
+                            <span class="card-title">Card 03. 性格光谱与动物模型</span>
+                            <span class="card-badge">Model</span>
+                        </div>
+                        <div class="card-body">
+                            <li><strong>性格矩阵</strong>：九型人格（Enneagram）被广泛用于斯坦福MBA及世界五百强。把握其和平型、完美型等性格特征，理解其看待世界的局限。</li>
+<li><strong>动物隐喻</strong>：</li>
+<div class='list-num-item'><strong>1.</strong> <strong>老虎型</strong>：自信、重权威、强控制。需先服从后用数据建言。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>孔雀型</strong>：和善、强感染力、易情绪化。需给予其充分的公众肯定。</div>
+<div class='list-num-item'><strong>3.</strong> <strong>变色龙型</strong>：圆滑、留余地、以柔克刚。需明确落实边界，落字为据。</div>
+<div class='list-num-item'><strong>4.</strong> <strong>猫头鹰型</strong>：保守、重规则、细节控。必须拿确凿事实和流程逻辑说话。</div>
+<div class='list-num-item'><strong>5.</strong> <strong>考拉型</strong>：稳健、温和中庸、规避风险。需提供全面的安全缓冲预案。 (页 15-19)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card moss-border" data-module="模块一">
+                        <div class="card-header moss-header">
+                            <span class="card-title">Card 04. 身体语言与微动作解码</span>
+                            <span class="card-badge">Model</span>
+                        </div>
+                        <div class="card-body">
+                            <li><strong>微动作解析</strong>：微动作为人潜意识的本能体现，包含以下经典闭合与赞同语言：</li>
+<div class='list-num-item'><strong>1.</strong> <strong>交叉抱胸+身体后仰</strong>：闭合式身体语言，代表心理防御与不认可。应立即中止观点输出，退回提问寻找共识。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>身体前倾+点头</strong>：正面开放信号，代表专注、期待与赞同。应及时启动你的陈述。</div>
+<div class='list-num-item'><strong>3.</strong> <strong>眼神游离+目光飘忽</strong>：代表对话题不关心或打断了其重要思路。应在最短时间内结束交谈。</div>
+<div class='list-num-item'><strong>4.</strong> <strong>托下巴变体</strong>：单手横托代表专注思考；手指点鼻代表不专注于你的发言；拇指托下巴+卷曲手指掩口代表强烈不认同。 (页 22-23)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card moss-border" data-module="模块一">
+                        <div class="card-header moss-header">
+                            <span class="card-title">Card 05. 印象晕轮效应与TPO原则</span>
+                            <span class="card-badge">Reference</span>
+                        </div>
+                        <div class="card-body">
+                            <li><strong>印象偏差</strong>：晕轮效应（Halo Effect）与首因效应会使领导对你的“一眼之见”产生先入为主的持久评判。</li>
+<li><strong>衣着TPO</strong>：衣着是人的第二张脸，遵循国际通用原则（Time 时间，Place 地点，Object 目的）：</li>
+<div class='list-num-item'><strong>1.</strong> <strong>严肃正装</strong>：代表做事认真、崇尚规则、秩序，适合谈判与汇报。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>运动休闲</strong>：代表个性、活力与随性，适合团队建构。</div>
+<li><strong>执行防线</strong>：颜色搭配上，深蓝代表认真与乐观，咖啡色易给人以决断力差的印象。利用TPO原则设计个人外部界面，防止印象失准。 (页 23-24)</li>
+<br>
+<p>---</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card slate-border" data-module="模块二">
+                        <div class="card-header slate-header">
+                            <span class="card-title">Card 06. 服从规则与智慧角色</span>
+                            <span class="card-badge">Model</span>
+                        </div>
+                        <div class="card-body">
+                            <li><strong>身位定位</strong>：职位的不平等是组织协作的客观需要，但在人格上完全平等。</li>
+<li><strong>服从铁律</strong>：服从是下属的第一规则，更是职场智慧的体现。面对领导的指示和决策，切忌在公开场合或者情绪失控状态下针锋相对。</li>
+<li><strong>智慧补位</strong>：服从不等于盲从。要在认可其决策主权的前提下，通过“低调收集事实、做足准备、私下以真诚微调方案”的方式为决策补差。通过“倾听与微笑”这两种最低成本的润滑剂，缩短与领导的情感隔阂。 (页 30-32)</li>
+                        </div>
+                    </div>
+                    
+                    <div class="card slate-border" data-module="模块二">
+                        <div class="card-header slate-header">
+                            <span class="card-title">Card 07. 主动闪亮与员工分类</span>
+                            <span class="card-badge">Model</span>
+                        </div>
+                        <div class="card-body">
+                            <li><strong>优势展现</strong>：主动闪亮是提升职场能见度、摆脱“含羞草”退缩心态的唯一手段。渲染自己的长线核心优势，保留或隐藏小的功劳。</li>
+<li><strong>加州大学研究</strong>：针对“融入集体 vs 展现自我”，加州大学将员工划分为四类：</li>
+<div class='list-num-item'><strong>1.</strong> <strong>双重嵌入式</strong>：言语有欲望但行动退缩，易被视作牢骚者，裁员首选。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>非嵌入式</strong>：处处出风头、特立独行，极易沦为边缘人。</div>
+<div class='list-num-item'><strong>3.</strong> <strong>同化型中间人</strong>：全盘融入集体，磨灭个性，失去被重用和晋升的机会。</div>
+<div class='list-num-item'><strong>4.</strong> <strong>综合性不守规则者</strong>：遵循规则并融入集体，但在擅长领域展现创新行为与独特优势。 (页 51)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card slate-border" data-module="模块二">
+                        <div class="card-header slate-header">
+                            <span class="card-title">Card 08. 拒绝的软着陆艺术</span>
+                            <span class="card-badge">Method</span>
+                        </div>
+                        <div class="card-body">
+                            <li><strong>拒绝第一性</strong>：拒绝的是“事情”而非“领导个人”。态度要诚恳，言辞必须简明扼要，拒绝理由过多反而极易暴露漏洞，引发借口推托嫌疑。</li>
+<li><strong>执行规范</strong>：</li>
+<div class='list-num-item'><strong>1.</strong> <strong>避开情绪低谷</strong>：在领导焦躁、身处困境时绝不提出拒绝。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>私室规过</strong>：扬善于公庭，规过于私室。绝对不在公开场合对领导说“不”。</div>
+<div class='list-num-item'><strong>3.</strong> <strong>携带备选</strong>：拒绝的同时必须为领导推荐更合适的方案、工具或人选，实现不伤面子的软着陆。 (页 58-61)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card slate-border" data-module="模块二">
+                        <div class="card-header slate-header">
+                            <span class="card-title">Card 09. 额外工作的承接逻辑</span>
+                            <span class="card-badge">Model</span>
+                        </div>
+                        <div class="card-body">
+                            <li><strong>责任承担</strong>：面对领导交办的困难任务或本职以外的额外工作，第一反应避免说“我不行”、“不归我管”。这在领导看来是不自信、无能或不思进取的负面信号。</li>
+<li><strong>认知升维</strong>：高逆商的下属会视额外工作为自我价值重塑与打破职场天花板的机会。应当以“我来试一试，我需要某些支持”来回应，在探索中学习不熟悉的事情，扩大个人的职责边界与影响力。 (页 58)</li>
+                        </div>
+                    </div>
+                    
+                    <div class="card slate-border" data-module="模块二">
+                        <div class="card-header slate-header">
+                            <span class="card-title">Card 10. 情感链接与弹性交往距离</span>
+                            <span class="card-badge">Model</span>
+                        </div>
+                        <div class="card-body">
+                            <li><strong>距离红线</strong>：情感链接能够提升合作默契，但试图做到“零距离”亲密无间极其不明智。</li>
+<li><strong>越界代价</strong>：与领导过近不仅招致同事非议，更容易暴露自己不成熟的想法，放大领导的缺陷，最危险的是会闯入领导内心的安全防线，引发本能反感。</li>
+<li><strong>执行规范</strong>：遵循拿破仑·希尔的人际弹性原则。保持有分寸的专业弹性空间。公私分明，用工作的可预测性搭建扎实的信赖阶梯，而非依靠私交投机。 (页 41)</li>
+<br>
+<p>---</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card plum-border" data-module="模块三">
+                        <div class="card-header plum-header">
+                            <span class="card-title">Card 11. 平凡岗位的长线投资</span>
+                            <span class="card-badge">Model</span>
+                        </div>
+                        <div class="card-body">
+                            <li><strong>极致敬业</strong>：平凡岗位并非平庸人生的理由，工作态度决定了最终出彩的程度。</li>
+<li><strong>典范启示</strong>：荷兰人列文虎克在其平淡的看门人工作岗位上，利用闲暇磨砺镜片，最终成为微生物学的奠基人。</li>
+<li><strong>执行防线</strong>：任何伟大的技艺都遵循“凝神专一，技近乎道”的法则。不要在琐碎任务中抱怨、浮躁，用极客精神将简单工作做到无人能及的极致，平凡的工作本身就是考验敬业心的长线投资。 (页 71)</li>
+                        </div>
+                    </div>
+                    
+                    <div class="card plum-border" data-module="模块三">
+                        <div class="card-header plum-header">
+                            <span class="card-title">Card 12. 伪工作与“装忙表演”的穿帮代价</span>
+                            <span class="card-badge">Model</span>
+                        </div>
+                        <div class="card-body">
+                            <li><strong>装忙族心理</strong>：在焦虑情绪下，员工为了迎合领导不希望看到员工无所事事的要求，往往采取贴便签、文档不关闭、加班发朋友圈等手段进行“装忙表演”。</li>
+<li><strong>表演陷阱</strong>：装忙是一种无奈的从众生存哲学，但假的终究是假的。装忙创造不出实际效能和能力，长此以往极易因没有实质成果交付而彻底“穿帮”，沦为虚伪的投机分子。</li>
+<li><strong>替代策略</strong>：主动利用空闲梳理业务流程、优化档案资料、帮助同事或进行主动技能学习，用创造效能代替装忙。 (页 81-83)</li>
+                        </div>
+                    </div>
+                    
+                    <div class="card plum-border" data-module="模块三">
+                        <div class="card-header plum-header">
+                            <span class="card-title">Card 13. 职场老好人的习惯性取悦陷阱</span>
+                            <span class="card-badge">Model</span>
+                        </div>
+                        <div class="card-body">
+                            <li><strong>老好人画像</strong>：习惯性有求必应、舍己为人地干杂活，但人际好感并不能转化为加薪，甚至工资往往低于特立独行的“刺头”。</li>
+<li><strong>取悦机制</strong>：心理学家哈丽雅特·布莱克指出，老好人本质上是一种由三大要素构成的习惯性取悦行为：</li>
+<div class='list-num-item'><strong>1.</strong> <strong>讨好思维</strong>：极度依赖他人看法来确立自我价值。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>顺从情感</strong>：通过妥协来逃避应对愤怒和潜在的冲突。</div>
+<div class='list-num-item'><strong>3.</strong> <strong>强迫行为</strong>：即使自己亏空超载也无法开口拒绝。</div>
+<li><strong>防线重塑</strong>：确立岗位底线，先完成本职工作，拒绝不合理要求，以硬实力获得尊重，而非好脾气。 (页 83-84)</li>
+                        </div>
+                    </div>
+                    
+                    <div class="card plum-border" data-module="模块三">
+                        <div class="card-header plum-header">
+                            <span class="card-title">Card 14. 智慧忠诚的实践边界</span>
+                            <span class="card-badge">Model</span>
+                        </div>
+                        <div class="card-body">
+                            <li><strong>忠诚第一性</strong>：对组织忠诚是个人职业生命的第一品质。</li>
+<li><strong>智慧注入</strong>：没有智慧的盲目愚忠不仅无益，甚至可能成为组织灾难的帮凶。智慧的忠诚要求员工理解领导决策背后的终极利益，并能够站在客观事实的角度对风险提供合理质询。</li>
+<li><strong>执行防线</strong>：不要为了讨好领导而故意隐藏可能影响决策的关键负面数据；对真实绩效和战略风险负责，这才是最高阶的忠诚。 (页 42)</li>
+<br>
+<p>---</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card gold-border" data-module="模块四">
+                        <div class="card-header gold-header">
+                            <span class="card-title">Card 15. 硬实力与一技之长</span>
+                            <span class="card-badge">Model</span>
+                        </div>
+                        <div class="card-body">
+                            <li><strong>话语权核心</strong>：实力是职场上最好的话语权。打铁还需自身硬，雇佣关系的本质是价值交换。</li>
+<li><strong>硬实力指标</strong>：指在专业领域内拥有别人无法轻易替代的“一技之长”。该长处不依赖于某个具体组织而存在，是个人职场资产的核心价值。</li>
+<li><strong>执行防线</strong>：硬实力并不等于学历或证书，而是应用技能高效、高质量解决实际业务难题的执行力。持续升级核心竞争力，用专业壁垒获得谈判筹码。 (页 91)</li>
+                        </div>
+                    </div>
+                    
+                    <div class="card gold-border" data-module="模块四">
+                        <div class="card-header gold-header">
+                            <span class="card-title">Card 16. 时间管理的四象限法则</span>
+                            <span class="card-badge">Method</span>
+                        </div>
+                        <div class="card-body">
+                            <li><strong>象限分类</strong>：管理大师史蒂芬·柯维提倡的效率分类工具：</li>
+<div class='list-num-item'><strong>1.</strong> <strong>重要且紧急</strong>：危机、重大谈判、紧急会议。马上着手处理，但要控制其发生频率。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>重要但不紧急</strong>：技能培训、规划预案、身体管理。投资回报率最大，应倾注核心精力和时间，防止其退化为重要紧急危机。</div>
+<div class='list-num-item'><strong>3.</strong> <strong>不重要但紧急</strong>：突发电话、琐碎访客。极具欺骗性，应尽量放权或合理谢绝。</div>
+<div class='list-num-item'><strong>4.</strong> <strong>不重要不紧急</strong>：发呆闲聊。浪费时间，必须将其减少至最低限度。 (页 101-102)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card gold-border" data-module="模块四">
+                        <div class="card-header gold-header">
+                            <span class="card-title">Card 17. 布利斯计划定理与脑海酝酿</span>
+                            <span class="card-badge">Method</span>
+                        </div>
+                        <div class="card-body">
+                            <li><strong>布利斯定理</strong>：美国行为学家艾得·布利斯证明，用较多的时间做事前周密计划，完成该项工作所用的总时间反而会大幅度减少。</li>
+<li><strong>两次创造</strong>：史蒂芬·柯维认为任何事物必须经历两次创造：第一次是在脑海中进行设想与演练，第二次才是物理实质的创造。</li>
+<li><strong>执行指南</strong>：在执行前彻底梳理目标，将局势拆解为可度量、有明确期限的小指标，通过预演防错。 (页 102)</li>
+                        </div>
+                    </div>
+                    
+                    <div class="card gold-border" data-module="模块四">
+                        <div class="card-header gold-header">
+                            <span class="card-title">Card 18. 不良多工与认知残留超载</span>
+                            <span class="card-badge">Model</span>
+                        </div>
+                        <div class="card-body">
+                            <li><strong>概念定义</strong>：艾利·高德拉特指出，造成工作效率低下的根源往往不是懈怠，而是多任务频繁切换的“不良多工”行为。</li>
+<li><strong>科学实证</strong>：密歇密大学研究显示，频繁切换任务会导致工作效率暴跌 20%-40%。明尼苏达大学索菲·勒罗伊教授证实，任务切换会留存“注意力残留”（Attention Residue），持续占用新任务的大脑认知资源。</li>
+<li><strong>执行防线</strong>：实施单线程专注模式。关闭多余的即时弹窗，在特定时间段内单点破局，彻底消除大脑超载。 (页 104-106)</li>
+<br>
+<p>---</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card terracotta-border" data-module="模块五">
+                        <div class="card-header terracotta-header">
+                            <span class="card-title">Card 19. 逆商(AQ)的四大关键结构</span>
+                            <span class="card-badge">Model</span>
+                        </div>
+                        <div class="card-body">
+                            <li><strong>概念定义</strong>：保罗·斯托兹提出的“逆商”（Adversity Quotient）是衡量个体应对逆境与危机能力的核心指标。</li>
+<li><strong>逆商四要素</strong>：</li>
+<div class='list-num-item'><strong>1.</strong> <strong>控制感 (Control)</strong>：面对挫折时，保持对周围环境的掌控与信心，寻找解决的支点。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>起因与责任归属 (Origin & Ownership)</strong>：理智拆解内因（自身疏忽）与外因（环境变动），清醒担当责任。</div>
+<div class='list-num-item'><strong>3.</strong> <strong>影响范围 (Reach)</strong>：将逆境的负面效应限制在局部，绝不让工作挫折污染家庭或日常生活。</div>
+<div class='list-num-item'><strong>4.</strong> <strong>持续时间 (Endurance)</strong>：保持乐观预估，相信危机的短暂性，并以主动补救缩短其时程。 (页 115)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card terracotta-border" data-module="模块五">
+                        <div class="card-header terracotta-header">
+                            <span class="card-title">Card 20. 犯错后的补救预案与信任重塑</span>
+                            <span class="card-badge">Model</span>
+                        </div>
+                        <div class="card-body">
+                            <li><strong>危机处理</strong>：任何人都会犯错，犯错本身不可怕，可怕的是在同一个地方、同一个领导面前重蹈覆辙。</li>
+<li><strong>防患未然</strong>：在项目开展前做好风险预估和预案，这是缩短问题发生后平复焦虑的最有效方式。</li>
+<li><strong>重塑信任</strong>：一旦事情搞砸，应在第一时间主动承认，不可遮掩或文过饰非。必须携带至少三套经过可行性论证的备用预案，引导领导将关注点从追责转移到解决问题，以高度责任心重塑信任。 (页 131)</li>
+                        </div>
+                    </div>
+                    
+                    <div class="card terracotta-border" data-module="模块五">
+                        <div class="card-header terracotta-header">
+                            <span class="card-title">Card 21. 被误解时的澄清技术</span>
+                            <span class="card-badge">Method</span>
+                        </div>
+                        <div class="card-body">
+                            <li><strong>认知偏差</strong>：主客观偏差会导致误解成为职场常态。“透明视觉”会让沟通打折，“基本归因错误”会让人们将坏结果归罪于他人的人格。</li>
+<li><strong>澄清原则</strong>：</li>
+<div class='list-num-item'><strong>1.</strong> <strong>客观事实</strong>：陈述事实和数据，摒弃“我真的不是这种人”等情绪宣泄。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>证有不证无</strong>：证明没做过一件事很难，较为理智的做法是请对方列举证据，精准解构。</div>
+<div class='list-num-item'><strong>3.</strong> <strong>选择时机</strong>：绝不在公开场合针锋相对，选择私密环境且领导心境愉悦时，消除其戒备心理。 (页 141)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card terracotta-border" data-module="模块五">
+                        <div class="card-header terracotta-header">
+                            <span class="card-title">Card 22. 冲突解决的“工作本位”法则</span>
+                            <span class="card-badge">Method</span>
+                        </div>
+                        <div class="card-body">
+                            <li><strong>冲突化解</strong>：跨部门协作或部门内部意见不合是常见的职场死结，容易诱发对立与嫌隙。</li>
+<li><strong>解决逻辑</strong>：时刻谨记“以工作为本”。合作是为了完成共同绩效目标，而不是为了改变对方让你不悦的行为习惯。</li>
+<li><strong>执行防线</strong>：在合作开始前，必须通过集体沟通形成明确的任务责任清单和时间进度表，将个人恩怨剥离出项目交付，以积极宽容求同存异。 (页 111-113)</li>
+                        </div>
+                    </div>
+                    
+                    <div class="card terracotta-border" data-module="模块五">
+                        <div class="card-header terracotta-header">
+                            <span class="card-title">Card 23. 逆境下的解压技术</span>
+                            <span class="card-badge">Method</span>
+                        </div>
+                        <div class="card-body">
+                            <li><strong>压力管理</strong>：焦虑和急躁常源于对自己不切实际的高期望（如铜牌效应：银牌因失去金牌而懊悔，铜牌因登上领奖台而快乐）。</li>
+<li><strong>解压实践</strong>：</li>
+<div class='list-num-item'><strong>1.</strong> <strong>平常心</strong>：降低不切实际的期望，专注当下的行动，而非未来无法预料的成败。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>感恩行动</strong>：生物学证明，感恩能刺激大脑释放多巴胺，缓解压力。在逆境中多想想给予自己雪中送炭的贵人。</div>
+<div class='list-num-item'><strong>3.</strong> <strong>寻找小成就</strong>：通过微小任务的圆满交付重构内心的自信。 (页 113-115)</div>
+<br>
+<p>---</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card indigo-border" data-module="模块六">
+                        <div class="card-header indigo-header">
+                            <span class="card-title">Card 24. 皮格马利翁期待效应</span>
+                            <span class="card-badge">Reference</span>
+                        </div>
+                        <div class="card-body">
+                            <li><strong>心理机制</strong>：皮格马利翁效应（Pygmalion Effect）证实，人会不自觉地受到钦佩、尊敬之人暗示与期望的影响，变成自己期望的样子。</li>
+<li><strong>以领导为镜</strong>：领导是职场中最亲近、最实用的学习资源：</li>
+<div class='list-num-item'><strong>1.</strong> <strong>学技能</strong>：观察并模仿其思考格局、决策范式与行业潜规则。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>传染热情</strong>：学习其职业担当，并将其奋斗经历作为自己的奋斗路径。</div>
+<div class='list-num-item'><strong>3.</strong> <strong>全局意识</strong>：建立大局观，站在更高层级看工作对组织的战略效能。 (页 149-151)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card indigo-border" data-module="模块六">
+                        <div class="card-header indigo-header">
+                            <span class="card-title">Card 25. 钥匙理论与关键人脉</span>
+                            <span class="card-badge">Model</span>
+                        </div>
+                        <div class="card-body">
+                            <li><strong>人脉本质</strong>：所有的资源都掌握在人的手里，职场拓展的基本逻辑是从与事物打交道升级为与人打交道。</li>
+<li><strong>钥匙理论</strong>：真诚是打开人际坚冰唯一的钥匙，心与心的交往能唤起共鸣。</li>
+<li><strong>二八定律</strong>：人脉圈不是指通讯录中随便记录的联系人，而是核心关键的20%人脉带来80%的机会。</li>
+<li><strong>杠杆支点</strong>：领导是接触高端人脉的最佳通道。卡耐基提倡，抛弃以自我为中心，真诚地多谈论他人感兴趣的事，建立互信的深度人脉圈。 (页 153-154)</li>
+                        </div>
+                    </div>
+                    
+                    <div class="card indigo-border" data-module="模块六">
+                        <div class="card-header indigo-header">
+                            <span class="card-title">Card 26. 肖恩·贝尔双向期望匹配</span>
+                            <span class="card-badge">Scenario</span>
+                        </div>
+                        <div class="card-body">
+                            <li><strong>和谐法则</strong>：和谐的协作关系建立在对彼此期望的高效满足上。</li>
+<li><strong>期望解构</strong>：员工对领导抱有薪资、赋能、发展等期望；美国学者肖恩·贝尔证明，领导对员工同样抱有“沟通、服从、支持、努力、态度、成果”六大维度期望。</li>
+<li><strong>协同飞轮</strong>：明确了解不同背景的领导的独特期望，并在每一次行动中逐步抬高期望的交付标准，达成双向成就的螺旋上升。 (页 161)</li>
+                        </div>
+                    </div>
+                    
+                    <div class="card indigo-border" data-module="模块六">
+                        <div class="card-header indigo-header">
+                            <span class="card-title">Card 27. 主动汇报与掌控安全感</span>
+                            <span class="card-badge">Model</span>
+                        </div>
+                        <div class="card-body">
+                            <li><strong>不确定性</strong>：管理最大的敌人是“不确定性”。当员工自作主张、信息不透明、甚至在公开场合唱对台戏时，会导致领导产生极强的失控感与不安全感。</li>
+<li><strong>安全感机制</strong>：</li>
+<div class='list-num-item'><strong>1.</strong> <strong>主动汇报</strong>：对工作进度、潜在隐患与阶段性成果进行高频汇报。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>提供预警</strong>：有异常情况必须提前警示，不让领导面临突发的尴尬场面。</div>
+<div class='list-num-item'><strong>3.</strong> <strong>决策留空</strong>：让决策权和控制权保留在领导手中，给予其掌控感。 (页 161)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card indigo-border" data-module="模块六">
+                        <div class="card-header indigo-header">
+                            <span class="card-title">Card 28. 资源杠杆与双赢闭环</span>
+                            <span class="card-badge">Model</span>
+                        </div>
+                        <div class="card-body">
+                            <li><strong>杠杆思维</strong>：向上管理的最高境界是让领导成为自己的职场资源。</li>
+<li><strong>组织共赢</strong>：下属要成为领导在战略执行上的破局尖刀，而领导则是下属获取预算、平台、授权与核心推荐的最高端杠杆。</li>
+<li><strong>执行防线</strong>：抛弃下属只承担任务的狭隘思维，通过帮助领导达成其核心业务目标，顺理成章地将领导的资源导流给自己，实现组织、领导、个人的多赢闭环。 (页 153)</li>
+<br>
+<p>---</p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        向上管理 Portfolio B 莫兰迪高密知识图谱 v1.0. 萧雨《向上管理与你的领导相互成就》拆书图谱.
+    </footer>
+
+    <script>
+        // Theme Toggle Logic
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.getElementById('theme-toggle');
+            if (body.classList.contains('light-mode')) {
+                body.classList.remove('light-mode');
+                btn.innerHTML = '🌙 暗色模式';
+            } else {
+                body.classList.add('light-mode');
+                btn.innerHTML = '☀️ 亮色模式';
+            }
+        }
+
+        // Sidebar Tabs Switch
+        function switchTab(btnElement, tabId) {
+            const buttons = document.querySelectorAll('.sidebar-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            const panels = document.querySelectorAll('.tab-panel');
+            panels.forEach(p => p.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // Card Filtering
+        function filterCards(moduleName, btnElement) {
+            const pills = document.querySelectorAll('.filter-pill');
+            pills.forEach(p => p.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(c => {
+                if (moduleName === 'all' || c.getAttribute('data-module') === moduleName) {
+                    c.style.display = 'flex';
+                } else {
+                    c.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

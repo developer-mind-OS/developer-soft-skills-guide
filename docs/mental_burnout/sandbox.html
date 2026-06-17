@@ -1,0 +1,2117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>摆脱精神内耗 心理自救填空模板库 | 开发者心智系统 developer-mind-OS</title>
+    <style>
+        /* =====================================================================
+           Etsy-Inspired Morandi Light Luxury Styling & Theme Colors
+           ===================================================================== */
+        :root {
+            --bg-color: #F8FAF9;
+            --sidebar-bg: #FFFFFF;
+            --card-bg: #FFFFFF;
+            --text-main: #2D3748;
+            --text-muted: #718096;
+            --primary: #2D3748;     /* Slate Blue */
+            --green: #0F766E;       /* Pine Green */
+            --red: #9B2C2C;         /* Crimson Red */
+            --charcoal: #374151;    /* Dark Charcoal */
+            --grey: #4A5568;        /* Muted Grey */
+            --border: #E2E8F0;
+            --accent: #E6FFFA;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Basic Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft YaHei", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            overflow-y: auto;
+        }
+
+        .sidebar-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar-subtitle {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
+        }
+
+        .nav-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .nav-category {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--green);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 18px;
+            margin-bottom: 4px;
+            padding: 4px 6px;
+            border-bottom: 1px dashed var(--border);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-category:first-of-type {
+            margin-top: 0;
+        }
+        
+        .nav-item {
+            padding: 10px 14px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-item:hover {
+            background-color: var(--bg-color);
+            color: var(--primary);
+        }
+
+        .nav-item.active {
+            background-color: var(--accent);
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 24px;
+            font-size: 11px;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+        }
+
+        /* Main Content Area */
+        .content {
+            margin-left: 280px;
+            flex-grow: 1;
+            padding: 40px 60px;
+            max-width: 1200px;
+        }
+
+        .header {
+            margin-bottom: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .book-meta {
+            font-size: 12px;
+            color: var(--green);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .title {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .actions-bar {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 8px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            background-color: #FFFFFF;
+            color: var(--text-main);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            border-color: var(--text-main);
+            background-color: var(--bg-color);
+        }
+
+        .btn-primary {
+            background-color: var(--green);
+            color: #FFFFFF;
+            border-color: var(--green);
+        }
+
+        .btn-primary:hover {
+            background-color: #0d635c;
+            border-color: #0d635c;
+        }
+
+        /* Template Container & Cards */
+        .template-section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .template-section.active {
+            display: block;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+
+        .card-header {
+            margin-bottom: 24px;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 12px;
+        }
+
+        .card-tag {
+            font-size: 11px;
+            color: var(--green);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        /* Form Controls */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .form-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 12px;
+            font-size: 13px;
+            font-family: inherit;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            resize: vertical;
+            color: var(--text-main);
+            transition: var(--transition);
+            background-color: #FAFAFA;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--green);
+            background-color: #FFFFFF;
+            box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 13px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-main);
+            transition: var(--transition);
+            background-color: #FAFAFA;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus {
+            outline: none;
+            border-color: var(--green);
+            background-color: #FFFFFF;
+        }
+
+        /* Checkbox list */
+        .checklist {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background-color: #FAFAFA;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .check-item:hover {
+            border-color: var(--text-muted);
+            background-color: #FFFFFF;
+        }
+
+        .check-item input[type="checkbox"] {
+            margin-top: 4px;
+            accent-color: var(--green);
+            width: 16px;
+            height: 16px;
+        }
+
+        .check-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        .check-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* Diagnostic Gauge/Alert */
+        .diagnostic-box {
+            padding: 18px;
+            border-radius: 8px;
+            background-color: #F7FAFC;
+            border: 1px solid var(--border);
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .diagnostic-score {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .score-val {
+            font-size: 24px;
+            color: var(--green);
+            font-weight: 800;
+        }
+
+        .diagnostic-status {
+            font-size: 13px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 9999px;
+            background-color: var(--border);
+            color: var(--text-muted);
+        }
+
+        .diagnostic-status.warning {
+            background-color: #FFF5F5;
+            color: var(--red);
+            border: 1px solid #FED7D7;
+            animation: pulse 2s infinite;
+        }
+
+        /* Sliders / Allocator */
+        .slider-item {
+            margin-bottom: 16px;
+        }
+
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .slider-val {
+            font-weight: 700;
+            color: var(--green);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--green);
+            height: 6px;
+            border-radius: 9999px;
+            background-color: var(--border);
+            outline: none;
+        }
+
+        .allocator-summary {
+            padding: 16px;
+            border-radius: 8px;
+            background-color: #F0FDF4;
+            border: 1px solid #BBF7D0;
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .allocator-total {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--green);
+        }
+
+        .total-val {
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .allocator-message {
+            font-size: 12px;
+            font-weight: 500;
+            color: #166534;
+        }
+
+        .allocator-message.error {
+            background-color: #FEF2F2;
+            border-color: #FCA5A5;
+            color: var(--red);
+        }
+
+        /* Declarations */
+        .declaration-box {
+            background-color: #FFFDF5;
+            border: 1px dashed #FCD34D;
+            padding: 24px;
+            border-radius: 8px;
+            position: relative;
+            margin-top: 20px;
+        }
+
+        .declaration-quote {
+            font-size: 14px;
+            font-style: italic;
+            color: #78350F;
+            font-weight: 500;
+            position: relative;
+            z-index: 2;
+        }
+
+        .declaration-fill {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #78350F;
+            color: #78350F;
+            font-weight: 700;
+            font-size: 14px;
+            padding: 0 4px;
+            text-align: center;
+            outline: none;
+            width: auto;
+            min-width: 100px;
+            display: inline-block;
+        }
+
+        /* Table formats inside cards */
+        .card-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin-top: 14px;
+        }
+
+        .card-table th {
+            text-align: left;
+            padding: 10px;
+            background-color: var(--bg-color);
+            border-bottom: 2px solid var(--border);
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .card-table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+
+        
+        /* Category Navigation (Top of content) */
+        .category-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            background-color: #FFFFFF;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .category-btn:hover {
+            border-color: var(--text-main);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+        }
+
+        .category-btn.active {
+            background-color: var(--green);
+            color: #FFFFFF;
+            border-color: var(--green);
+            box-shadow: 0 4px 10px rgba(15, 118, 110, 0.2);
+        }
+
+        /* =====================================================================
+           Print Media Queries - Crucial for Etsy Printable PDF Export
+           ===================================================================== */
+        @media print {
+            body {
+                background-color: #FFFFFF;
+                color: #000000;
+                display: block;
+                font-size: 12pt;
+            }
+
+            .sidebar, .category-nav {
+                display: none !important;
+            }
+
+            .content {
+                margin-left: 0 !important;
+                padding: 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+
+            .header, .actions-bar, .btn, .form-desc, .sidebar-footer {
+                display: none !important;
+            }
+
+            .template-section {
+                display: none !important;
+            }
+
+            .template-section.active {
+                display: block !important;
+            }
+
+            .card {
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                background: transparent !important;
+            }
+
+            .card-header {
+                border-bottom: 2px solid #000000 !important;
+                margin-bottom: 20px !important;
+            }
+
+            textarea, input[type="text"], input[type="number"] {
+                border: none !important;
+                border-bottom: 1px solid #718096 !important;
+                border-radius: 0 !important;
+                background-color: transparent !important;
+                padding: 4px 0 !important;
+                font-size: 11pt !important;
+            }
+
+            /* Hide sliders and checkboxes for clean printout if empty, or style them */
+            input[type="range"] {
+                display: none !important;
+            }
+
+            .slider-val {
+                border-bottom: 1px solid #000000;
+                padding: 0 10px;
+            }
+
+            .check-item {
+                border: none !important;
+                background: transparent !important;
+                padding: 4px 0 !important;
+            }
+
+            .check-item input[type="checkbox"] {
+                border: 1px solid #000000 !important;
+            }
+
+            .declaration-box {
+                background: transparent !important;
+                border: 1px dashed #000000 !important;
+            }
+
+            .allocator-summary, .diagnostic-box {
+                border: 1px solid #000000 !important;
+                background: transparent !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR NAVIGATION -->
+    <div class="sidebar">
+        <div class="sidebar-title">《摆脱精神内耗》</div>
+        <div class="sidebar-subtitle">心理防线与自救填空模板库 (v1.0)</div>
+        
+                        <ul class="nav-list">
+            <li class="nav-category">🛡️ 真实内疚与期望审计 (1-5)</li>
+            <li class="nav-item active" onclick="switchTab(1)">
+                <span>1.</span> 真实内疚“6A”解脱坊
+            </li>
+            <li class="nav-item" onclick="switchTab(2)">
+                <span>2.</span> 模糊期望“量化”置换表
+            </li>
+            <li class="nav-item" onclick="switchTab(3)">
+                <span>3.</span> 过时期望“断舍离”审计
+            </li>
+            <li class="nav-item" onclick="switchTab(4)">
+                <span>4.</span> 拾人牙慧价值观真伪清单
+            </li>
+            <li class="nav-item" onclick="switchTab(5)">
+                <span>5.</span> 内疚操控9大标志诊断
+            </li>
+
+            <li class="nav-category">🌀 自责解释与习惯防线 (6-10)</li>
+            <li class="nav-item" onclick="switchTab(6)">
+                <span>6.</span> 责任边界“客观拆解”滑块
+            </li>
+            <li class="nav-item" onclick="switchTab(7)">
+                <span>7.</span> “不祥喜悦”阻断宣言
+            </li>
+            <li class="nav-item" onclick="switchTab(8)">
+                <span>8.</span> CBT-PEEL 情绪自救表
+            </li>
+            <li class="nav-item" onclick="switchTab(9)">
+                <span>9.</span> 内疚操控“反弹话术库”
+            </li>
+            <li class="nav-item" onclick="switchTab(10)">
+                <span>10.</span> 8个日常习惯打卡表
+            </li>
+
+            <li class="nav-category">⌛ 决策瘫痪与能量泄露 (11-14)</li>
+            <li class="nav-item" onclick="switchTab(11)">
+                <span>11.</span> 决策瘫痪（过度思考）阻断表
+            </li>
+            <li class="nav-item" onclick="switchTab(12)">
+                <span>12.</span> 自责型解释重构日志
+            </li>
+            <li class="nav-item" onclick="switchTab(13)">
+                <span>13.</span> 完美主义及格线实验表
+            </li>
+            <li class="nav-item" onclick="switchTab(14)">
+                <span>14.</span> 精神能量泄漏审计表
+            </li>
+
+            <li class="nav-category">🛑 社交迎合、反刍与拖延 (15-19)</li>
+            <li class="nav-item" onclick="switchTab(15)">
+                <span>15.</span> 讨好人际安全防护墙
+            </li>
+            <li class="nav-item" onclick="switchTab(16)">
+                <span>16.</span> 睡前反刍强行杀进程
+            </li>
+            <li class="nav-item" onclick="switchTab(17)">
+                <span>17.</span> 自我关怀三步解脱宣言
+            </li>
+            <li class="nav-item" onclick="switchTab(18)">
+                <span>18.</span> 完美拖延微动作漏斗
+            </li>
+            <li class="nav-item" onclick="switchTab(19)">
+                <span>19.</span> 不祥喜悦脱敏记录本
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <div>作者：瓦洛丽·伯顿</div>
+            <div style="margin-top: 4px; font-size: 10px;">Etsy 轻奢莫兰迪版式设计</div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="content">
+        <div class="header" style="text-align: center; display: block; margin-bottom: 32px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <div class="book-meta" style="margin-bottom: 0;">CBT Self-Coaching Worksheets</div>
+                <div class="actions-bar">
+                    <button class="btn" onclick="resetAll()">重置输入</button>
+                    <button class="btn btn-primary" onclick="window.print()">打印 / 导出 PDF</button>
+                </div>
+            </div>
+            <h1 class="title" style="font-size: 28px; font-weight: 800; color: var(--primary); margin-bottom: 12px; text-align: center;">摆脱精神内耗 - 心理防线与自救工作坊</h1>
+            <p class="subtitle" style="font-size: 13px; color: var(--text-muted); max-width: 800px; margin: 0 auto 24px auto; line-height: 1.6; text-align: center;">
+                基于《摆脱精神内耗》原书核心 CBT 与自我教练机制开发。请选择下方的专业维度卡片，进行系统的抗内耗与防御自救练习。
+            </p>
+        </div>
+
+        <!-- CATEGORY TABS -->
+        <div class="category-nav">
+            <button class="category-btn active" id="cat-btn-1" onclick="switchCategory(1)">
+                <span>🛡️</span> 1. 真实内疚与期望审计 (1-5)
+            </button>
+            <button class="category-btn" id="cat-btn-2" onclick="switchCategory(2)">
+                <span>🌀</span> 2. 自责解释与习惯防线 (6-10)
+            </button>
+            <button class="category-btn" id="cat-btn-3" onclick="switchCategory(3)">
+                <span>⌛</span> 3. 决策瘫痪与能量泄露 (11-14)
+            </button>
+            <button class="category-btn" id="cat-btn-4" onclick="switchCategory(4)">
+                <span>🛑</span> 4. 社交迎合、反刍与拖延 (15-19)
+            </button>
+        </div>
+
+        <!-- 1. 真实内疚“6A”自我解脱工作坊 -->
+        <div id="tab-1" class="template-section active">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Template 01</div>
+                    <div class="card-title">真实内疚“6A”自我解脱工作坊</div>
+                    <div class="card-desc">适用场景：当你确定自己做错了某件事，伤害了他人或违背了真实价值观，需要从真实内疚中解脱。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">A1：承认过错 (Admit)</label>
+                    <div class="form-desc">我承认我做错了以下事情：</div>
+                    <textarea id="t1-admit-1" placeholder="列出具体行为与错误事实..."></textarea>
+                    <div class="form-desc" style="margin-top: 10px;">我造成的具体伤害和后果是：</div>
+                    <textarea id="t1-admit-2" placeholder="分析对他人的实质性影响..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">A2：评估错误 (Assess)</label>
+                    <div class="form-desc">我评估这一行为违反了我的哪些核心价值观、规则或期望？</div>
+                    <textarea id="t1-assess-1" placeholder="例如：违背了坦诚、体贴、或者尊重他人的原则..."></textarea>
+                    <div class="form-desc" style="margin-top: 10px;">对受害者造成的情感或实质损失程度（1-10分评分）：</div>
+                    <input type="number" id="t1-assess-2" min="1" max="10" placeholder="1-10分" style="width: 120px;">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">A3：道歉 (Apologize)</label>
+                    <div class="form-desc">我将向谁致以真诚的歉意？</div>
+                    <input type="text" id="t1-apologize-name" placeholder="姓名/关系角色" style="width: 300px; margin-bottom: 10px;">
+                    <div class="form-desc">我设计的道歉话术（必须包含：具体承认什么错、对他人造成的麻烦表达痛心、补偿意愿）：</div>
+                    <textarea id="t1-apologize-script" placeholder="“ 真的很抱歉，我之前在...事情上做错了，这给你带来了...的麻烦，我感到非常痛心。我本可以...，为了弥补，我将... ”"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">A4：弥补错误 (Atone)</label>
+                    <div class="form-desc">我能采取什么具体行动来补救或挽回损失？</div>
+                    <textarea id="t1-atone-1" placeholder="具体的实质性补偿行动..."></textarea>
+                    <div class="form-desc" style="margin-top: 10px;">如果无法挽回，我可以做些什么来阻止进一步的伤害，或付出什么代价来吸取教训？</div>
+                    <textarea id="t1-atone-2" placeholder="如何控制风险并记录教训..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">A5：行为调整 (Adjust)</label>
+                    <div class="form-desc">为了确保在未来不重蹈覆辙，我将如何调整我的运作流程、规则或环境？</div>
+                    <textarea id="t1-adjust-1" placeholder="例如：改进工作日程、提前沟通、设定系统提醒等..."></textarea>
+                    <div class="form-desc" style="margin-top: 10px;">触发下一次类似情景时，我的新行为反应预案：</div>
+                    <textarea id="t1-adjust-2" placeholder="建立条件反射防线：一旦遇到...场景，我将立即..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">A6：原谅自己 (Accept)</label>
+                    <div class="form-desc">事实已经发生，我接纳我不完美的过去。请在下方填入具体错误以定制您的自我宣告：</div>
+                    <div class="declaration-box">
+                        <div class="declaration-quote">
+                            “我看到了我犯下的错误（ 
+                            <input type="text" id="t1-accept-fill" class="declaration-fill" placeholder="输入具体错事" style="width: 250px;" oninput="syncDeclaration(1)"> 
+                            ）。我已尽力去致歉和弥补，我选择放下这个情绪包袱，用爱和勇气走向未来的生活。”
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. 模糊期望“量化”置换表 -->
+        <div id="tab-2" class="template-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Template 02</div>
+                    <div class="card-title">模糊期望“具体量化”置换表</div>
+                    <div class="card-desc">适用场景：当脑海中不断回响着“我应该多做一点”、“我不是个好母亲/好女儿”等无法衡量的自责时。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">第一步：捕获脑海中的模糊期望 (Blurry Expectation)</label>
+                    <div class="form-desc">捕获内心声音：</div>
+                    <textarea id="t2-step1" placeholder="例如：我应该多抽点时间陪父母 / 我应该把房间整理得足够干净..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">第二步：明确指出不可量化的“鬼影”词汇</label>
+                    <div class="form-desc">例如“多一点”、“足够”、“合格”、“好”。我的模糊期望中，这个词是：</div>
+                    <input type="text" id="t2-step2" placeholder="鬼影词汇，如：多抽点、足够、合格" style="width: 250px;">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">第三步：重写为“清晰、可衡量、包含停止线”的期望标准</label>
+                    <div class="form-desc">1. 时间/频率标准：</div>
+                    <input type="text" id="t2-step3-1" placeholder="如：每周打电话 1 次，每次 15 分钟">
+                    <div class="form-desc" style="margin-top: 10px;">2. 实质内容标准：</div>
+                    <input type="text" id="t2-step3-2" placeholder="如：只要了解父母的基本健康、解答他们的问题即可">
+                    <div class="form-desc" style="margin-top: 10px;">3. 明确的“停止线”（一旦做到这一步，我就完成了期望，必须停止自责）：</div>
+                    <textarea id="t2-step3-3" placeholder="只要做完了上述两点，本周我的任务即算完成，我的内疚警报必须强行降噪。"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">第四步：对比宣告</label>
+                    <div class="declaration-box">
+                        <div class="declaration-quote">
+                            “过去我因为没达成【 
+                            <input type="text" id="t2-decl-1" class="declaration-fill" placeholder="输入模糊期望" style="width: 200px;"> 
+                            】而感到内疚。现在我向自己声明，只要我做到了【 
+                            <input type="text" id="t2-decl-2" class="declaration-fill" placeholder="输入量化停止线" style="width: 250px;"> 
+                            】，我就已经达成了当下的目标，我选择保持内心的平静。”
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. 人生阶段与过时期望“断舍离”审计表 -->
+        <div id="tab-3" class="template-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Template 03</div>
+                    <div class="card-title">人生阶段与过时期望“断舍离”审计表</div>
+                    <div class="card-desc">适用场景：当你的外部环境或角色已经发生巨大变化，却依然用旧标准折磨自己时。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">1. 我目前所处的人生新阶段与核心愿景</label>
+                    <div class="form-desc">阶段定义（如：初创企业阶段、哺乳期二胎、转型备考期）：</div>
+                    <input type="text" id="t3-phase" placeholder="新人生阶段名称" style="width: 400px; margin-bottom: 10px;">
+                    <div class="form-desc">当前前三优先级的任务：</div>
+                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                        <input type="text" id="t3-pri1" placeholder="优先级 ①">
+                        <input type="text" id="t3-pri2" placeholder="优先级 ②">
+                        <input type="text" id="t3-pri3" placeholder="优先级 ③">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">2. 正在折磨我的旧期望标准</label>
+                    <div class="form-desc">来源于我人生哪个旧阶段？（如：单身自由时期、普通员工时期）：</div>
+                    <input type="text" id="t3-old-phase" placeholder="旧人生阶段" style="width: 400px; margin-bottom: 10px;">
+                    <div class="form-desc">具体期望表述：</div>
+                    <textarea id="t3-old-expectation" placeholder="“我应该像过去那样，保持每天高强度社交、每周看两本书、家里时刻一尘不染...”"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">3. 冲突分析</label>
+                    <div class="form-desc">如果我继续坚持这个旧期望，会对当下的核心愿景造成什么破坏？</div>
+                    <textarea id="t3-conflict" placeholder="分析精力超载、时间冲突和心理焦虑对主线任务的影响..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">4. 期望解约宣告</label>
+                    <div class="declaration-box">
+                        <div class="declaration-quote">
+                            “我当下的人生阶段是【 
+                            <input type="text" id="t3-decl-1" class="declaration-fill" placeholder="新阶段" style="width: 150px;"> 
+                            】。那个要求我【 
+                            <input type="text" id="t3-decl-2" class="declaration-fill" placeholder="过期旧期望" style="width: 250px;"> 
+                            】的标准已经过期。为了专注于我目前的头等愿景【 
+                            <input type="text" id="t3-decl-3" class="declaration-fill" placeholder="核心优先级" style="width: 200px;"> 
+                            】，我在此声明主动放弃这一过期标准。我允许自己在这个领域表现得‘不完美’。”
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. 拾人牙慧式价值观“真伪鉴别”清单 -->
+        <div id="tab-4" class="template-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Template 04</div>
+                    <div class="card-title">拾人牙慧式价值观“真伪鉴别”清单</div>
+                    <div class="card-desc">适用场景：当你感到内疚，但发现这并不是你发自内心认同的价值观，而是被动接受了他人的期望（如父母的传统教条、社交媒体对完美的定义）。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">1. 追根溯源</label>
+                    <div class="form-desc">这个“我应该做”的标准，我最早是在哪里听到或看到谁在践行的？</div>
+                    <textarea id="t4-source" placeholder="例如：我妈妈当年总是清晨为全家做早饭 / 朋友圈里的精致职业女性形象..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">2. 利益归属</label>
+                    <div class="form-desc">如果我完美达成了这个标准，谁能获得最大程度的心安或好处？</div>
+                    <textarea id="t4-benefit" placeholder="例如：是我自己感到价值升华，还是仅仅是我的伴侣免去了家务的烦恼，或者是父母觉得面子过得去？..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">3. 极端假设</label>
+                    <div class="form-desc">如果我选择完全不理会这个标准，我是伤害了自己内心的善良和良知，还是仅仅让提出这个期望的人失望了？</div>
+                    <textarea id="t4-hypothetical" placeholder="例如：虽然我妈妈不赞同，但这并没有降低我的道德操守，我仅仅是让他们有些失望。所以这是拾人牙慧的虚假内疚。"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">4. 价值观置换声明</label>
+                    <div class="declaration-box">
+                        <div class="declaration-quote">
+                            别人的价值观/期望：“ 
+                            <input type="text" id="t4-decl-1" class="declaration-fill" placeholder="别人的规则" style="width: 250px; display: block; margin-bottom: 10px;"> 
+                            ”<br>
+                            我自己的真实价值观：“ 
+                            <input type="text" id="t4-decl-2" class="declaration-fill" placeholder="我的真实信念" style="width: 250px; display: block; margin-bottom: 10px;"> 
+                            ”<br>
+                            “我决定不再为了别人的不切实际标准折磨自己.我选择按照我自己的核心价值观【 
+                            <input type="text" id="t4-decl-3" class="declaration-fill" placeholder="我的价值观" style="width: 150px;"> 
+                            】去工作和生活。”
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. 内疚操控者（内疚之坑）9大标志诊断与防线策划 -->
+        <div id="tab-5" class="template-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Template 05</div>
+                    <div class="card-title">内疚操控者 9 大标志诊断与防线策划</div>
+                    <div class="card-desc">适用场景：评估你与某人的关系，看看他是否故意按下你的“内疚按钮（内疚之坑）”来迫使你做妥协。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">诊断对象</label>
+                    <input type="text" id="t5-target" placeholder="请输入你要评估的交往对象（如：我的伴侣、我的母亲、老板）" style="width: 400px; margin-bottom: 15px;" oninput="updateT5Target()">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">勾选以下符合的事实信号：</label>
+                    <div class="checklist">
+                        <label class="check-item">
+                            <input type="checkbox" id="t5-c1" onchange="calculateT5Score()">
+                            <div>
+                                <span class="check-label">1. 无法达成</span>
+                                <div class="check-desc">你似乎永远达不到对方的标准，无论怎么做，对方总能挑出刺，觉得你“做得不够”。</div>
+                            </div>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" id="t5-c2" onchange="calculateT5Score()">
+                            <div>
+                                <span class="check-label">2. 盲目对比</span>
+                                <div class="check-desc">对方经常拿你和别人比较（“你看邻居家的孩子/别的同事...”），以此暗示你的不足。</div>
+                            </div>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" id="t5-c3" onchange="calculateT5Score()">
+                            <div>
+                                <span class="check-label">3. 情绪勒索</span>
+                                <div class="check-desc">对方利用自己的“脆弱无助”施压，宣称没有你他生活就会崩溃，强行建立共生依恋。</div>
+                            </div>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" id="t5-c4" onchange="calculateT5Score()">
+                            <div>
+                                <span class="check-label">4. 负债错觉</span>
+                                <div class="check-desc">对方让你感觉欠了对方感情债，或者是在恩赐、容忍你的“不完美”。</div>
+                            </div>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" id="t5-c5" onchange="calculateT5Score()">
+                            <div>
+                                <span class="check-label">5. 绑架爱意</span>
+                                <div class="check-desc">对方频繁套用公式：“如果你真的爱我 / 真的为了公司好，你就会放弃你的原则做这件事。”</div>
+                            </div>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" id="t5-c6" onchange="calculateT5Score()">
+                            <div>
+                                <span class="check-label">6. 说“不”恐惧</span>
+                                <div class="check-desc">对他说一个“不”字会让你内心充满罪恶和恐惧，因为这可能意味着面临爆发或冷暴力。</div>
+                            </div>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" id="t5-c7" onchange="calculateT5Score()">
+                            <div>
+                                <span class="check-label">7. 单向归罪</span>
+                                <div class="check-desc">一旦出现坏事，对方绝不反思自己，总是单方面指责是你的疏忽或错误。</div>
+                            </div>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" id="t5-c8" onchange="calculateT5Score()">
+                            <div>
+                                <span class="check-label">8. 惩罚施加</span>
+                                <div class="check-desc">对方惯用冷暴力、沉默不语、或者收回关爱等被动攻击手段，直到你主动鞠躬道歉。</div>
+                            </div>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" id="t5-c9" onchange="calculateT5Score()">
+                            <div>
+                                <span class="check-label">9. 痛点攻击</span>
+                                <div class="check-desc">对方摸清了你的道德软肋（如单亲父母对孩子的亏欠感），在冲突中反复按下该按钮。</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="diagnostic-box">
+                    <div class="diagnostic-score">
+                        诊断得分：<span class="score-val" id="t5-score">0</span> / 9 分
+                    </div>
+                    <div class="diagnostic-status" id="t5-status">暂无警报</div>
+                </div>
+
+                <div class="form-group" style="margin-top: 24px;">
+                    <label class="form-label">防线反弹策划</label>
+                    <div class="form-desc">针对他/她经常说的内疚指责话术：</div>
+                    <textarea id="t5-blame" placeholder="输入对方经常对你说的道德绑架词汇..."></textarea>
+                    <div class="form-desc" style="margin-top: 10px;">我设计的“边界防线复读机”反击话术（平和、冷淡、坚守界限）：</div>
+                    <textarea id="t5-reply" placeholder="“我很理解你想要...，但我有我当下的职业责任。我将在周五完成这部分，感谢理解。”"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. 自责解释风格“责任边界客观拆解”圆盘 -->
+        <div id="tab-6" class="template-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Template 06</div>
+                    <div class="card-title">自责解释风格“责任边界客观拆解”滑块</div>
+                    <div class="card-desc">适用场景：当事情搞砸时，你习惯性地认为“这全是因为我”，陷入全盘自责。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">坏事件定义</label>
+                    <input type="text" id="t6-event" placeholder="发生的令你自责的坏事（例如：公司的重大合作由于沟通问题黄了 / 孩子今天发烧了）" style="width: 100%;">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">因素拆解（分配百分比，总和必须等于 100%）：</label>
+                    <div class="form-desc">拖动滑块客观分配以下四种成因的权重：</div>
+
+                    <div class="slider-item">
+                        <div class="slider-header">
+                            <span>1. 宏观环境与不可控因素 (Macro Environment)</span>
+                            <span class="slider-val"><span id="t6-v1-txt">25</span>%</span>
+                        </div>
+                        <input type="range" id="t6-v1" min="0" max="100" value="25" oninput="updateAllocator()">
+                        <div class="form-desc" style="font-size: 11px;">指市场规律、恶劣天气、行业整体下行等任何人无法扭转的自然因素。</div>
+                    </div>
+
+                    <div class="slider-item">
+                        <div class="slider-header">
+                            <span>2. 对方/当事人的个人决策与选择 (Others' Choice)</span>
+                            <span class="slider-val"><span id="t6-v2-txt">25</span>%</span>
+                        </div>
+                        <input type="range" id="t6-v2" min="0" max="100" value="25" oninput="updateAllocator()">
+                        <div class="form-desc" style="font-size: 11px;">对方当事人本身性格上的局限、偏好以及他自己所做的主动商业/生活决策。</div>
+                    </div>
+
+                    <div class="slider-item">
+                        <div class="slider-header">
+                            <span>3. 历史因素与系统局限性 (History & System)</span>
+                            <span class="slider-val"><span id="t6-v3-txt">25</span>%</span>
+                        </div>
+                        <input type="range" id="t6-v3" min="0" max="100" value="25" oninput="updateAllocator()">
+                        <div class="form-desc" style="font-size: 11px;">指团队长期积攒的系统Bug、前任留下的历史债务、或是流程结构的先天不足。</div>
+                    </div>
+
+                    <div class="slider-item">
+                        <div class="slider-header">
+                            <span>4. 我个人的具体失误与越界 (My Responsibility)</span>
+                            <span class="slider-val"><span id="t6-v4-txt">25</span>%</span>
+                        </div>
+                        <input type="range" id="t6-v4" min="0" max="100" value="25" oninput="updateAllocator()">
+                        <div class="form-desc" style="font-size: 11px;">我能直接决定、控制并由于操作失误导致问题恶化的具体行为。</div>
+                    </div>
+                </div>
+
+                <div class="allocator-summary" id="t6-summary">
+                    <div class="allocator-total">
+                        分配总权重：<span class="total-val" id="t6-total">100</span>%
+                    </div>
+                    <div class="allocator-message" id="t6-message">权重之和已达成 100%，符合客观逻辑。</div>
+                </div>
+
+                <div class="form-group" style="margin-top: 24px;">
+                    <label class="form-label">我的客观责任评估结论：</label>
+                    <textarea id="t6-conclusion" style="min-height: 100px;" placeholder="点击滑块后，此处将自动根据分配权重为您导出合理的心理自救责任结论..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. “不祥喜悦”阻断宣言 -->
+        <div id="tab-7" class="template-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Template 07</div>
+                    <div class="card-title">重建幸福冒险“不祥喜悦”阻断宣言</div>
+                    <div class="card-desc">适用场景：当生活一切顺利，你本该享受快乐，却莫名焦虑、提前担心发生灾难并感到内疚时。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">1. 捕获当下的幸福与负面焦虑</label>
+                    <div class="form-desc">我此刻体验到的极度喜悦是：</div>
+                    <textarea id="t7-joy" placeholder="例如：新书顺利出版、孩子乖巧、今天放长假心情很好..."></textarea>
+                    <div class="form-desc" style="margin-top: 10px;">我脑海中冒出的不祥预感与心碎防范是：</div>
+                    <textarea id="t7-fear" placeholder="例如：觉得一定好景不长、担心马上会有倒霉的事发生来破坏一切..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">2. 重建幸福冒险誓词</label>
+                    <div class="form-desc">请阅读并签署这份反焦虑的心理保护契约：</div>
+                    <div class="declaration-box">
+                        <div class="declaration-quote">
+                            “我看见了脑海中这个不祥的喜悦。我承认拥有幸福是脆弱的，也是一种冒险。但我决定珍惜当下的快乐，为我所拥有的【 
+                            <input type="text" id="t7-decl-fill" class="declaration-fill" placeholder="输入幸福小事" style="width: 250px;"> 
+                            】表达真诚的感激。<br><br>
+                            我拒绝用虚无的内疚来预支痛苦。如果未来的坏事发生，我也有爱和勇气去面对；但在此时此刻，我选择拥抱当下的快乐。感觉好，就是真的好！”
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. CBT-PEEL 情绪自救表 -->
+        <div id="tab-8" class="template-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Template 08</div>
+                    <div class="card-title">CBT-PEEL 情绪自救分析工作表</div>
+                    <div class="card-desc">适用场景：日常遇到突发内疚内耗事件时，引导大脑放慢脚步、用理性重构内心叙事。</div>
+                </div>
+
+                <table class="card-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 200px;">步骤 / 引导问题</th>
+                            <th>我的记录与填空</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <strong>P (Pinpoint) 定位触发点</strong><br>
+                                <span class="check-desc">是什么具体场景触发了我的内疚感？给内疚源打上具体标签。</span>
+                            </td>
+                            <td>
+                                <textarea id="t8-p" placeholder="我因为：例如今天出差没能陪孩子写作业，而感到内疚。"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>E (Examine) 审视叙事</strong><br>
+                                <span class="check-desc">关于这个触发点，我脑海中正在对自己说什么？我编织了什么自责故事？</span>
+                            </td>
+                            <td>
+                                <textarea id="t8-e1" placeholder="我脑海中的声音是：我是一个自私的妈妈，我应该为了孩子牺牲职业前途，否则我就不配做母亲。"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>E (Exchange) 置换真实</strong><br>
+                                <span class="check-desc">客观事实是什么？符合真相、更健康的理性置换想法是什么？</span>
+                            </td>
+                            <td>
+                                <textarea id="t8-e2" placeholder="事实是：我的出差保障了家庭生活质量。更理性的置换想法是：出差不等于不爱孩子。我可以选择工作，也信任父亲对他的照顾。我只要高质量地陪伴他即可。"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>L (List) 列出证据</strong><br>
+                                <span class="check-desc">什么样的既有事实，能支撑我这个置换后的新想法？</span>
+                            </td>
+                            <td>
+                                <textarea id="t8-l" placeholder="铁证如山：1. 上周周末我带孩子去游乐园玩了整整一天。 2. 孩子性格开朗，能够理解我为什么出差。"></textarea>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 9. 内疚操控“反弹话术库” -->
+        <div id="tab-9" class="template-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Template 09</div>
+                    <div class="card-title">人际与商业合作内疚操控“反弹话术库”</div>
+                    <div class="card-desc">适用场景：当面对他人或商业合作方的道德绑架和情绪勒索时，直接套用以下防线话术，保持声调平和，决不妥协。</div>
+                </div>
+
+                <div class="form-group" style="border-bottom: 1px solid var(--border); padding-bottom: 20px;">
+                    <label class="form-label">场景 1. 面对家庭与亲密关系的爱意勒索</label>
+                    <div class="form-desc">操控词汇：“如果你真的爱我/在乎这个家，你就应该放弃这个出差机会/少花精力在写书上。”</div>
+                    <div class="form-desc" style="margin-top: 10px;"><strong>反弹模版：</strong></div>
+                    <textarea id="t9-script1" style="min-height: 90px;">“我很爱你，也很在乎我们这个家。但我去出差是为了我们共同的家庭未来以及我个人的职业责任。这两者并不冲突，我会在周五回来，期待那时候和你拥抱。”</textarea>
+                </div>
+
+                <div class="form-group" style="border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-top: 20px;">
+                    <label class="form-label">场景 2. 面对周围人的闲言碎语与规范期待</label>
+                    <div class="form-desc">操控词汇：“你怎么舍得离开孩子出差这么多天？我可做不到，这对你来说一定很难吧。”</div>
+                    <div class="form-desc" style="margin-top: 10px;"><strong>反弹模版：</strong></div>
+                    <textarea id="t9-script2" style="min-height: 90px;">“谢谢你的关心。每个人都有适合自己家庭的合作分工。我出差期间我的丈夫会把孩子照顾得很好，我也信任我的家庭，并且我相信这对我的孩子来说也是一个有目标、能坚守的职业榜样。”</textarea>
+                </div>
+
+                <div class="form-group" style="margin-top: 20px;">
+                    <label class="form-label">场景 3. 面对商业合作方的“凄惨营销”与越界要求</label>
+                    <div class="form-desc">操控词汇：“我们在这个项目上投入了巨大精力，你们现在撤资/拒绝这个超纲服务会对我们造成致命打击，太不够朋友了！”</div>
+                    <div class="form-desc" style="margin-top: 10px;"><strong>反弹模版：</strong></div>
+                    <textarea id="t9-script3" style="min-height: 90px;">“我非常理解你们面临的困难，也希望你们能顺利渡过难关。但是，根据我们的合同条款，我们在此阶段必须终止合作/坚守原有服务边界。这是我们公司基于既定商业预算和规则做做出决策。谢谢你们之前的付出和配合。”</textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10. 8个日常习惯打卡表 -->
+        <div id="tab-10" class="template-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Template 10</div>
+                    <div class="card-title">找回快乐的 8 个日常习惯打卡表</div>
+                    <div class="card-desc">放下内疚是认知肌肉，需要每日坚持锻炼打卡，让自主快乐化为本能反应。</div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label class="form-label">打卡日期</label>
+                    <input type="text" id="t10-date" placeholder="如：2026 年 6 月 15 日" style="width: 250px;">
+                </div>
+
+                <table class="card-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px; text-align: center;">编号</th>
+                            <th style="width: 150px;">习惯名称</th>
+                            <th>今日实践记录 / 填空评估</th>
+                            <th style="width: 80px; text-align: center;">成功打卡</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: center; font-weight: bold;">1</td>
+                            <td><strong>留意快乐的消失</strong></td>
+                            <td>
+                                <input type="text" id="t10-h1" placeholder="我今天在哪里感到焦虑或内疚？我是否意识到快乐被偷走了？">
+                            </td>
+                            <td style="text-align: center;">
+                                <input type="checkbox" id="t10-c1" style="width: 18px; height: 18px; accent-color: var(--green);">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: bold;">2</td>
+                            <td><strong>接纳不完美的过去</strong></td>
+                            <td>
+                                <input type="text" id="t10-h2" placeholder="今天是否有令我遗憾的小失误？我是否做到了“和解并继续前进”？">
+                            </td>
+                            <td style="text-align: center;">
+                                <input type="checkbox" id="t10-c2" style="width: 18px; height: 18px; accent-color: var(--green);">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: bold;">3</td>
+                            <td><strong>重设自我期望</strong></td>
+                            <td>
+                                <input type="text" id="t10-h3" placeholder="我今天是否把某个模糊期望（如做家务）替换为了明确的“停止线”？">
+                            </td>
+                            <td style="text-align: center;">
+                                <input type="checkbox" id="t10-c3" style="width: 18px; height: 18px; accent-color: var(--green);">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: bold;">4</td>
+                            <td><strong>练习自我关怀</strong></td>
+                            <td>
+                                <input type="text" id="t10-h4" placeholder="今天我原谅了自己什么错？我对自己说了什么温柔的话？">
+                            </td>
+                            <td style="text-align: center;">
+                                <input type="checkbox" id="t10-c4" style="width: 18px; height: 18px; accent-color: var(--green);">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: bold;">5</td>
+                            <td><strong>坚守核心价值观</strong></td>
+                            <td>
+                                <input type="text" id="t10-h5" placeholder="今天我做出了哪个符合自身价值观、即使别人不理解的选择？">
+                            </td>
+                            <td style="text-align: center;">
+                                <input type="checkbox" id="t10-c5" style="width: 18px; height: 18px; accent-color: var(--green);">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: bold;">6</td>
+                            <td><strong>拆除内疚按钮</strong></td>
+                            <td>
+                                <input type="text" id="t10-h6" placeholder="今天谁试图按下我的内疚按钮？我是否成功起动防线反弹？">
+                            </td>
+                            <td style="text-align: center;">
+                                <input type="checkbox" id="t10-c6" style="width: 18px; height: 18px; accent-color: var(--green);">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: bold;">7</td>
+                            <td><strong>拥抱接纳不抗拒</strong></td>
+                            <td>
+                                <input type="text" id="t10-h7" placeholder="面对今天发生且无法改变的现实，我是否用“爱和勇气回应”代替了抗拒？">
+                            </td>
+                            <td style="text-align: center;">
+                                <input type="checkbox" id="t10-c7" style="width: 18px; height: 18px; accent-color: var(--green);">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: bold;">8</td>
+                            <td><strong>大声说出感恩</strong></td>
+                            <td>
+                                <input type="text" id="t10-h8" placeholder="我今天为拥有的哪件幸福小事表达了感恩，以此阻断不祥的喜悦？">
+                            </td>
+                            <td style="text-align: center;">
+                                <input type="checkbox" id="t10-c8" style="width: 18px; height: 18px; accent-color: var(--green);">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 11. 过度分析与决策瘫痪阻断表 -->
+        <div id="tab-11" class="template-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Template 11</div>
+                    <div class="card-title">过度分析与决策瘫痪阻断表 (Analysis Paralysis Loop Breaker)</div>
+                    <div class="card-desc">适用场景：面对选择（如换工作、买房、甚至日常决定）时，反复权衡、疯狂收集信息却迟迟不敢做决定，导致精神严重虚脱。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">1. 我目前感到极端纠结的决定：</label>
+                    <textarea id="t11-decision" placeholder="描述你迟迟做不出选择的决策..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">2. 内耗状态自测：</label>
+                    <div style="display: flex; gap: 20px; align-items: center; margin-bottom: 12px;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span class="form-desc" style="margin-bottom:0;">困扰天数：</span>
+                            <input type="text" id="t11-duration" placeholder="例如：7天" style="width: 100px;">
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span class="form-desc" style="margin-bottom:0;">收集信息/咨询人数：</span>
+                            <input type="text" id="t11-info-count" placeholder="例如：5份/3人" style="width: 150px;">
+                        </div>
+                    </div>
+                    <div class="checklist">
+                        <label class="check-item">
+                            <input type="checkbox" id="t11-100-percent">
+                            <div>
+                                <span class="check-label">我觉得我必须收集到 100% 的信息才安全，少一点都不敢做决定</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">3. 最坏结果理性拆解 (Feasibility Audit)</label>
+                    <div class="form-desc">如果我选了最直觉的那一项，最糟糕的情况是什么？（客观列出，不带形容词）</div>
+                    <textarea id="t11-worst" placeholder="例如：新换的工作不太适应，或者没有预期的那么有前景..."></textarea>
+                    <div class="form-desc" style="margin-top: 10px;">如果真的发生了，我的具体备份/补救措施是什么？</div>
+                    <textarea id="t11-backup" placeholder="例如：在原行业保持联系人脉，或者利用业余时间补充新技能..."></textarea>
+                    <div class="form-desc" style="margin-top: 10px;">这个“最坏结果”实际发生的概率（1-100%）：</div>
+                    <input type="number" id="t11-worst-prob" min="1" max="100" placeholder="%" style="width: 120px;">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">4. 直觉首选强行落子 (The 80/20 Rule Decision)</label>
+                    <div class="form-desc">在不考虑任何外部期望的前提下，我的潜意识第一直觉选择是：</div>
+                    <textarea id="t11-intuition" placeholder="你的第一直觉选择是..."></textarea>
+                    <div class="declaration-box">
+                        <div class="declaration-quote">
+                            “我设定必须在【 <input type="text" id="t11-decl-timer" class="declaration-fill" placeholder="输入小时数" style="width: 80px;"> 】小时内下定决心。我决定选择【 <input type="text" id="t11-decl-choice" class="declaration-fill" placeholder="输入直觉选择" style="width: 200px;"> 】，我相信我有能力承担后续的调整，完美的决策是做出来的，而不是凭空想出来的。”
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 12. 自责型解释风格重构日志 -->
+        <div id="tab-12" class="template-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Template 12</div>
+                    <div class="card-title">自责型解释风格重构日志 (Self-Criticism Reframing Log)</div>
+                    <div class="card-desc">适用场景：事情一出错（如项目延期、孩子感冒、人际冲突），第一反应是“都是我的错”、“我怎么什么都做不好”（自责解释风格）。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">1. 记录事件 (The Event)</label>
+                    <div class="form-desc">发生了什么不好的事？</div>
+                    <textarea id="t12-event" oninput="updateT12Conclusion()" placeholder="描述客观事件，不带情绪词..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">2. 自责对话定位 (The Blame Trap)</label>
+                    <div class="form-desc">我内心深处的自责声音在说什么？（捕获原话，如“我太差劲了/都是我搞砸的”）</div>
+                    <textarea id="t12-critique" oninput="updateT12Conclusion()" placeholder="例如：我怎么这么笨，连个沟通都做不好，我真是个失败者..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">3. 客观因素责任拆解 (Fact-based Responsibility Audit)</label>
+                    <div class="form-desc">[ 外部客观因素 ] (如天气、硬件故障、市场客观规律等)：</div>
+                    <textarea id="t12-external" oninput="updateT12Conclusion()" placeholder="客观物理原因..."></textarea>
+                    <div class="form-desc" style="margin-top: 10px;">[ 他人责任部分 ] (如队友失误、沟通延迟、对方自身的情绪问题等)：</div>
+                    <textarea id="t12-others" oninput="updateT12Conclusion()" placeholder="他人的选择与决策..."></textarea>
+                    <div class="form-desc" style="margin-top: 10px;">[ 我真正可控的部分 ] (非“态度”，而是具体可改变的步骤 and 行动)：</div>
+                    <textarea id="t12-my-control" oninput="updateT12Conclusion()" placeholder="我可以操作并直接改变的行为..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">4. 重构后的理性结论 (New Explanatory Style)</label>
+                    <div class="form-desc">系统基于您的责任拆解自动为您梳理的认知自救结论：</div>
+                    <textarea id="t12-conclusion" style="min-height: 120px;" placeholder="在上方输入内容后，此处将自动为您梳理结论..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- 13. 完美主义“及格线”暴露疗法实验表 -->
+        <div id="tab-13" class="template-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Template 13</div>
+                    <div class="card-title">完美主义“及格线”暴露疗法实验表 (Perfectionism Exposure Challenge)</div>
+                    <div class="card-desc">适用场景：由于极度追求完美，担心结果不佳而产生严重的“拖延症”；或是把 80% 的精力浪费在最后 5% 的细节修饰上。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">1. 实验项目设定</label>
+                    <div class="form-desc">我准备挑战的一件事（例：半小时写完大纲直接发领导，不反复检查）：</div>
+                    <textarea id="t13-event" placeholder="列出具体待挑战的任务..."></textarea>
+                    <div class="form-desc" style="margin-top: 10px;">我平常的完美主义标准（100分）：</div>
+                    <textarea id="t13-perfect-standard" placeholder="例如：格式必须精美、反复阅读五遍、确认没有任何措辞问题..."></textarea>
+                    <div class="form-desc" style="margin-top: 10px;">我本次挑战的“及格线”标准（70分，直接发布或提交）：</div>
+                    <textarea id="t13-pass-standard" placeholder="定义本次挑战中，只做到70分的要求..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">2. 情绪监控与预测</label>
+                    <div class="form-desc">如果我只做到 70 分，我预测的最坏结果是：</div>
+                    <textarea id="t13-worst-predict" placeholder="写下你的最坏担心..."></textarea>
+                    <div class="slider-item" style="margin-top: 15px;">
+                        <div class="slider-header">
+                            <span>此时我的焦虑度 (Anxiety Level)</span>
+                            <span class="slider-val"><span id="t13-anxiety-txt">5</span> / 10 分</span>
+                        </div>
+                        <input type="range" id="t13-anxiety" min="1" max="10" value="5" oninput="updateT13Anxiety()">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">3. 实验结果追踪（实验结束后填写）</label>
+                    <div class="form-desc">对方的实际反应 / 事情的实际结果是：</div>
+                    <textarea id="t13-actual-result" placeholder="客观记录发生了什么，不要脑补..."></textarea>
+                    <div class="form-desc" style="margin-top: 10px;">我发现的真相信号：</div>
+                    <div class="checklist">
+                        <label class="check-item">
+                            <input type="checkbox" id="t13-truth-1">
+                            <div>
+                                <span class="check-label">最坏的结果并没有发生，对方甚至没有注意到任何细节瑕疵。</span>
+                            </div>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" id="t13-truth-2">
+                            <div>
+                                <span class="check-label">事情直接做完交出去的成就感，远大于拖延等待带来的空虚感和焦虑。</span>
+                            </div>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" id="t13-truth-3">
+                            <div>
+                                <span class="check-label">我由于做这个暴露实验，成功节省了时间：
+                                <input type="number" id="t13-saved-hours" placeholder="小时" style="width: 80px; display:inline-block; padding: 4px 8px;"> 小时。</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 14. 个人精神能量泄漏审计表 -->
+        <div id="tab-14" class="template-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Template 14</div>
+                    <div class="card-title">个人精神能量泄漏审计表 (Mental Energy Drains Audit)</div>
+                    <div class="card-desc">适用场景：没有干什么体力活，却感觉整天筋疲力尽，不知道精力和热情都在哪里“漏”掉了。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">1. 日常能量泄露源 (Energy Drains) 审计</label>
+                    <div class="form-desc">评估以下各个潜在泄露项，并调节其能量消耗星级：</div>
+
+                    <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 15px;">
+                        <div class="check-item" style="display:flex; justify-content:space-between; align-items:center;">
+                            <div style="display:flex; align-items:flex-start; gap:10px;">
+                                <input type="checkbox" id="t14-drain-1" style="margin-top:4px;">
+                                <div>
+                                    <span class="check-label">过度迎合他人 (People Pleasing)</span>
+                                    <div class="check-desc">花大量精力猜测别人是否在生我的气，因为别人一句话反复纠结。</div>
+                                </div>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <input type="range" id="t14-drain-1-val" min="1" max="5" value="3" style="width:80px;" oninput="updateT14Drains()">
+                                <span style="font-size:12px; font-weight:700; width:50px;" id="t14-drain-1-txt">⭐⭐⭐</span>
+                            </div>
+                        </div>
+
+                        <div class="check-item" style="display:flex; justify-content:space-between; align-items:center;">
+                            <div style="display:flex; align-items:flex-start; gap:10px;">
+                                <input type="checkbox" id="t14-drain-2" style="margin-top:4px;">
+                                <div>
+                                    <span class="check-label">内耗性反刍 (Rumination)</span>
+                                    <div class="check-desc">反复回想白天说错的一句话，在脑海里反复重播、自我鞭笞。</div>
+                                </div>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <input type="range" id="t14-drain-2-val" min="1" max="5" value="3" style="width:80px;" oninput="updateT14Drains()">
+                                <span style="font-size:12px; font-weight:700; width:50px;" id="t14-drain-2-txt">⭐⭐⭐</span>
+                            </div>
+                        </div>
+
+                        <div class="check-item" style="display:flex; justify-content:space-between; align-items:center;">
+                            <div style="display:flex; align-items:flex-start; gap:10px;">
+                                <input type="checkbox" id="t14-drain-3" style="margin-top:4px;">
+                                <div>
+                                    <span class="check-label">不敢说“不” (Lack of Boundaries)</span>
+                                    <div class="check-desc">接下了不属于自己的额外工作，或者答应了自己不想参加的无意义社交。</div>
+                                </div>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <input type="range" id="t14-drain-3-val" min="1" max="5" value="3" style="width:80px;" oninput="updateT14Drains()">
+                                <span style="font-size:12px; font-weight:700; width:50px;" id="t14-drain-3-txt">⭐⭐⭐</span>
+                            </div>
+                        </div>
+
+                        <div class="check-item" style="display:flex; justify-content:space-between; align-items:center;">
+                            <div style="display:flex; align-items:flex-start; gap:10px;">
+                                <input type="checkbox" id="t14-drain-4" style="margin-top:4px;">
+                                <div>
+                                    <span class="check-label">慢性未决决定 (Open Decision Loops)</span>
+                                    <div class="check-desc">脑子里堆满了“要不要做”、“要不要买”的事，长期悬而未决，占用后台内存。</div>
+                                </div>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <input type="range" id="t14-drain-4-val" min="1" max="5" value="3" style="width:80px;" oninput="updateT14Drains()">
+                                <span style="font-size:12px; font-weight:700; width:50px;" id="t14-drain-4-txt">⭐⭐⭐</span>
+                            </div>
+                        </div>
+
+                        <div class="check-item" style="display:flex; justify-content:space-between; align-items:center;">
+                            <div style="display:flex; align-items:flex-start; gap:10px;">
+                                <input type="checkbox" id="t14-drain-5" style="margin-top:4px;">
+                                <div>
+                                    <span class="check-label">完美主义自我苛求 (Self-Criticism)</span>
+                                    <div class="check-desc">一旦表现不完美，就启动脑内的“严厉审判官”，进行高强度自我鞭笞。</div>
+                                </div>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <input type="range" id="t14-drain-5-val" min="1" max="5" value="3" style="width:80px;" oninput="updateT14Drains()">
+                                <span style="font-size:12px; font-weight:700; width:50px;" id="t14-drain-5-txt">⭐⭐⭐</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 24px;">
+                    <label class="form-label">2. 精力补漏行动方案 (Boundary Setup)</label>
+                    <div class="form-desc">今天，我要强行关闭的一个“内耗进程”是（如：不再去猜测某某人对我刚才那句话的反应）：</div>
+                    <textarea id="t14-plug" placeholder="要强行释放的内存..."></textarea>
+                    <div class="form-desc" style="margin-top: 10px;">今天，我要勇敢拒绝的一件事或一个人是：</div>
+                    <textarea id="t14-refuse" placeholder="划定防守界线..."></textarea>
+                    <div class="form-desc" style="margin-top: 10px;">今日我的“精神充电”关爱活动是（至少安排 15 分钟，如看书、听音乐）：</div>
+                    <textarea id="t14-recharge" placeholder="自我能量回血计划..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- 15. 讨好型人格与人际“安全防护墙”建立表 -->
+        <div id="tab-15" class="template-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Template 15</div>
+                    <div class="card-title">讨好型人格与人际“安全防护墙”建立表 (Boundary Wall Builder)</div>
+                    <div class="card-desc">适用场景：因为害怕冲突、渴望获得他人认可，下意识答应所有人的请求，事后感到无比懊悔和能量被榨干。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">1. 迎合行为“即时捕捉”</label>
+                    <div class="form-desc">发出请求的人：</div>
+                    <input type="text" id="t15-requester" placeholder="如：同事老王、表姐" style="width: 300px; margin-bottom:10px;">
+                    <div class="form-desc">对方的请求内容：</div>
+                    <textarea id="t15-request" placeholder="对方请你帮他处理的事或活动..."></textarea>
+                    <div class="form-desc" style="margin-top:10px;">我内心的真实想法：</div>
+                    <div class="checklist">
+                        <label class="check-item">
+                            <input type="checkbox" id="t15-thought-1">
+                            <div>
+                                <span class="check-label">我根本不想去，这占用了我宝贵的私人休息时间。</span>
+                            </div>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" id="t15-thought-2">
+                            <div>
+                                <span class="check-label">这超出了我的能力或工作职责范围，本该是他自己的事。</span>
+                            </div>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" id="t15-thought-3">
+                            <div>
+                                <span class="check-label">我之所以打算答应，仅仅是因为我害怕对方失望、冷淡或生我的气。</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">2. “安全拒绝”三步法缓冲话术生成 (No-Guilt Refusal Script)</label>
+                    <div class="form-desc">第一步：肯定对方的请求，表示理解（温和垫底）：</div>
+                    <textarea id="t15-refuse-step1" oninput="updateT15Script()" placeholder="“我很乐意帮忙...” / “谢谢你信任我，这件事确实很重要...”"></textarea>
+                    <div class="form-desc" style="margin-top:10px;">第二步：明确指出客观边界，不留余地（坚决拒绝）：</div>
+                    <textarea id="t15-refuse-step2" oninput="updateT15Script()" placeholder="“但我目前手头上的任务已经排满，实在分不出多余的精力了。” / “但我这周末有非常核心的私人事务，没办法参加。”"></textarea>
+                    <div class="form-desc" style="margin-top:10px;">第三步：提供替代方案或划清界限（转移视线）：</div>
+                    <textarea id="t15-refuse-step3" oninput="updateT15Script()" placeholder="“建议你可以联系某某部门处理。” / “如果这事下周还不急，我下周三可以抽空帮你看看。”"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">3. 拼接好的防线拒绝台词（可直接复制或背诵）：</label>
+                    <textarea id="t15-full-script" style="min-height: 120px;" placeholder="上方输入后自动合成完整拒绝信..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- 16. 睡前消极反刍“强行杀进程”日志 -->
+        <div id="tab-16" class="template-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Template 16</div>
+                    <div class="card-title">睡前消极反刍“强行杀进程”日志 (Anti-Rumination Sleep Routine)</div>
+                    <div class="card-desc">适用场景：夜深人静躺在床上时，脑子开始疯狂回放白天的尴尬瞬间、做错的决定，导致失眠、心跳加快、精神紧绷。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">1. 倾倒大脑“垃圾”（Brain Dump）</label>
+                    <div class="form-desc">强行把脑子里转了十几圈的念头，落到纸面上（写下来即是具象化，可以有效减小大脑的认知负担）：</div>
+                    <textarea id="t16-dump" placeholder="把我此刻脑子里转来转去的负面念头都写在下面..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">2. 定性标签化 (Labeling the thoughts)</label>
+                    <div class="form-desc">我认识到这是大脑自动运行的无效进程，我将其归类为以下大脑防线偏误：</div>
+                    <div class="checklist">
+                        <label class="check-item">
+                            <input type="checkbox" id="t16-label-1">
+                            <div>
+                                <span class="check-label">灾难化脑补（把一件不完美的小事放大为天塌下来的大危机）</span>
+                            </div>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" id="t16-label-2">
+                            <div>
+                                <span class="check-label">自我道德审判（因为不够符合某个完美规则而疯狂怪罪自己）</span>
+                            </div>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" id="t16-label-3">
+                            <div>
+                                <span class="check-label">读心术幻想（反复猜测别人说话时的眼神或语气，觉得是在针对自己）</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">3. 睡眠“隔离层”建立</label>
+                    <div class="checklist" style="margin-bottom: 15px;">
+                        <label class="check-item">
+                            <input type="checkbox" id="t16-can-solve">
+                            <div>
+                                <span class="check-label">理性判定：我现在躺在床上，在这个时间和空间里，有任何事情是我能马上起床解决的吗？（如果没有，勾选此项确认）</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="declaration-box">
+                        <div class="declaration-quote">
+                            “这个问题我此时此刻无法解决。我已经将其记录在纸上。我现在要把它移交给明天的自己，明天早上【 <input type="text" id="t16-worry-start" class="declaration-fill" placeholder="8:00" style="width: 80px;"> 】点到【 <input type="text" id="t16-worry-end" class="declaration-fill" placeholder="8:30" style="width: 80px;"> 】点是我的专属‘担忧时间’，到时候我再集中精力处理。”
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 17. 自我关怀（Self-Compassion）三步解脱宣言 -->
+        <div id="tab-17" class="template-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Template 17</div>
+                    <div class="card-title">自我关怀（Self-Compassion）三步解脱宣言 (Self-Compassion Acceptance)</div>
+                    <div class="card-desc">适用场景：由于犯了某个错误（如搞砸方案、冲孩子发火），内心的小人正在进行极其残忍的自我鞭笞和道德羞辱时。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">1. 隔离自我批评</label>
+                    <div class="form-desc">我内心的严厉审判官正在对我说的话：</div>
+                    <textarea id="t17-criticism" placeholder="例如：你连这种小事都做不好，简直太让人失望了..."></textarea>
+                    <div class="slider-item" style="margin-top: 15px;">
+                        <div class="slider-header">
+                            <span>这一自责想法带给我的身体紧绷与不舒服指数</span>
+                            <span class="slider-val"><span id="t17-tension-txt">5</span> / 10 分</span>
+                        </div>
+                        <input type="range" id="t17-tension" min="1" max="10" value="5" oninput="updateT17Tension()">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">2. 角色换位思考 (Friend Perspective)</label>
+                    <div class="form-desc">如果我最在乎的一位挚友（或我的孩子）犯了完全相同的错误，我会用同样残忍的话骂他吗？如果不会，此时我会对我的挚友说什么温暖、宽容、鼓励的话？</div>
+                    <textarea id="t17-friend-words" placeholder="“这确实很令人沮丧，但我知道你已经尽力了。这只是一个暂时的挫折，并不代表你这个人是失败的，我们一起来看怎么弥补。”"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">3. 自我关怀宣言</label>
+                    <div class="form-desc">用上面相同的温柔、友善的语气，对自己大声读出这份自救宣言：</div>
+                    <div class="declaration-box">
+                        <div class="declaration-quote">
+                            “虽然我犯了错，但我允许自己有不完美的时候。我对自己声明：【 <input type="text" id="t17-self-decl" class="declaration-fill" placeholder="输入接纳并鼓励自己的一句话" style="width: 350px;"> 】。我已尽力而为，我选择原谅我，依然拥抱我。”
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 18. 目标焦虑与完美主义拖延症的“微动作”漏斗 -->
+        <div id="tab-18" class="template-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Template 18</div>
+                    <div class="card-title">完美主义拖延症的“微动作”漏斗 (Procrastination Micro-Action Funnel)</div>
+                    <div class="card-desc">适用场景：面对一个宏大或者让人焦虑的任务（如写报告、开启健身），因为追求“必须一次性完美做好”，导致严重拖延，甚至连第一步都不敢动。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">1. 让我焦虑拖延的宏大任务 (The Big Goal)</label>
+                    <textarea id="t18-big-goal" placeholder="如：写完季度总结报告、开发全套心理填空工作册..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">2. 完美主义恐惧审计 (The Fear)</label>
+                    <div class="form-desc">为什么我一直不敢开始？背后的恐惧思维是：</div>
+                    <textarea id="t18-fear" placeholder="例如：我害怕写出来的第一稿太垃圾了，我害怕大家看了之后觉得我不专业..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">3. “破罐破摔”垃圾第一稿计划 (Allow a terrible first draft)</label>
+                    <div class="form-desc">允许自己写出最烂的、满是废话的第一稿。现在的目标不是“好”，而是“有”。写下最简单潦草的第一句话或第一段草稿：</div>
+                    <textarea id="t18-draft" placeholder="例如：我现在什么都写不出来，这个总结就是要包含三个项目进展，项目A上周交付了..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">4. 5分钟“微物理动作”强行切入 (The 5-Minute Rule)</label>
+                    <div class="form-desc">强行把第一步压缩成一个“不需要动脑子”、“5分钟内肯定能完成”的物理小动作（如：打开Word文档新建文件、在第一行打下大纲标题、找出参考材料）：</div>
+                    <textarea id="t18-micro-action" placeholder="定义你的5分钟物理动作..."></textarea>
+                    <div class="checklist" style="margin-top: 15px;">
+                        <label class="check-item">
+                            <input type="checkbox" id="t18-done">
+                            <div>
+                                <span class="check-label">落地确认：我已经做完了这个 5 分钟微物理动作。我已经跨过了最难的“启动阻力”，完美的文章是改出来的，现在我已走在路上。</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 19. 不祥喜悦（Foreboding Joy）脱敏记录本 -->
+        <div id="tab-19" class="template-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Template 19</div>
+                    <div class="card-title">不祥喜悦（Foreboding Joy）脱敏记录本 (Foreboding Joy Desensitization)</div>
+                    <div class="card-desc">适用场景：生活中遇到极开心的好事（如升职、找到好伴侣、孩子健康）时，内心突然升起强烈的恐惧，害怕“乐极生悲”，不敢真正享受幸福。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">1. 恐惧情绪捕捉</label>
+                    <div class="form-desc">让我感到极其喜悦的、当下的好事是：</div>
+                    <textarea id="t19-joy" placeholder="例如：拿到了非常理想的Offer，明天就要出去度假..."></textarea>
+                    <div class="form-desc" style="margin-top: 10px;">我随之脑补的“灾难化乐极生悲”心碎画面是：</div>
+                    <textarea id="t19-fear" placeholder="例如：担心去度假的飞机出事，或者立刻会有坏消息把这个好运冲洗掉..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">2. 自我脱敏与阻断 (Gratitude Stabilizer)</label>
+                    <div class="form-desc">我知道大脑因为害怕失去的痛苦，试图用“假想的担忧”来作为防御防御，降低我的脆弱感。我选择深呼吸并用感恩锚定：</div>
+                    <div class="declaration-box">
+                        <div class="declaration-quote">
+                            “我承认我有这种脆弱和不安。但我不会用恐惧去透支明天的担忧。我选择感激当下的幸福【 <input type="text" id="t19-gratitude" class="declaration-fill" placeholder="感激的事情，如伴侣的笑脸/平静的午后" style="width: 250px;"> 】，我值得拥有此刻的快乐。”
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+        <!-- JAVASCRIPT FOR DYNAMIC INTERACTIVE BEHAVIOR -->
+    <script>
+        // Tab switching
+        function switchTab(tabNum) {
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            document.querySelectorAll('.template-section').forEach(section => section.classList.remove('active'));
+            
+            // Add active class
+            const items = document.querySelectorAll('.nav-item');
+            if (items[tabNum - 1]) {
+                items[tabNum - 1].classList.add('active');
+            }
+            const targetSection = document.getElementById(`tab-${tabNum}`);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+
+            // Update category nav buttons active state
+            let catNum = 1;
+            if (tabNum >= 1 && tabNum <= 5) catNum = 1;
+            else if (tabNum >= 6 && tabNum <= 10) catNum = 2;
+            else if (tabNum >= 11 && tabNum <= 14) catNum = 3;
+            else if (tabNum >= 15 && tabNum <= 19) catNum = 4;
+
+            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+            const activeCatBtn = document.getElementById(`cat-btn-${catNum}`);
+            if (activeCatBtn) {
+                activeCatBtn.classList.add('active');
+            }
+        }
+
+        // Category switching
+        function switchCategory(catNum) {
+            const catFirstTabs = {
+                1: 1,  // Category 1 -> Tab 1
+                2: 6,  // Category 2 -> Tab 6
+                3: 11, // Category 3 -> Tab 11
+                4: 15  // Category 4 -> Tab 15
+            };
+            switchTab(catFirstTabs[catNum]);
+        }
+
+        // Synchronize A6 and other declaration fields dynamically
+        function syncDeclaration(tab) {
+            if (tab === 1) {
+                const src = document.getElementById('t1-accept-fill').value;
+            }
+        }
+
+        // T5 Checklist scoring and warn trigger
+        function calculateT5Score() {
+            let score = 0;
+            const target = document.getElementById('t5-target').value || '对方';
+            for (let i = 1; i <= 9; i++) {
+                if (document.getElementById(`t5-c${i}`).checked) {
+                    score++;
+                }
+            }
+            document.getElementById('t5-score').innerText = score;
+            const statusBox = document.getElementById('t5-status');
+            
+            if (score >= 3) {
+                statusBox.innerText = `⚠️ 触发勒索警告：你已深陷${target}挖的“内疚之坑”！`;
+                statusBox.className = "diagnostic-status warning";
+            } else {
+                statusBox.innerText = "状态安全：关系边界健康";
+                statusBox.className = "diagnostic-status";
+            }
+            saveData();
+        }
+
+        function updateT5Target() {
+            calculateT5Score();
+        }
+
+        // T6 Sliders allocator (Ensure total sum = 100% and dynamic text generator)
+        function updateAllocator() {
+            const v1 = parseInt(document.getElementById('t6-v1').value);
+            const v2 = parseInt(document.getElementById('t6-v2').value);
+            const v3 = parseInt(document.getElementById('t6-v3').value);
+            const v4 = parseInt(document.getElementById('t6-v4').value);
+            
+            document.getElementById('t6-v1-txt').innerText = v1;
+            document.getElementById('t6-v2-txt').innerText = v2;
+            document.getElementById('t6-v3-txt').innerText = v3;
+            document.getElementById('t6-v4-txt').innerText = v4;
+            
+            const total = v1 + v2 + v3 + v4;
+            const totalBox = document.getElementById('t6-total');
+            totalBox.innerText = total;
+            
+            const summaryBox = document.getElementById('t6-summary');
+            const messageBox = document.getElementById('t6-message');
+            const conclusionBox = document.getElementById('t6-conclusion');
+            const badEvent = document.getElementById('t6-event').value || '这一坏事件';
+            
+            if (total !== 100) {
+                messageBox.innerText = `警告：当前因素总和为 ${total}%。权重总和必须调节至 100% 才能建立客观模型！`;
+                summaryBox.style.backgroundColor = '#FFF5F5';
+                summaryBox.style.borderColor = '#FED7D7';
+                conclusionBox.value = "";
+            } else {
+                messageBox.innerText = "权重之和已达成 100%，科学逻辑模型建立成功。";
+                summaryBox.style.backgroundColor = '#F0FDF4';
+                summaryBox.style.borderColor = '#BBF7D0';
+                
+                // Objective analysis text generator
+                let text = `针对【${badEvent}】的客观责任链条审计结论如下：\n`;
+                text += `1. 宏观环境因素占了 ${v1}% 的物理影响；\n`;
+                text += `2. 对方个人的决策风格与性格局限占了 ${v2}% 的影响，这属于其自主意志控制范围，与我无关；\n`;
+                text += `3. 系统沉淀问题与历史债务占了 ${v3}%，这是过去的累积结果；\n`;
+                text += `4. 我个人的直接操作与具体失误占了 ${v4}%。\n\n`;
+                
+                if (v4 <= 10) {
+                    text += `【自救结论】：我个人的真实责任比例仅占 ${v4}%（极低），我已对该失误制定了未来的纠偏防线。根据解释风格（Personalization）解构原则，我坚决拒绝为剩余 ${100-v4}% 的宏观及他人因素背负内疚包袱，我选择宽恕自己，轻装上阵。`;
+                } else {
+                    text += `【自救结论】：我个人的责任比例为 ${v4}%，这属于我能够直接控制和改进的事物。我将把情绪上的自责转化为积极的“6A”纠偏行动（弥补与行为调整），至于剩下的 ${100-v4}% 责任，我坚决隔离在个人的心理防线之外。`;
+                }
+                
+                conclusionBox.value = text;
+            }
+            saveData();
+        }
+
+        // =====================================================================
+        // New interactive functions for templates 11-19
+        // =====================================================================
+        function updateT12Conclusion() {
+            const event = document.getElementById('t12-event').value || '该事件';
+            const external = document.getElementById('t12-external').value || '...';
+            const others = document.getElementById('t12-others').value || '...';
+            const mine = document.getElementById('t12-my-control').value || '...';
+            document.getElementById('t12-conclusion').value = `针对【${event}】的自责心理机制重构结论：\n1. 外部环境/不可抗力影响：${external}\n2. 对方/他人应承担的决策责任：${others}\n3. 我真正能够决定和改进行的动：${mine}\n【认知防线自救结论】：我个人的真实可控责任范围是清晰有限的。我拒绝为我无法直接决定的外部现实和他人情绪承担道德内疚。我只为我自己的行动负责，并接纳自己的局限性。`;
+        }
+
+        function updateT13Anxiety() {
+            const val = document.getElementById('t13-anxiety').value;
+            document.getElementById('t13-anxiety-txt').innerText = val;
+        }
+
+        function updateT14Drains() {
+            for (let i = 1; i <= 5; i++) {
+                const val = document.getElementById(`t14-drain-${i}-val`).value;
+                document.getElementById(`t14-drain-${i}-txt`).innerText = '⭐'.repeat(val);
+            }
+        }
+
+        function updateT15Script() {
+            const step1 = document.getElementById('t15-refuse-step1').value || '...';
+            const step2 = document.getElementById('t15-refuse-step2').value || '...';
+            const step3 = document.getElementById('t15-refuse-step3').value || '...';
+            document.getElementById('t15-full-script').value = `“ ${step1}\n\n${step2}\n\n${step3} ”`;
+        }
+
+        function updateT17Tension() {
+            const val = document.getElementById('t17-tension').value;
+            document.getElementById('t17-tension-txt').innerText = val;
+        }
+
+        // =====================================================================
+        // LocalStorage auto-save and state restore
+        // =====================================================================
+        const storageKey = 'neinhao_worksheets_data';
+
+        function saveData() {
+            const data = {};
+            // Gather all text and number inputs, and textareas
+            document.querySelectorAll('input[type="text"], input[type="number"], textarea').forEach(el => {
+                data[el.id] = el.value;
+            });
+            // Gather all checkboxes
+            document.querySelectorAll('input[type="checkbox"]').forEach(el => {
+                data[el.id] = el.checked;
+            });
+            // Gather range sliders
+            document.querySelectorAll('input[type="range"]').forEach(el => {
+                data[el.id] = el.value;
+            });
+            localStorage.setItem(storageKey, JSON.stringify(data));
+        }
+
+        function loadData() {
+            const raw = localStorage.getItem(storageKey);
+            if (!raw) return;
+            try {
+                const data = JSON.parse(raw);
+                // Restore text and numbers
+                document.querySelectorAll('input[type="text"], input[type="number"], textarea').forEach(el => {
+                    if (data[el.id] !== undefined) {
+                        el.value = data[el.id];
+                    }
+                });
+                // Restore checkboxes
+                document.querySelectorAll('input[type="checkbox"]').forEach(el => {
+                    if (data[el.id] !== undefined) {
+                        el.checked = data[el.id];
+                    }
+                });
+                // Restore range sliders
+                document.querySelectorAll('input[type="range"]').forEach(el => {
+                    if (data[el.id] !== undefined) {
+                        el.value = data[el.id];
+                    }
+                });
+                
+                // Recalculate scores and sliders view
+                calculateT5Score();
+                updateAllocator();
+                updateT12Conclusion();
+                updateT13Anxiety();
+                updateT14Drains();
+                updateT15Script();
+                updateT17Tension();
+            } catch (e) {
+                console.error("Failed to restore local draft: ", e);
+            }
+        }
+
+        function resetAll() {
+            if (confirm("确定要清空所有模板中的输入内容并重置为默认值吗？")) {
+                localStorage.removeItem(storageKey);
+                // Reset textareas and inputs
+                document.querySelectorAll('input[type="text"], input[type="number"], textarea').forEach(el => {
+                    el.value = "";
+                });
+                // Reset checkboxes
+                document.querySelectorAll('input[type="checkbox"]').forEach(el => {
+                    el.checked = false;
+                });
+                // Reset range sliders
+                document.querySelectorAll('input[type="range"]').forEach(el => {
+                    el.value = "25";
+                });
+                // T13 range and T17 range default to 5
+                if (document.getElementById('t13-anxiety')) document.getElementById('t13-anxiety').value = "5";
+                if (document.getElementById('t17-tension')) document.getElementById('t17-tension').value = "5";
+                // T14 ranges default to 3
+                for (let i = 1; i <= 5; i++) {
+                    if (document.getElementById(`t14-drain-${i}-val`)) {
+                        document.getElementById(`t14-drain-${i}-val`).value = "3";
+                    }
+                }
+                // Recalculate
+                calculateT5Score();
+                updateAllocator();
+                updateT12Conclusion();
+                updateT13Anxiety();
+                updateT14Drains();
+                updateT15Script();
+                updateT17Tension();
+            }
+        }
+
+        // Auto save inputs on change
+        document.body.addEventListener('input', saveData);
+        document.body.addEventListener('change', saveData);
+
+        // Run on load
+        window.onload = function() {
+            loadData();
+            // Pre-populate date if empty
+            const dateInput = document.getElementById('t10-date');
+            if (dateInput && !dateInput.value) {
+                const today = new Date();
+                dateInput.value = `${today.getFullYear()} 年 ${today.getMonth() + 1} 月 ${today.getDate()} 日`;
+            }
+        };
+    </script>
+</body>
+</html>

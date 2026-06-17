@@ -1,0 +1,1616 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>结构表达力 交互演练沙盒 | 开发者心智系统 developer-mind-OS</title>
+    <!-- Modern Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #1E3A5F;        /* Executive Navy */
+            --primary-light: rgba(30, 58, 95, 0.08);
+            --primary-soft: rgba(30, 58, 95, 0.04);
+            --secondary: #748CAB;      /* Slate Grey */
+            --secondary-dark: #4A607A;
+            --accent: #8A9A86;         /* Sage Green */
+            --accent-dark: #6E7D6A;
+            --warm-gold: #C8B195;      /* Morandi Gold */
+            --bg-gradient: linear-gradient(135deg, #F5F7FA 0%, #E9ECEF 100%);
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --text-main: #2C3E50;
+            --text-muted: #6C7A89;
+            --border-color: rgba(218, 224, 233, 0.7);
+            --shadow-sm: 0 4px 6px rgba(30, 58, 95, 0.03);
+            --shadow-md: 0 10px 25px rgba(74, 96, 122, 0.08);
+            --shadow-lg: 0 20px 40px rgba(30, 58, 95, 0.06);
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 18px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* Dark Mode variables */
+        [data-theme="dark"] {
+            --bg-gradient: linear-gradient(135deg, #101B2B 0%, #08101E 100%);
+            --card-bg: rgba(24, 37, 56, 0.95);
+            --text-main: #E2E8F0;
+            --text-muted: #94A3B8;
+            --border-color: rgba(51, 65, 85, 0.6);
+            --primary-light: rgba(116, 140, 171, 0.15);
+            --primary-soft: rgba(116, 140, 171, 0.06);
+            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', 'Inter', 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            transition: background var(--transition), color var(--transition);
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background: rgba(30, 58, 95, 0.95);
+            backdrop-filter: blur(15px);
+            border-right: 1px solid var(--border-color);
+            color: #FFFFFF;
+            padding: 2.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: fixed;
+            height: 100vh;
+            z-index: 10;
+        }
+
+        .sidebar-brand {
+            margin-bottom: 3rem;
+        }
+
+        .sidebar-brand h1 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            background: linear-gradient(to right, #FFFFFF, var(--warm-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-brand span {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--secondary);
+            display: block;
+            margin-top: 0.3rem;
+            font-weight: 600;
+        }
+
+        .nav-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 1rem 1.2rem;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .nav-item:hover {
+            color: #FFFFFF;
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateX(4px);
+        }
+
+        .nav-item.active {
+            color: #FFFFFF;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            opacity: 0.7;
+            transition: var(--transition);
+        }
+
+        .nav-item.active .nav-icon {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1.5rem;
+        }
+
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.8rem 1rem;
+            border-radius: var(--radius-md);
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Main Content Panel */
+        .main-content {
+            margin-left: 280px;
+            padding: 3rem;
+            width: calc(100% - 280px);
+            max-width: 1400px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .header-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.5rem;
+        }
+
+        .header-title h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        [data-theme="dark"] .header-title h2 {
+            color: #FFFFFF;
+        }
+
+        .header-title p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+        }
+
+        .book-badge {
+            background: var(--primary-light);
+            border: 1px solid rgba(30, 58, 95, 0.15);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        [data-theme="dark"] .book-badge {
+            color: var(--secondary);
+            border-color: rgba(116, 140, 171, 0.3);
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            transition: var(--transition);
+        }
+
+        .glass-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Form Controls */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        [data-theme="dark"] .form-label {
+            color: var(--secondary);
+        }
+
+        .form-label span {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 400;
+            text-transform: none;
+            margin-left: 5px;
+        }
+
+        .form-control, .form-select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.5);
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] .form-control, [data-theme="dark"] .form-select {
+            background: rgba(15, 23, 42, 0.4);
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        [data-theme="dark"] .form-control:focus, [data-theme="dark"] .form-select:focus {
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: #FFFFFF;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn:hover {
+            background: var(--secondary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(30, 58, 95, 0.15);
+        }
+
+        .btn-accent {
+            background: var(--accent);
+        }
+
+        .btn-accent:hover {
+            background: var(--accent-dark);
+            box-shadow: 0 6px 12px rgba(138, 154, 134, 0.2);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-soft);
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        [data-theme="dark"] .btn-outline:hover {
+            color: #FFFFFF;
+            border-color: #FFFFFF;
+        }
+
+        /* Sandbox Layouts */
+        .sandbox-panel {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .sandbox-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .editor-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .editor-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .editor-pane, .preview-pane {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .preview-box {
+            background: #111827;
+            color: #E5E7EB;
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            font-family: 'Inter', Courier, monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            border: 1px solid #374151;
+            flex-grow: 1;
+            min-height: 350px;
+            max-height: 600px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+        }
+
+        .preview-header span {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        /* McKinsey Sky-Rain-Umbrella Grid */
+        .sky-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 900px) {
+            .sky-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .sky-column {
+            background: var(--primary-soft);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            min-height: 400px;
+        }
+
+        .sky-column-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .sky-column-header h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        [data-theme="dark"] .sky-column-header h3 {
+            color: #FFFFFF;
+        }
+
+        .sky-badge {
+            background: var(--primary);
+            color: #FFFFFF;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+        }
+
+        .sky-item-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            flex-grow: 1;
+            min-height: 250px;
+        }
+
+        .sky-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            cursor: grab;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .sky-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .sky-card.dragging {
+            opacity: 0.5;
+            cursor: grabbing;
+        }
+
+        .sky-card-text {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 0.6rem;
+            word-break: break-all;
+        }
+
+        .sky-card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(0,0,0,0.05);
+            padding-top: 0.5rem;
+        }
+
+        [data-theme="dark"] .sky-card-meta {
+            border-top-color: rgba(255,255,255,0.05);
+        }
+
+        .sky-card-delete {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 2px;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .sky-card-delete:hover {
+            color: #EF4444;
+        }
+
+        /* Matrix Calculator Styles */
+        .matrix-table-wrapper {
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.85rem;
+        }
+
+        .matrix-table th, .matrix-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .matrix-table th {
+            background: var(--primary-soft);
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        [data-theme="dark"] .matrix-table th {
+            color: #FFFFFF;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .slider-container input {
+            flex-grow: 1;
+        }
+
+        .weight-badge {
+            background: var(--warm-gold);
+            color: #1A1A1A;
+            font-weight: 600;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .matrix-score-input {
+            width: 60px;
+            padding: 0.4rem;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .results-panel {
+            background: var(--primary-soft);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border: 1px dashed var(--secondary);
+        }
+
+        .results-panel h4 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        [data-theme="dark"] .results-panel h4 {
+            color: #FFFFFF;
+        }
+
+        .alternative-rank {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .rank-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            gap: 15px;
+        }
+
+        .rank-label {
+            font-weight: 600;
+            min-width: 120px;
+        }
+
+        .rank-bar-bg {
+            background: rgba(0,0,0,0.1);
+            height: 10px;
+            border-radius: 5px;
+            flex-grow: 1;
+            overflow: hidden;
+            position: relative;
+        }
+
+        [data-theme="dark"] .rank-bar-bg {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .rank-bar-fill {
+            background: var(--accent);
+            height: 100%;
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .rank-bar-fill.winner {
+            background: var(--primary);
+        }
+
+        [data-theme="dark"] .rank-bar-fill.winner {
+            background: var(--warm-gold);
+        }
+
+        .rank-val {
+            font-weight: 700;
+            min-width: 50px;
+            text-align: right;
+        }
+
+        /* Diagnoser Styles */
+        .diagnose-results {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            display: none;
+        }
+
+        .diagnose-results.active {
+            display: block;
+        }
+
+        .diagnose-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .diagnose-badge.pass {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10B981;
+        }
+
+        .diagnose-badge.warning {
+            background: rgba(245, 158, 11, 0.2);
+            color: #F59E0B;
+        }
+
+        .diagnose-badge.fail {
+            background: rgba(239, 68, 68, 0.2);
+            color: #EF4444;
+        }
+
+        .diagnose-warnings {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .diagnose-warnings li {
+            position: relative;
+            padding-left: 18px;
+        }
+
+        .diagnose-warnings li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        .diagnose-warnings li.warning::before {
+            color: #F59E0B;
+        }
+
+        .diagnose-warnings li.success::before {
+            color: #10B981;
+        }
+
+        /* SVG Icons Inline */
+        .icon-svg {
+            width: 100%;
+            height: 100%;
+            fill: currentColor;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <h1>结构表达力 <span>Heartbeat OS</span></h1>
+        </div>
+        <ul class="nav-list">
+            <li class="nav-item active" data-tab="reporting">
+                <span class="nav-icon">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M19,3H5C3.89,3 3,3.9 3,5V19C3,20.1 3.89,21 5,21H19C20.1,21 21,20.1 21,19V5C21,3.9 20.1,3 19,3M19,19H5V5H19V19M17,12H7V10H17V12M17,16H7V14H17V16M13,8H7V6H13V8Z"/></svg>
+                </span>
+                工作汇报生成器
+            </li>
+            <li class="nav-item" data-tab="notes">
+                <span class="nav-icon">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M14 2H6C4.9 2 4.01 2.9 4.01 4L4 20C4 21.1 4.89 22 5.99 22H18C19.1 22 20 21.1 20 20V8L14 2M18 20H6V4H13V9H18V20M8 12C8 11.4 8.4 11 9 11H15C15.6 11 16 11.4 16 12C16 12.6 15.6 13 15 13H9C8.4 13 8 12.6 8 12M8 16C8 15.4 8.4 15 9 15H13C13.6 15 14 15.4 14 16C14 16.6 13.6 17 13 17H9C8.4 17 8 16.6 8 16Z"/></svg>
+                </span>
+                麦肯锡空雨伞看板
+            </li>
+            <li class="nav-item" data-tab="matrix">
+                <span class="nav-icon">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3M19 19H5V5H19V19M7 10H9V17H7V10M11 7H13V17H11V7M15 13H17V17H15V13Z"/></svg>
+                </span>
+                成对分析决策器
+            </li>
+            <li class="nav-item" data-tab="persuade">
+                <span class="nav-icon">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2M12 20C7.59 20 4 16.41 4 12S7.59 4 12 4 20 7.59 20 12 16.41 20 12 20M13 7H11V9H13V7M13 11H11V17H13V11Z"/></svg>
+                </span>
+                说服力诊断沙盒
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <button class="theme-toggle" id="theme-btn">
+                <svg style="width:18px;height:18px" viewBox="0 0 24 24"><path fill="currentColor" d="M12,18C11.11,18 10.26,17.8 9.5,17.45C11.56,16.5 13,14.42 13,12C13,9.58 11.56,7.5 9.5,6.55C10.26,6.2 11.11,6 12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18M20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31L23.31,12L20,8.69Z"/></svg>
+                切换暗黑模式
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main class="main-content">
+        <header class="header-panel">
+            <div class="header-title">
+                <h2 id="workspace-title">工作汇报生成器</h2>
+                <p id="workspace-desc">依据目标、问题、成果不同维度，生成纵向结构结实的职场汇报文本</p>
+            </div>
+            <div class="book-badge">
+                <svg style="width:14px;height:14px" viewBox="0 0 24 24"><path fill="currentColor" d="M19,2H14A2,2 0 0,0 12,4V18A2,2 0 0,0 14,20H19A2,2 0 0,0 21,18V4A2,2 0 0,0 19,2M19,18H14V4H19V18M11,18A2,2 0 0,1 9,20H4A2,2 0 0,1 2,18V4A2,2 0 0,1 4,2H9A2,2 0 0,1 11,4V18M9,18V4H4V18H9Z"/></svg>
+                T3 职场沟通与商务表达
+            </div>
+        </header>
+
+        <!-- Sandbox Panel: Work Report Generator -->
+        <section class="sandbox-panel active" id="tab-reporting">
+            <div class="editor-grid">
+                <div class="editor-pane glass-card">
+                    <div class="form-group">
+                        <label class="form-label" for="report-type">选择汇报模型</label>
+                        <select class="form-select" id="report-type">
+                            <option value="star">STAR 成果工作汇报模型 (成果导向)</option>
+                            <option value="2w1h">2W1H 整体目标规划模型 (目标导向)</option>
+                            <option value="prs">现象-原因-方案问题处理模型 (问题导向)</option>
+                            <option value="scqat">请求支持三角计划模型 (资源申请)</option>
+                        </select>
+                    </div>
+                    
+                    <div id="reporting-fields">
+                        <!-- Dynamic inputs injected by JS -->
+                    </div>
+                </div>
+
+                <div class="preview-pane">
+                    <div class="glass-card" style="height:100%; display:flex; flex-direction:column">
+                        <div class="preview-header">
+                            <span>生成的汇报文本 (Markdown)</span>
+                            <button class="btn btn-outline" id="copy-report-btn">一键复制</button>
+                        </div>
+                        <div class="preview-box" id="report-preview">
+                            <!-- Live Preview Content -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sandbox Panel: Sky Rain Umbrella Kanban -->
+        <section class="sandbox-panel" id="tab-notes">
+            <div class="glass-card" style="margin-bottom: 1.5rem">
+                <div class="editor-grid" style="grid-template-columns: 2fr 1fr; align-items: end; gap: 1rem">
+                    <div style="display:grid; grid-template-columns: 1fr 1fr 1.5fr; gap:10px">
+                        <div class="form-group" style="margin:0">
+                            <label class="form-label">信息分区</label>
+                            <select class="form-select" id="kanban-col">
+                                <option value="sky">空 (Sky - 事实数据)</option>
+                                <option value="rain">雨 (Rain - 分析导察)</option>
+                                <option value="umbrella">伞 (Umbrella - 行动方案)</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin:0">
+                            <label class="form-label">责任人 / 时间</label>
+                            <input type="text" class="form-control" id="kanban-meta" placeholder="如: 李工 / 周五前">
+                        </div>
+                        <div class="form-group" style="margin:0">
+                            <label class="form-label">内容要点</label>
+                            <input type="text" class="form-control" id="kanban-text" placeholder="输入事实、论点或待办计划">
+                        </div>
+                    </div>
+                    <button class="btn" id="add-kanban-item-btn" style="height:42px">添加至面板</button>
+                </div>
+            </div>
+
+            <div class="sky-grid">
+                <!-- Sky Column -->
+                <div class="sky-column" id="col-sky">
+                    <div class="sky-column-header">
+                        <h3>☁️ 空 (Sky) <span>事实与客观数据</span></h3>
+                        <span class="sky-badge" id="count-sky">0</span>
+                    </div>
+                    <div class="sky-item-list" data-column="sky" ondragover="allowDrop(event)" ondrop="drop(event, 'sky')">
+                        <!-- Dynamic items -->
+                    </div>
+                </div>
+
+                <!-- Rain Column -->
+                <div class="sky-column" id="col-rain">
+                    <div class="sky-column-header">
+                        <h3>🌧️ 雨 (Rain) <span>分析、推论与潜在风险</span></h3>
+                        <span class="sky-badge" id="count-rain">0</span>
+                    </div>
+                    <div class="sky-item-list" data-column="rain" ondragover="allowDrop(event)" ondrop="drop(event, 'rain')">
+                        <!-- Dynamic items -->
+                    </div>
+                </div>
+
+                <!-- Umbrella Column -->
+                <div class="sky-column" id="col-umbrella">
+                    <div class="sky-column-header">
+                        <h3>☂️ 伞 (Umbrella) <span>决策与具体行动步骤</span></h3>
+                        <span class="sky-badge" id="count-umbrella">0</span>
+                    </div>
+                    <div class="sky-item-list" data-column="umbrella" ondragover="allowDrop(event)" ondrop="drop(event, 'umbrella')">
+                        <!-- Dynamic items -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Export to Clipboard -->
+            <div style="margin-top: 1.5rem; display: flex; justify-content: flex-end">
+                <button class="btn btn-outline" id="export-kanban-btn">导出为麦肯锡空雨伞纪要模板</button>
+            </div>
+        </section>
+
+        <!-- Sandbox Panel: Paired Analysis Calculator -->
+        <section class="sandbox-panel" id="tab-matrix">
+            <div class="editor-grid" style="grid-template-columns: 3fr 2fr">
+                <div class="glass-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1.5rem">
+                        <h3 style="font-weight: 700; color: var(--primary)">成对分析打分矩阵</h3>
+                        <div style="display:flex; gap:10px">
+                            <button class="btn btn-outline" id="add-alternative-btn" style="padding: 0.5rem 1rem; font-size:0.8rem">+ 增加方案</button>
+                            <button class="btn btn-outline" id="add-criterion-btn" style="padding: 0.5rem 1rem; font-size:0.8rem">+ 增加维度</button>
+                        </div>
+                    </div>
+
+                    <div class="matrix-table-wrapper">
+                        <table class="matrix-table" id="matrix-table">
+                            <thead>
+                                <tr id="matrix-header">
+                                    <th>候选方案</th>
+                                    <!-- Dynamic header injected by JS -->
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="matrix-body">
+                                <!-- Dynamic rows injected by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="preview-pane">
+                    <div class="glass-card" style="height:100%">
+                        <h3 style="font-weight:700; color: var(--primary); margin-bottom:1.5rem">决策评估结果</h3>
+                        <div class="alternative-rank" id="rank-container">
+                            <!-- Rank bars injected by JS -->
+                        </div>
+                        <div class="results-panel">
+                            <h4>📋 决策推荐陈述报告</h4>
+                            <p id="recommendation-text" style="font-size:0.85rem; line-height:1.6; word-break: break-all;"></p>
+                            <button class="btn btn-outline" id="copy-recommendation-btn" style="margin-top:1rem; width:100%">复制汇报陈述词</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sandbox Panel: Persuasion Diagnoser -->
+        <section class="sandbox-panel" id="tab-persuade">
+            <div class="editor-grid">
+                <div class="editor-pane glass-card">
+                    <div class="form-group">
+                        <label class="form-label" for="persuade-actor">A (Actor) 沟通对象 <span>谁来做，他最关注的KPI/利益点是什么？</span></label>
+                        <input type="text" class="form-control" id="persuade-actor" placeholder="如: 财务部李经理 (关注预算安全性、票据合规度)">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="persuade-behavior">B (Behavior) 期望的行动 <span>你想让他采取什么具体行为？</span></label>
+                        <input type="text" class="form-control" id="persuade-behavior" placeholder="如: 在明天下午前特批通过差旅预算改签付款申请">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="persuade-pathos">晓之以情 (Pathos) <span>如何化解对立情绪？预制哪些工作以降低对方的工作阻力？</span></label>
+                        <textarea class="form-control" id="persuade-pathos" placeholder="如: 已经主动理好了改签明细对比表，并承认给财务添了麻烦..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="persuade-logos">动之以理 (Logos) <span>理性的利弊分析是什么？如果不处理会产生什么高昂的流程代价？</span></label>
+                        <textarea class="form-control" id="persuade-logos" placeholder="如: 只有改签才能准时签署战略合同，若按常规流转，不仅耽误客情，且层层跨部沟通耗时数倍..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="persuade-interest">诱之以利 (Interest) <span>这对他或他的部门有什么可共享的利益？</span></label>
+                        <textarea class="form-control" id="persuade-interest" placeholder="如: 拿下大单可以在总裁会上作为财务快速敏捷响应业务的典型案例进行展示..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="persuade-raw-text">说服草稿 <span>输入你原本想发在微信/邮件里的话进行诊断评估</span></label>
+                        <textarea class="form-control" id="persuade-raw-text" placeholder="如: 李经理好，我们这边的报销改签费用，领导非常急用，麻烦您明天下午前审核通过一下，谢谢。"></textarea>
+                    </div>
+                    <button class="btn btn-accent" id="diagnose-btn">开启说服力诊断 & AI抛光</button>
+
+                    <div class="glass-card diagnose-results" id="diagnose-box">
+                        <div class="diagnose-badge" id="diagnose-rank">诊断结果</div>
+                        <ul class="diagnose-warnings" id="diagnose-list">
+                            <!-- Warnings injected here -->
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="preview-pane">
+                    <div class="glass-card" style="height:100%; display:flex; flex-direction:column">
+                        <div class="preview-header">
+                            <span>抛光后的说服沟通模板 (推荐一键复制)</span>
+                            <button class="btn btn-outline" id="copy-persuade-btn">复制推荐模板</button>
+                        </div>
+                        <div class="preview-box" id="persuade-preview" style="flex-grow:1">
+                            <!-- Live Polished Template -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- UI Logic ES6 Scripts -->
+    <script>
+        // --- Dark Theme Toggle ---
+        const themeBtn = document.getElementById('theme-btn');
+        let currentTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+
+        themeBtn.addEventListener('click', () => {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            localStorage.setItem('theme', currentTheme);
+        });
+
+        // --- Tab Switcher Logic ---
+        const navItems = document.querySelectorAll('.nav-item');
+        const panels = document.querySelectorAll('.sandbox-panel');
+        const workspaceTitle = document.getElementById('workspace-title');
+        const workspaceDesc = document.getElementById('workspace-desc');
+
+        const tabDescs = {
+            reporting: {
+                title: "工作汇报生成器",
+                desc: "依据目标、问题、成果不同维度，生成纵向结构结实的职场汇报文本"
+            },
+            notes: {
+                title: "麦肯锡“空·雨·伞”看板",
+                desc: "将客观数据、深度推论与具体待办隔离开来，实现高质量归档决策"
+            },
+            matrix: {
+                title: "成对分析决策器",
+                desc: "通过配置决策属性与权重系数，科学打分计算最佳商业选择"
+            },
+            persuade: {
+                title: "说服力诊断沙盒",
+                desc: "应用AB法则（受众-行为对齐）及情理利模型诊断并打磨你的高影响力话术"
+            }
+        };
+
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const targetTab = item.getAttribute('data-tab');
+                
+                // Update nav class
+                navItems.forEach(nav => nav.classList.remove('active'));
+                item.classList.add('active');
+
+                // Update panels
+                panels.forEach(panel => panel.classList.remove('active'));
+                document.getElementById(`tab-${targetTab}`).classList.add('active');
+
+                // Update headers
+                workspaceTitle.textContent = tabDescs[targetTab].title;
+                workspaceDesc.textContent = tabDescs[targetTab].desc;
+            });
+        });
+
+        // ==========================================
+        // TAB 1: Work Report Generator
+        // ==========================================
+        const reportTypeSelect = document.getElementById('report-type');
+        const reportingFields = document.getElementById('reporting-fields');
+        const reportPreview = document.getElementById('report-preview');
+
+        const fieldTemplates = {
+            star: [
+                { id: 's-context', label: 'Situation (S) 挑战背景', placeholder: '如: Q3季度由于外部供应链短缺，导致原本A大客户采购订单面临延期交货两周的风险。', type: 'textarea' },
+                { id: 't-task', label: 'Task (T) 核心任务目标', placeholder: '如: 主动出击确保大客户本季度内不退单、平稳交付，并锁定明年续约权。', type: 'textarea' },
+                { id: 'a-action', label: 'Action (A) 关键行动举措', placeholder: '如: 1. 启动备用工厂排单，缩短工艺流转周期；2. 携技术顾问拜访客户，提供每日看板追踪机制；3. 给出1%的物流补差。', type: 'textarea' },
+                { id: 'r-result', label: 'Result (R) 成果数据指标', placeholder: '如: 最终大客户按期拿到首批货，退单率为0%，并追加了明年200万的续签预算。', type: 'textarea' }
+            ],
+            '2w1h': [
+                { id: 'w-what', label: 'What 核心目标任务', placeholder: '如: Q4季度主导完成核心交易网关的微服务拆分，提升交易系统高可用率。', type: 'textarea' },
+                { id: 'w-why', label: 'Why 核心立项起因', placeholder: '如: 应对双十一高峰期流量暴涨，防止由于旧版单体架构导致交易处理排队和接口超时报错。', type: 'textarea' },
+                { id: 'h-how', label: 'How 执行计划路径', placeholder: '如: 第一步进行网关接口解耦；第二步应用K8s进行容器化部署；第三步进行多轮压力测试校验。', type: 'textarea' }
+            ],
+            prs: [
+                { id: 'p-phenomenon', label: 'Phenomenon 负面业务现象', placeholder: '如: 本月后台客情投诉单数环比上升25%，用户退货响应时间由24小时拉长至48小时。', type: 'textarea' },
+                { id: 'r-reason', label: 'Reason 根本原因分析', placeholder: '如: 售后客服团队因考核机制调整流失了40%老员工，新人培训跟不上导致服务链路阻塞。', type: 'textarea' },
+                { id: 's-solution', label: 'Solution 改善行动方案', placeholder: '如: 1. 启动紧急人才返聘计划；2. 制定客服快捷回复话术卡，启用自动工单分配机制。', type: 'textarea' }
+            ],
+            scqat: [
+                { id: 's-scqa-s', label: 'S (Situation) 正常进展背景', placeholder: '如: 新产品移动端Beta版本测试顺利，各核心数据反馈非常喜人。', type: 'textarea' },
+                { id: 's-scqa-c', label: 'C (Complication) 突发瓶颈阻碍', placeholder: '如: 但本周遇到了移动端底层跨域的安全漏洞，技术小组缺乏专门的网络安全骨干。', type: 'textarea' },
+                { id: 's-scqa-q', label: 'Q (Question) 面临核心挑战', placeholder: '如: 如何在下周二封版交付前，彻底解决安全隐患，防止上线后遭遇渗透攻击？', type: 'textarea' },
+                { id: 's-triangle-people', label: '人 (People) 协调支持人员', placeholder: '如: 申请安全部李工跨部门借调协助1天，进行代码安全走查。', type: 'input' },
+                { id: 's-triangle-job', label: '事 (Tasks) 具体工作范畴', placeholder: '如: 只负责审查跨域网关部分的配置参数，李工本人不接新的写码工作。', type: 'input' },
+                { id: 's-triangle-asset', label: '物 (Assets) 预算预算支持', placeholder: '如: 申请购买一次性的外部代码深度扫描API额度，预算3000元。', type: 'input' }
+            ]
+        };
+
+        function renderFields() {
+            const currentTemplate = reportTypeSelect.value;
+            const fields = fieldTemplates[currentTemplate];
+            reportingFields.innerHTML = '';
+
+            fields.forEach(field => {
+                const group = document.createElement('div');
+                group.className = 'form-group';
+                
+                const label = document.createElement('label');
+                label.className = 'form-label';
+                label.innerHTML = field.label;
+                
+                let input;
+                if (field.type === 'textarea') {
+                    input = document.createElement('textarea');
+                    input.rows = 3;
+                } else {
+                    input = document.createElement('input');
+                    input.type = 'text';
+                }
+                input.className = 'form-control report-input';
+                input.id = field.id;
+                input.placeholder = field.placeholder;
+                
+                group.appendChild(label);
+                group.appendChild(input);
+                reportingFields.appendChild(group);
+
+                // Add real-time event listener
+                input.addEventListener('input', updateReportPreview);
+            });
+
+            updateReportPreview();
+        }
+
+        function updateReportPreview() {
+            const currentTemplate = reportTypeSelect.value;
+            let mdText = '';
+
+            if (currentTemplate === 'star') {
+                const s = document.getElementById('s-context').value || '[输入背景]';
+                const t = document.getElementById('t-task').value || '[输入任务目标]';
+                const a = document.getElementById('a-action').value || '[输入关键行动]';
+                const r = document.getElementById('r-result').value || '[输入数据指标]';
+                mdText = `# STAR 成果工作汇报\n\n### 1. 挑战背景 (Situation)\n${s}\n\n### 2. 核心任务目标 (Task)\n${t}\n\n### 3. 关键行动举措 (Action)\n${a}\n\n### 4. 成果数据指标 (Result)\n${r}`;
+            } else if (currentTemplate === '2w1h') {
+                const w = document.getElementById('w-what').value || '[输入核心目标]';
+                const y = document.getElementById('w-why').value || '[输入立项起因]';
+                const h = document.getElementById('h-how').value || '[输入执行路径]';
+                mdText = `# 2W1H 规划汇报\n\n### 1. What (要做什么/目标)\n${w}\n\n### 2. Why (为什么做/起因)\n${y}\n\n### 3. How (将如何做/步骤)\n${h}`;
+            } else if (currentTemplate === 'prs') {
+                const p = document.getElementById('p-phenomenon').value || '[输入业务现象]';
+                const r = document.getElementById('r-reason').value || '[输入根源分析]';
+                const s = document.getElementById('s-solution').value || '[输入解决方案]';
+                mdText = `# 问题改善专项汇报\n\n### 1. 异常现象 (Phenomenon)\n${p}\n\n### 2. 根本原因 (Reason)\n${r}\n\n### 3. 改善方案 (Solution)\n${s}`;
+            } else if (currentTemplate === 'scqat') {
+                const s = document.getElementById('s-scqa-s').value || '[输入正常进展]';
+                const c = document.getElementById('s-scqa-c').value || '[输入突发瓶颈]';
+                const q = document.getElementById('s-scqa-q').value || '[输入面临挑战]';
+                const tp = document.getElementById('s-triangle-people').value || '[输入支持人]';
+                const tj = document.getElementById('s-triangle-job').value || '[输入具体职责]';
+                const ta = document.getElementById('s-triangle-asset').value || '[输入预算金额]';
+                
+                mdText = `# 资源申请专项汇报\n\n### 1. 项目进展背景 (Situation)\n${s}\n\n### 2. 技术瓶颈阻碍 (Complication)\n${c}\n\n### 3. 关键挑战疑问 (Question)\n${q}\n\n### 4. 三角资源保障计划\n*   **人 (People / 协调人)**: ${tp}\n*   **事 (Tasks / 工作范畴)**: ${tj}\n*   **物 (Assets / 预算支持)**: ${ta}`;
+            }
+
+            reportPreview.textContent = mdText;
+        }
+
+        reportTypeSelect.addEventListener('change', renderFields);
+        renderFields(); // Initial run
+
+        document.getElementById('copy-report-btn').addEventListener('click', () => {
+            navigator.clipboard.writeText(reportPreview.textContent);
+            showToast('汇报文本复制成功！');
+        });
+
+        // ==========================================
+        // TAB 2: McKinsey Sky-Rain-Umbrella
+        // ==========================================
+        let kanbanData = {
+            sky: [
+                { id: 'k1', text: '本周新产品成交转化率由3.5%下降至2.1%', meta: '分析部 / 周二' }
+            ],
+            rain: [
+                { id: 'k2', text: '若下周无法止跌，Q2季度总体成交目标将面临 15% 的无法达成风险', meta: '业务部 / 周二' }
+            ],
+            umbrella: [
+                { id: 'k3', text: '李工牵头于周四前上线支付网关的短延时优化补丁', meta: '研发部 / 周四前' }
+            ]
+        };
+
+        function renderKanban() {
+            ['sky', 'rain', 'umbrella'].forEach(col => {
+                const container = document.querySelector(`#col-${col} .sky-item-list`);
+                const counter = document.getElementById(`count-${col}`);
+                container.innerHTML = '';
+                counter.textContent = kanbanData[col].length;
+
+                kanbanData[col].forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'sky-card';
+                    card.draggable = true;
+                    card.setAttribute('data-id', item.id);
+                    card.addEventListener('dragstart', dragStart);
+                    card.addEventListener('dragend', dragEnd);
+
+                    card.innerHTML = `
+                        <div class="sky-card-text">${item.text}</div>
+                        <div class="sky-card-meta">
+                            <span>${item.meta || '无'}</span>
+                            <button class="sky-card-delete" onclick="deleteKanbanItem('${col}', '${item.id}')">✕</button>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            });
+        }
+
+        // Drag and Drop handlers
+        let draggedElement = null;
+        let sourceCol = null;
+
+        function dragStart(e) {
+            draggedElement = e.currentTarget;
+            sourceCol = draggedElement.parentNode.getAttribute('data-column');
+            draggedElement.classList.add('dragging');
+        }
+
+        function dragEnd() {
+            draggedElement.classList.remove('dragging');
+            draggedElement = null;
+        }
+
+        function allowDrop(e) {
+            e.preventDefault();
+        }
+
+        function drop(e, destCol) {
+            e.preventDefault();
+            if (!draggedElement) return;
+
+            const itemId = draggedElement.getAttribute('data-id');
+            const itemIndex = kanbanData[sourceCol].findIndex(i => i.id === itemId);
+            if (itemIndex === -1) return;
+
+            const item = kanbanData[sourceCol].splice(itemIndex, 1)[0];
+            kanbanData[destCol].push(item);
+            
+            renderKanban();
+        }
+
+        function deleteKanbanItem(col, id) {
+            kanbanData[col] = kanbanData[col].filter(i => i.id !== id);
+            renderKanban();
+        }
+
+        document.getElementById('add-kanban-item-btn').addEventListener('click', () => {
+            const col = document.getElementById('kanban-col').value;
+            const meta = document.getElementById('kanban-meta').value.trim();
+            const text = document.getElementById('kanban-text').value.trim();
+
+            if (!text) {
+                alert('请填写看板内容点！');
+                return;
+            }
+
+            const newItem = {
+                id: 'k_' + Date.now(),
+                text: text,
+                meta: meta || '自建项目'
+            };
+
+            kanbanData[col].push(newItem);
+            renderKanban();
+
+            // Clear inputs
+            document.getElementById('kanban-text').value = '';
+            document.getElementById('kanban-meta').value = '';
+        });
+
+        document.getElementById('export-kanban-btn').addEventListener('click', () => {
+            let mdText = `# 麦肯锡【空·雨·伞】会议纪要与决策归档\n\n`;
+            
+            mdText += `## ☁️ 空 (Sky - 事实数据)\n`;
+            kanbanData.sky.forEach(i => mdText += `*   [${i.meta}] ${i.text}\n`);
+            if (kanbanData.sky.length === 0) mdText += `*   (空)\n`;
+
+            mdText += `\n## 🌧️ 雨 (Rain - 分析推论)\n`;
+            kanbanData.rain.forEach(i => mdText += `*   [${i.meta}] ${i.text}\n`);
+            if (kanbanData.rain.length === 0) mdText += `*   (空)\n`;
+
+            mdText += `\n## ☂️ 伞 (Umbrella - 行动方案)\n`;
+            kanbanData.umbrella.forEach(i => mdText += `*   [${i.meta}] ${i.text}\n`);
+            if (kanbanData.umbrella.length === 0) mdText += `*   (空)\n`;
+
+            navigator.clipboard.writeText(mdText);
+            showToast('空雨伞决策模板已成功复制到剪贴板！');
+        });
+
+        renderKanban(); // Initial render
+
+        // ==========================================
+        // TAB 3: Paired Analysis Matrix Calculator
+        // ==========================================
+        let matrixData = {
+            criteria: [
+                { id: 'c1', name: '成本优势', weight: 40 },
+                { id: 'c2', name: '上线速度', weight: 30 },
+                { id: 'c3', name: '运营风险', weight: 30 }
+            ],
+            alternatives: [
+                { id: 'a1', name: '方案A: 自研系统', scores: { c1: 4, c2: 5, c3: 9 } },
+                { id: 'a2', name: '方案B: 第三方外包', scores: { c1: 8, c2: 9, c3: 4 } }
+            ]
+        };
+
+        function renderMatrixTable() {
+            const header = document.getElementById('matrix-header');
+            const body = document.getElementById('matrix-body');
+
+            // 1. Render Header
+            header.innerHTML = '<th>候选方案</th>';
+            matrixData.criteria.forEach((c, index) => {
+                header.innerHTML += `
+                    <th>
+                        <div style="margin-bottom:5px">${c.name}</div>
+                        <div class="slider-container">
+                            <input type="range" min="0" max="100" value="${c.weight}" oninput="updateWeight('${c.id}', this.value)">
+                            <span class="weight-badge" id="badge-${c.id}">${c.weight}%</span>
+                        </div>
+                    </th>
+                `;
+            });
+            header.innerHTML += '<th>操作</th>';
+
+            // 2. Render Body
+            body.innerHTML = '';
+            matrixData.alternatives.forEach(alt => {
+                let row = `<tr><td><input type="text" class="form-control" value="${alt.name}" onchange="updateAltName('${alt.id}', this.value)"></td>`;
+                matrixData.criteria.forEach(c => {
+                    const score = alt.scores[c.id] || 5;
+                    row += `<td><input type="number" min="1" max="10" value="${score}" class="matrix-score-input" onchange="updateScore('${alt.id}', '${c.id}', this.value)"></td>`;
+                });
+                row += `<td><button class="sky-card-delete" onclick="deleteAlternative('${alt.id}')">✕ 删除</button></td></tr>`;
+                body.innerHTML += row;
+            });
+
+            calculateScores();
+        }
+
+        window.updateWeight = function(cId, value) {
+            const criterion = matrixData.criteria.find(c => c.id === cId);
+            if (criterion) {
+                criterion.weight = parseInt(value);
+                
+                // Real-time balance normalization
+                let total = matrixData.criteria.reduce((sum, c) => sum + c.weight, 0);
+                if (total === 0) total = 1;
+                
+                // Normalize badge text instantly
+                matrixData.criteria.forEach(c => {
+                    const pct = Math.round((c.weight / total) * 100);
+                    document.getElementById(`badge-${c.id}`).textContent = `${pct}%`;
+                });
+                
+                calculateScores();
+            }
+        };
+
+        window.updateScore = function(altId, cId, val) {
+            const alt = matrixData.alternatives.find(a => a.id === altId);
+            if (alt) {
+                alt.scores[cId] = Math.max(1, Math.min(10, parseInt(val) || 5));
+                calculateScores();
+            }
+        };
+
+        window.updateAltName = function(altId, val) {
+            const alt = matrixData.alternatives.find(a => a.id === altId);
+            if (alt) alt.name = val;
+        };
+
+        window.deleteAlternative = function(altId) {
+            matrixData.alternatives = matrixData.alternatives.filter(a => a.id !== altId);
+            renderMatrixTable();
+        };
+
+        document.getElementById('add-alternative-btn').addEventListener('click', () => {
+            const newId = 'a_' + Date.now();
+            const scores = {};
+            matrixData.criteria.forEach(c => scores[c.id] = 5);
+            
+            matrixData.alternatives.push({
+                id: newId,
+                name: `方案${String.fromCharCode(65 + matrixData.alternatives.length)}`,
+                scores: scores
+            });
+            renderMatrixTable();
+        });
+
+        document.getElementById('add-criterion-btn').addEventListener('click', () => {
+            const newId = 'c_' + Date.now();
+            matrixData.criteria.push({
+                id: newId,
+                name: `维度${matrixData.criteria.length + 1}`,
+                weight: 30
+            });
+            
+            // Add default scores for the new criterion
+            matrixData.alternatives.forEach(alt => {
+                alt.scores[newId] = 5;
+            });
+            renderMatrixTable();
+        });
+
+        function calculateScores() {
+            const rankContainer = document.getElementById('rank-container');
+            const recText = document.getElementById('recommendation-text');
+            rankContainer.innerHTML = '';
+
+            let totalWeight = matrixData.criteria.reduce((sum, c) => sum + c.weight, 0);
+            if (totalWeight === 0) totalWeight = 1;
+
+            let results = matrixData.alternatives.map(alt => {
+                let weightedScore = 0;
+                matrixData.criteria.forEach(c => {
+                    const score = alt.scores[c.id] || 5;
+                    const weightPct = c.weight / totalWeight;
+                    weightedScore += score * weightPct;
+                });
+                return {
+                    name: alt.name,
+                    score: parseFloat(weightedScore.toFixed(2))
+                };
+            });
+
+            // Sort results by score
+            results.sort((x, y) => y.score - x.score);
+
+            if (results.length > 0) {
+                const maxVal = Math.max(...results.map(r => r.score), 1);
+                
+                results.forEach((r, idx) => {
+                    const isWinner = idx === 0;
+                    const widthPct = (r.score / 10) * 100;
+
+                    rankContainer.innerHTML += `
+                        <div class="rank-row">
+                            <div class="rank-label">${r.name}</div>
+                            <div class="rank-bar-bg">
+                                <div class="rank-bar-fill ${isWinner ? 'winner' : ''}" style="width: ${widthPct}%"></div>
+                            </div>
+                            <div class="rank-val">${r.score} 分</div>
+                        </div>
+                    `;
+                });
+
+                // Generate report text
+                const winner = results[0];
+                const runnerUp = results[1] || { name: '其他候选', score: 0 };
+                const topCriterion = matrixData.criteria.sort((x, y) => y.weight - x.weight)[0];
+
+                recText.textContent = `尊敬的领导，关于我们本次项目方案决策，我们围绕着 ${matrixData.criteria.map(c => c.name).join('、')} 等关键维度进行了成对加权比选。最终评估计算结果显示，【${winner.name}】加权综合得分为 ${winner.score} 分（满分10分），优于【${runnerUp.name}】的 ${runnerUp.score} 分。主因是在核心权重维度【${topCriterion.name}】中表现亮眼。因此，我倾向于推荐选择【${winner.name}】方案，呈请您批示审批。`;
+            } else {
+                recText.textContent = '请先添加候选方案及决策维度。';
+            }
+        }
+
+        renderMatrixTable(); // Initial run
+
+        document.getElementById('copy-recommendation-btn').addEventListener('click', () => {
+            navigator.clipboard.writeText(document.getElementById('recommendation-text').textContent);
+            showToast('汇报陈述词复制成功！');
+        });
+
+        // ==========================================
+        // TAB 4: Persuasion Diagnoser
+        // ==========================================
+        const persuadeActor = document.getElementById('persuade-actor');
+        const persuadeBehavior = document.getElementById('persuade-behavior');
+        const persuadePathos = document.getElementById('persuade-pathos');
+        const persuadeLogos = document.getElementById('persuade-logos');
+        const persuadeInterest = document.getElementById('persuade-interest');
+        const persuadeRaw = document.getElementById('persuade-raw-text');
+
+        const diagnoseBtn = document.getElementById('diagnose-btn');
+        const diagnoseBox = document.getElementById('diagnose-box');
+        const diagnoseRank = document.getElementById('diagnose-rank');
+        const diagnoseList = document.getElementById('diagnose-list');
+        const persuadePreview = document.getElementById('persuade-preview');
+
+        diagnoseBtn.addEventListener('click', () => {
+            const actorVal = persuadeActor.value.trim();
+            const behaviorVal = persuadeBehavior.value.trim();
+            const rawText = persuadeRaw.value.trim();
+
+            if (!actorVal || !behaviorVal) {
+                alert('请填写沟通对象和期望的行为！');
+                return;
+            }
+
+            diagnoseBox.classList.add('active');
+            diagnoseList.innerHTML = '';
+
+            let score = 100;
+            let warnings = [];
+
+            // Diagnose logic
+            if (rawText) {
+                // Rule 1: We vs You check
+                const weMatches = (rawText.match(/我|我们|我们部门|我这边/g) || []).length;
+                const youMatches = (rawText.match(/您|贵部门|李经理/g) || []).length;
+
+                if (weMatches > youMatches) {
+                    score -= 30;
+                    warnings.push({
+                        type: 'warning',
+                        text: `【自说自话风险】：本位词汇 (我/我们) 出现了 ${weMatches} 次，而受众视角词汇 (您/贵部) 仅 ${youMatches} 次。这容易给对方带来完成任务的防御感。`
+                    });
+                } else {
+                    warnings.push({
+                        type: 'success',
+                        text: `【视角校验】：受众尊称词汇合理，本位思想弱化，符合“知彼解己”原则。`
+                    });
+                }
+
+                // Rule 2: Interest matching check
+                const keyInterests = ['安全', '合规', '利益', '典型', '省事', '绩效', '指标', '痛点', 'KPI'];
+                let foundInterest = false;
+                keyInterests.forEach(k => {
+                    if (rawText.includes(k)) foundInterest = true;
+                });
+
+                if (!foundInterest) {
+                    score -= 30;
+                    warnings.push({
+                        type: 'warning',
+                        text: `【利益点虚化】：草稿中未提及任何与受众痛点或 KPI 挂钩的利益点 (诱之以利)。对方合作的内驱力可能不足。`
+                    });
+                } else {
+                    warnings.push({
+                        type: 'success',
+                        text: `【利益拉齐】：包含明确的诱之以利点，有利于降低跨部门审批门槛。`
+                    });
+                }
+
+                // Rule 3: Detail clarity
+                if (rawText.length < 35) {
+                    score -= 20;
+                    warnings.push({
+                        type: 'warning',
+                        text: `【依据不足】：理由过于单薄短小，缺失了“动之以理”的合理对立代价陈述。`
+                    });
+                }
+            } else {
+                score = 50;
+                warnings.push({
+                    type: 'warning',
+                    text: '未填草稿，将直接根据上方录入的“情、理、利”字段生成打磨后的沟通模板。'
+                });
+            }
+
+            // Set badge level
+            if (score >= 80) {
+                diagnoseRank.className = 'diagnose-badge pass';
+                diagnoseRank.textContent = `说服指数：优秀 (${score}分)`;
+            } else if (score >= 60) {
+                diagnoseRank.className = 'diagnose-badge warning';
+                diagnoseRank.textContent = `说服指数：中等 (${score}分)`;
+            } else {
+                diagnoseRank.className = 'diagnose-badge fail';
+                diagnoseRank.textContent = `说服指数：偏弱 (${score}分)`;
+            }
+
+            warnings.forEach(w => {
+                const li = document.createElement('li');
+                li.className = w.type;
+                li.textContent = w.text;
+                diagnoseList.appendChild(li);
+            });
+
+            // Generate polished templates
+            generatePolishedTemplate(actorVal, behaviorVal);
+        });
+
+        function generatePolishedTemplate(actor, behavior) {
+            const pathos = persuadePathos.value.trim() || '我已经将改签的数据差旅费明细对比表理好了';
+            const logos = persuadeLogos.value.trim() || '如果不特批解决，战略合同签署将被顺延一周，延误业务时机';
+            const interest = persuadeInterest.value.trim() || '该项目在总裁会上可作为财务部高效配合业务的最佳典型案例展示';
+
+            const polished = `【跨部门说服沟通推荐模板 (AB法则 + 晓理利)】\n\n${actor}，您好！\n\n向您请求支持一件事：为了确保明天下午前能特批通过【${behavior}】。\n\n目前背景是：${pathos}。如果按正常跨部常规流转，可能会耽误业务时机（${logos}），这也需要劳烦两边领导层层审批，增加繁琐的流程流转负担。\n\n如果您这边特批加速，不仅业务感激，我们也计划在此项目的结项复盘会以及总裁汇报时，将本次合作作为财务部快速响应业务、支撑公司战略级大单签批的【敏捷协作典型案例】进行重点展示。\n\n请您于百忙之中协助，特批签字发款，万分感谢！\n\n[您部门的名字]\n[发送日期]`;
+
+            persuadePreview.textContent = polished;
+        }
+
+        document.getElementById('copy-persuade-btn').addEventListener('click', () => {
+            navigator.clipboard.writeText(persuadePreview.textContent);
+            showToast('说服力抛光模板复制成功！');
+        });
+
+        // --- Helper toast message ---
+        function showToast(msg) {
+            const toast = document.createElement('div');
+            toast.style.position = 'fixed';
+            toast.style.bottom = '20px';
+            toast.style.right = '20px';
+            toast.style.background = 'var(--primary)';
+            toast.style.color = '#FFFFFF';
+            toast.style.padding = '0.8rem 1.5rem';
+            toast.style.borderRadius = 'var(--radius-md)';
+            toast.style.boxShadow = 'var(--shadow-md)';
+            toast.style.zIndex = '999';
+            toast.style.fontSize = '0.85rem';
+            toast.style.fontWeight = '600';
+            toast.style.animation = 'fadeIn 0.2s ease';
+            toast.textContent = msg;
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'fadeOut 0.2s ease';
+                setTimeout(() => toast.remove(), 200);
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>权力 核心命题与心智速查 | 开发者心智系统 developer-mind-OS</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f090b;
+            --bg-light: #f7f3f5;
+            --panel-dark: rgba(26, 17, 20, 0.7);
+            --panel-light: rgba(255, 255, 255, 0.85);
+            --text-dark: #e6dfdf;
+            --text-light: #2c2527;
+            --border-dark: rgba(92, 61, 70, 0.3);
+            --border-light: rgba(90, 107, 124, 0.2);
+            
+            /* Morandi Palette */
+            --plum: #5C3D46;
+            --plum-glow: rgba(92, 61, 70, 0.2);
+            --slate: #5A6B7C;
+            --slate-glow: rgba(90, 107, 124, 0.2);
+            --moss: #4E6B5A;
+            --moss-glow: rgba(78, 107, 90, 0.2);
+            --gold: #C19A6B;
+            --gold-glow: rgba(193, 154, 107, 0.2);
+            --terracotta: #9E5757;
+            --terracotta-glow: rgba(158, 87, 87, 0.2);
+            --indigo: #525B75;
+            --indigo-glow: rgba(82, 91, 117, 0.2);
+            
+            --active-bg: var(--bg-dark);
+            --active-panel: var(--panel-dark);
+            --active-text: var(--text-dark);
+            --active-border: var(--border-dark);
+        }
+        
+        .light-mode {
+            --active-bg: var(--bg-light);
+            --active-panel: var(--panel-light);
+            --active-text: var(--text-light);
+            --active-border: var(--border-light);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Outfit', 'Noto Sans SC', sans-serif;
+            background-color: var(--active-bg);
+            color: var(--active-text);
+            min-height: 100vh;
+            padding-bottom: 50px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1A1114 0%, #110A0C 100%);
+            color: #fff;
+            padding: 30px 5%;
+            position: relative;
+            border-bottom: 2px solid var(--plum);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .title-area h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, #fff 0%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .title-area p {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-top: 5px;
+            max-width: 800px;
+        }
+        
+        .controls-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .theme-btn {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        
+        .theme-btn:hover {
+            background: rgba(255,255,255,0.15);
+        }
+        
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 5% 15px 5%;
+            border-bottom: 1px solid var(--active-border);
+            padding-bottom: 5px;
+        }
+        
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--active-text);
+            opacity: 0.6;
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 10px 25px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .tab-btn.active {
+            opacity: 1;
+            color: var(--gold);
+        }
+        
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--gold);
+            border-radius: 3px;
+        }
+        
+        /* Main Container */
+        .container {
+            max-width: 90%;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Grid Layouts */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 1100px) {
+            .overview-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .glass-box {
+            background: var(--active-panel);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--active-border);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .box-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--gold);
+            border-bottom: 2px solid var(--plum);
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Typography Elements */
+        p, li, td {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+        
+        strong {
+            color: var(--gold);
+        }
+        
+        code {
+            background: rgba(0,0,0,0.15);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-family: monospace;
+        }
+        
+        /* Math styling */
+        .math-block {
+            background: rgba(0,0,0,0.2);
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--gold);
+            text-align: center;
+            margin: 10px 0;
+            letter-spacing: 0.5px;
+        }
+        .math-inline {
+            color: var(--gold);
+            font-weight: 600;
+            font-family: sans-serif;
+            background: rgba(0,0,0,0.08);
+            padding: 1px 4px;
+            border-radius: 3px;
+        }
+        
+        /* Anti-Consensus Matrix Table */
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        .matrix-table th, .matrix-table td {
+            padding: 15px 20px;
+            text-align: left;
+            border: 1px solid var(--active-border);
+        }
+        
+        .matrix-table th {
+            background: var(--plum);
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+        
+        .matrix-table tr:hover {
+            background: rgba(255,255,255,0.03);
+        }
+        
+        .light-mode .matrix-table tr:hover {
+            background: rgba(0,0,0,0.02);
+        }
+        
+        /* Card Filter Section */
+        .filter-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+            background: var(--active-panel);
+            padding: 15px 25px;
+            border-radius: 8px;
+            border: 1px solid var(--active-border);
+        }
+        
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-label {
+            font-weight: 700;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .filter-btn {
+            background: rgba(0,0,0,0.05);
+            border: 1px solid var(--active-border);
+            color: var(--active-text);
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .light-mode .filter-btn {
+            background: rgba(255,255,255,0.5);
+        }
+        
+        .filter-btn.active {
+            background-color: var(--plum);
+            color: #fff;
+            border-color: var(--plum);
+        }
+        
+        .filter-btn.type-btn.active.plum { background-color: var(--plum); border-color: var(--plum); }
+        .filter-btn.type-btn.active.slate { background-color: var(--slate); border-color: var(--slate); }
+        .filter-btn.type-btn.active.gold { background-color: var(--gold); border-color: var(--gold); }
+        
+        .search-input {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--active-border);
+            background: rgba(0,0,0,0.1);
+            color: var(--active-text);
+            font-family: inherit;
+            width: 280px;
+        }
+        
+        .light-mode .search-input {
+            background: #fff;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+        
+        /* Cards Layout */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+        
+        .card {
+            border-radius: 8px;
+            border: 1px solid transparent;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+            cursor: pointer;
+            transform: translateY(0);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .card.plum {
+            background: linear-gradient(135deg, rgba(92, 61, 70, 0.12) 0%, rgba(92, 61, 70, 0.04) 100%);
+            border-color: rgba(92, 61, 70, 0.35);
+        }
+        .card.slate {
+            background: linear-gradient(135deg, rgba(90, 107, 124, 0.12) 0%, rgba(90, 107, 124, 0.04) 100%);
+            border-color: rgba(90, 107, 124, 0.35);
+        }
+        .card.moss {
+            background: linear-gradient(135deg, rgba(78, 107, 90, 0.12) 0%, rgba(78, 107, 90, 0.04) 100%);
+            border-color: rgba(78, 107, 90, 0.35);
+        }
+        .card.gold {
+            background: linear-gradient(135deg, rgba(193, 154, 107, 0.12) 0%, rgba(193, 154, 107, 0.04) 100%);
+            border-color: rgba(193, 154, 107, 0.35);
+        }
+        .card.terracotta {
+            background: linear-gradient(135deg, rgba(158, 87, 87, 0.12) 0%, rgba(158, 87, 87, 0.04) 100%);
+            border-color: rgba(158, 87, 87, 0.35);
+        }
+        .card.indigo {
+            background: linear-gradient(135deg, rgba(82, 91, 117, 0.12) 0%, rgba(82, 91, 117, 0.04) 100%);
+            border-color: rgba(82, 91, 117, 0.35);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+        }
+        
+        .light-mode .card-header {
+            border-bottom-color: rgba(0,0,0,0.05);
+        }
+        
+        .card-tag {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: #fff;
+        }
+        
+        .card-tag.plum { background-color: var(--plum); }
+        .card-tag.slate { background-color: var(--slate); }
+        .card-tag.moss { background-color: var(--moss); }
+        .card-tag.gold { background-color: var(--gold); }
+        .card-tag.terracotta { background-color: var(--terracotta); }
+        .card-tag.indigo { background-color: var(--indigo); }
+        
+        .card-num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 800;
+            opacity: 0.7;
+        }
+        
+        .card h3 {
+            font-size: 1.05rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        
+        .card-body {
+            max-height: 280px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .card-body::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: linear-gradient(to top, var(--active-bg) 0%, rgba(255,255,255,0) 100%);
+            pointer-events: none;
+        }
+        
+        /* Zone T Tab Styles */
+        .workspace-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 25px;
+        }
+        
+        @media (max-width: 1200px) {
+            .workspace-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Interactive Self-Audit Table */
+        .audit-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        .audit-table th, .audit-table td {
+            border: 1px solid var(--active-border);
+            padding: 10px 12px;
+            font-size: 0.85rem;
+        }
+        
+        .audit-table th {
+            background: var(--slate);
+            color: #fff;
+            font-weight: 700;
+        }
+        
+        .audit-select {
+            background: rgba(0,0,0,0.15);
+            border: 1px solid var(--active-border);
+            color: var(--active-text);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: inherit;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .light-mode .audit-select {
+            background: #fff;
+        }
+        
+        .result-panel {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            background: rgba(193, 154, 107, 0.1);
+            border: 1px dashed var(--gold);
+            text-align: center;
+        }
+        
+        .result-score {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--gold);
+            margin: 10px 0;
+        }
+        
+        .result-desc {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        /* Modal window for card detail view */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        
+        .modal-box {
+            background: var(--active-bg);
+            border: 1px solid var(--active-border);
+            border-radius: 12px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            animation: modalSlideUp 0.3s ease;
+        }
+        
+        @keyframes modalSlideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--active-text);
+            cursor: pointer;
+            opacity: 0.6;
+        }
+        
+        .modal-close:hover {
+            opacity: 1;
+        }
+        
+        /* Helper styles for parsed MD elements in list items */
+        .list-num-item {
+            margin-left: 10px;
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-container">
+        <div class="title-area">
+            <h1>《权力：为什么有些人有，有些人没有》</h1>
+            <p>组织行为学名著高密度互动博弈速查舱。整合戏剧论与非言语高低姿态演学系统，提供客观的地位审计量表与博弈红线防御工具。</p>
+        </div>
+        <div class="controls-area">
+            <button class="theme-btn" id="theme-toggle">切换明亮模式</button>
+        </div>
+    </div>
+</header>
+
+<nav class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab('framework-tab', this)">🗺️ 核心架构</button>
+    <button class="tab-btn" onclick="switchTab('cards-tab', this)">🧠 策略卡片库</button>
+    <button class="tab-btn" onclick="switchTab('audit-tab', this)">🧭 演练与审计</button>
+</nav>
+
+<div class="container">
+    <!-- TAB 1: CORE FRAMEWORK -->
+    <div id="framework-tab" class="tab-content active">
+        <div class="overview-grid">
+            <div class="glass-box">
+                <div class="box-title">🗺️ L0-L2 核心压缩阶梯</div>
+                <div style="margin-bottom: 18px;">
+                    <h4 style="color:var(--plum); font-size:1rem; margin-bottom:5px;">L0 一句话本质</h4>
+                    <p style="font-size: 0.95rem;"><p>权力不是个人特质或职位垄断，而是人在社会舞台上为了实现集体目标，在他人故事里所扮演的角色与受托信托关系。</p></p>
+                </div>
+                <div style="margin-bottom: 18px;">
+                    <h4 style="color:var(--plum); font-size:1rem; margin-bottom:5px;">L1 四句话逻辑</h4>
+                    <div style="font-size: 0.92rem; padding-left: 5px;"><div class='list-num-item'><strong>1.</strong> <strong>本质认知</strong>：权力是情境与关系属性，由核心资源的依赖程度决定（重要性、稀缺性、不可替代性）。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>两面演技</strong>：通过高姿态（Up-playing）展现权威以确立规则，通过低姿态（Down-playing）建立信任以获取真理。</div>
+<div class='list-num-item'><strong>3.</strong> <strong>临场掌控</strong>：将管理职位视为“集体剧本要求”入戏以克服冒名顶替感，意念去中心化以战胜演讲焦虑。</div>
+<div class='list-num-item'><strong>4.</strong> <strong>责任避险</strong>：警惕无力感引发的权力腐败，通过匿名的 360 度反馈自检，联合盟友进行不卑不亢的抗争。</div></div>
+                </div>
+                <div>
+                    <h4 style="color:var(--plum); font-size:1rem; margin-bottom:5px;">L2 十条博弈法则</h4>
+                    <div style="font-size: 0.9rem; padding-left: 5px; max-height: 250px; overflow-y: auto;"><div class='list-num-item'><strong>1.</strong> <strong>依赖产生权力</strong>：你拥有权力，仅仅是因为他人需要你所控制的资源，权力在依赖中产生（第1章）。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>受托信托本质</strong>：权力是集体的信托，使用者必须对集体的安全与利益承担保护受托人职责（第1章）。</div>
+<div class='list-num-item'><strong>3.</strong> <strong>高姿态表征</strong>：通过昂首直立、占据空间、放慢动作与语速、敢于直视和停顿确立威信（第2章）。</div>
+<div class='list-num-item'><strong>4.</strong> <strong>低姿态表征</strong>：通过微微前倾、歪头、微笑、提问和分享脆弱与团队拉近距离（第3章）。</div>
+<div class='list-num-item'><strong>5.</strong> <strong>动态身位平衡</strong>：优秀的领导力是高姿态（提供秩序）与低姿态（促进协作）的自如交替（第3章）。</div>
+<div class='list-num-item'><strong>6.</strong> <strong>职业盔甲入戏</strong>：视岗位职责为“集体剧本要求”，穿上职业盔甲以消除不自信的虚假感（第4章）。</div>
+<div class='list-num-item'><strong>7.</strong> <strong>授权自退机制</strong>：高层管理者的核心能力是“交出聚光灯”，在团队执行期扮演支持性的配角（第5章）。</div>
+<div class='list-num-item'><strong>8.</strong> <strong>去中心化抗焦</strong>：上台焦虑时，将注意力从自我表现移开，对准如何帮到听众（第6章）。</div>
+<div class='list-num-item'><strong>9.</strong> <strong>无权阶层腐败</strong>：高位者残暴霸凌，往往源于其“手握权力却内心无力”的补偿心理（第7章）。</div>
+<div class='list-num-item'><strong>10.</strong> <strong>不卑不亢沟通</strong>：抛弃受害者剧本，使用“事实+红线”的 Assertive 坚定话术明确划定物理边界（第8章）。</div></div>
+                </div>
+            </div>
+            
+            <div class="glass-box">
+                <div class="box-title">🌐 作者底层的戏剧论与心智滤镜 (Epistemic Filter)</div>
+                <div style="font-size: 0.92rem;">
+                    <li><strong>认识论 (Epistemology)</strong>：权力非特质，而是情境性的“剧本角色”与“资源依赖”关系网。社会交往本质上是一种舞台表演（戈夫曼社会学），地位高低是人在舞台上即兴扮演的角色。</li>
+<li><strong>人性观 (Human Nature)</strong>：人类在特定角色剧本前具有高度易感性，极易受环境塑造（斯坦福监狱实验）。权力拥有者的大脑镜像神经元会趋于休眠，导致同理心退化（Empathy Deficit）；而在低权力位置的个体容易陷入习得性无助。</li>
+<li><strong>方法论 (Methodology)</strong>：采用微观非言语行为分析与组织行为学实验相结合。通过身体姿态、眼神、音调、空间占用等地位暗示，剖析人际交往中权力的动态分配。</li>
+<li><strong>伦理观 (Ethics)</strong>：权力是集体的“受托信托”（Stewardship），用于承担保护责任，而非自我膨胀与掠夺。任何时候都不应将权力私有化，必须建立畅通的反馈回路防止腐败。</li>
+<br>
+<p>---</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="glass-box">
+            <div class="box-title">⚔️ 反常识硬碰撞矩阵 (Anti-Consensus Matrix)</div>
+            <div style="overflow-x: auto;">
+                <table class="matrix-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">常人直觉</th>
+                            <th style="width: 35%;">作者解构 (客观行为科学事实)</th>
+                            <th style="width: 40%;">现实防线动作 / 底层实证数据</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><p><strong>直觉一</strong>：权力是与生俱来的个人性格魅力、高贵气质或职位垄断。</p></td><td><p><strong>解构</strong>：权力是动态的关系属性。别人依赖你的资源，你就拥有权力；一旦依赖解除，权力瞬间瓦解。</p></td><td><p><strong>防线</strong>：定期评估“依赖关系网”，通过拓展核心资源或去中心化备份，打破对单一上游的绝对依赖（第1章）。</p></td></tr>
+<tr><td><p><strong>直觉二</strong>：在职场或社交场合，永远保持谦虚低调、和蔼可亲是最好的沟通策略。</p></td><td><p><strong>解构</strong>：过度的低姿态（亲和力）会丧失威信与执行力。高姿态（权威）与低姿态（亲和）的动态交替才是顶尖的领导力。</p></td><td><p><strong>防线</strong>：在规则失守或危机爆发时强制切换为高姿态以稳定局面；在脑暴或跨部协作时切换为低姿态以获取真实信息（第3章）。</p></td></tr>
+<tr><td><p><strong>直觉三</strong>：上大台演讲、向高管汇报时，手抖、心跳过速是“我不够自信”的表现，必须强行压抑紧张情绪。</p></td><td><p><strong>解构</strong>：紧张是肾上腺素的正常生理反应。越想“我表现好不好”（自我中心），就越焦虑。</p></td><td><p><strong>防线</strong>：启动“去中心化”意念法，把关注点转为“听众有什么痛点，我能带给他们什么价值”，让注意力完全转移到使命上（第6章）。</p></td></tr>
+<tr><td><p><strong>直觉四</strong>：欺压或霸凌下属的管理者，通常是因为他们过于自信、傲慢，内心极度强大。</p></td><td><p><strong>解构</strong>：最残暴和歇斯底里的霸凌往往源于“手握权力却内心无权感”的补偿心理。越是面临失去掌控的恐惧，越要通过极端控制下属来寻找安全感。</p></td><td><p><strong>防线</strong>：HR和管理层对频咆哮、暴怒的管理者进行降权或赋能；下属遭遇此类欺压时，用“事实+红线”冷静回击，绝不扮演默默隐忍的受害者（第7-8章）。</p></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 2: CARDS GRID -->
+    <div id="cards-tab" class="tab-content">
+        <div class="filter-section">
+            <div class="filter-group">
+                <span class="filter-label">分章模块：</span>
+                <button class="filter-btn active" onclick="filterModule('All', this)">全部</button>
+                <button class="filter-btn" onclick="filterModule('模块一', this)">模块一 (1-4)</button>
+                <button class="filter-btn" onclick="filterModule('模块二', this)">模块二 (5-10)</button>
+                <button class="filter-btn" onclick="filterModule('模块三', this)">模块三 (11-15)</button>
+                <button class="filter-btn" onclick="filterModule('模块四', this)">模块四 (16-18)</button>
+                <button class="filter-btn" onclick="filterModule('模块五', this)">模块五 (19-23)</button>
+                <button class="filter-btn" onclick="filterModule('模块六', this)">模块六 (24-28)</button>
+            </div>
+            
+            <div class="filter-group">
+                <span class="filter-label">类型标签：</span>
+                <button class="filter-btn type-btn active" onclick="filterType('All', this)">全部</button>
+                <button class="filter-btn type-btn plum" onclick="filterType('Model', this)">Model Card</button>
+                <button class="filter-btn type-btn slate" onclick="filterType('Method', this)">Method Card</button>
+                <button class="filter-btn type-btn gold" onclick="filterType('Scenario', this)">Scenario Card</button>
+                <button class="filter-btn type-btn gold" onclick="filterType('Reference', this)">Reference Card</button>
+            </div>
+            
+            <div>
+                <input type="text" class="search-input" id="search-bar" placeholder="搜索卡片标题或内容..." onkeyup="searchCards()">
+            </div>
+        </div>
+        
+        <div class="cards-grid" id="cards-container">
+            
+            <div class="card plum" data-id="card-01" data-module="模块一" data-type="Model" onclick="openCard('card-01')">
+                <div class="card-header">
+                    <span class="card-tag plum">Model Card</span>
+                    <span class="card-num">01</span>
+                </div>
+                <h3>权力的关系属性定义 </h3>
+                <div class="card-body">
+                    <li><strong>定义与本质</strong>：权力不是你带进房间的性格特征，而是房间里的人对你产生资源依赖的结果。权力存在于关系之中，随着依赖关系的变化而动态调整。</li>
+<p><div class="math-block">权力影响力 = f(资源依赖度) \quad [依赖度 → 1, 权力 → \infty]</div></p>
+<li><strong>经典案例</strong>：父母与婴儿的权力关系。婴儿在食物、安全和情感资源上对父母有100%的绝对依赖，此时父母拥有绝对权力；但当孩子成年、财务独立后，这种资源依赖解耦，原有的权力结构自动瓦解（p. 25）。</li>
+<li><strong>商业/科技映射</strong>：在软件开发团队中，某位老员工掌握了唯一的旧版核心代码库修改权。新架构调整必须依赖他，因此即便他没有任何管理头衔，也在该项目节点上拥有极高的隐性权力。</li>
+<li><strong>适用与失效边界</strong>：只要有第二条低成本路径可以获取同等资源，现有的权力依赖就会立即坍塌。</li>
+<li><strong>关联卡片</strong>：<code>Card 02</code>, <code>Card 04</code></li>
+<li>页 23-26</li>
+                </div>
+            </div>
+            
+
+            <div class="card plum" data-id="card-02" data-module="模块一" data-type="Model" onclick="openCard('card-02')">
+                <div class="card-header">
+                    <span class="card-tag plum">Model Card</span>
+                    <span class="card-num">02</span>
+                </div>
+                <h3>资源依赖三要素模型 </h3>
+                <div class="card-body">
+                    <li><strong>定义与本质</strong>：决定一个人或部门权力大小的，是其所控制的资源在系统中的依赖性度量，它由三个核心指标决定：</li>
+<p><div class="math-block">\text{依赖性} = \text{重要性 (Importance)} \times \text{稀缺性 (Scarcity)} \times \text{不可替代性 (Non-substitutability)}</div></p>
+<li><strong>要素拆解</strong>：</li>
+<div class='list-num-item'><strong>1.</strong> <strong>重要性</strong>：该资源对于团队生存或目标达成的关键度。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>稀缺性</strong>：资源掌控在极少数人手里，没有广泛流通。</div>
+<div class='list-num-item'><strong>3.</strong> <strong>不可替代性</strong>：没有其他低成本的备用手段可以获取该资源。</div>
+<li><strong>商业/科技映射</strong>：在云计算时代，若某云服务商掌握了全球唯一的AI算力芯片供货渠道，这块算力资源便具有高重要性、高稀缺性与强不可替代性，该芯片厂商对所有AI初创公司拥有最大谈判特权。</li>
+<li><strong>适用与失效边界</strong>：当行业出现可完全兼容的国产替代芯片，且产能充足时，原有芯片厂商的“不可替代性”清零，其特权随之大幅贬值。</li>
+<li><strong>关联卡片</strong>：<code>Card 01</code></li>
+<li>页 27-29</li>
+                </div>
+            </div>
+            
+
+            <div class="card plum" data-id="card-03" data-module="模块一" data-type="Model" onclick="openCard('card-03')">
+                <div class="card-header">
+                    <span class="card-tag plum">Model Card</span>
+                    <span class="card-num">03</span>
+                </div>
+                <h3>权力的集体信托本质 </h3>
+                <div class="card-body">
+                    <li><strong>定义与本质</strong>：在社会和组织系统里，权力并不是个人的私有财产，而是集体“托付”（Stewardship）给个体的。托付的目的是为了让持有者代表集体利益进行秩序维系、资源分派和方向指引，这意味着权力天然伴随保护责任。</li>
+<li><strong>经典案例</strong>：在空难分析中，副驾驶即使发现了机长的操作失误，也由于绝对的层级权力压制而选择保持沉默，最终导致飞机坠毁（致命的沉默）。这揭示了当权力被误当做个人权威而非集体信托时，对集体的生存所造成的毁灭性打击（p. 30）。</li>
+<li><strong>商业/科技映射</strong>：公司董事会授予CEO财权和审批权。若CEO将该权力用来为私人谋利或大搞一言堂，即违背了信托契约，会导致组织效率低下和核心人才流失。</li>
+<li><strong>适用与失效边界</strong>：当权力持有者不再履行对被托付人的保护职责时，集体收回其权力的合法性斗争便会自发启动。</li>
+<li><strong>关联卡片</strong>：<code>Card 13</code>, <code>Card 28-Exp 1</code></li>
+<li>页 29-32</li>
+                </div>
+            </div>
+            
+
+            <div class="card plum" data-id="card-04" data-module="模块一" data-type="Method" onclick="openCard('card-04')">
+                <div class="card-header">
+                    <span class="card-tag plum">Method Card</span>
+                    <span class="card-num">04</span>
+                </div>
+                <h3>关系依赖去中心化备份 </h3>
+                <div class="card-body">
+                    <li><strong>操作步骤</strong>：</li>
+<div class='list-num-item'><strong>1.</strong> <strong>识别依赖红线</strong>：审计团队或个人是否在关键技术、资金或客户渠道上对单一上游存在 100% 的资源依赖。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>寻找第二渠道</strong>：在资源未枯竭前，寻找并引入备用供应商或开源方案。</div>
+<div class='list-num-item'><strong>3.</strong> <strong>实施技术解耦</strong>：将核心业务逻辑模块化，确保即使更换底层核心组件，也不会发生整体崩溃。</div>
+<li><strong>错误示范</strong>：某初创公司将所有用户数据和底层算法完全部署在单一云服务商上，并在对方无预警涨价时，只能默默接受，丧失全部博弈权。</li>
+<li><strong>正确动作</strong>：技术总监在项目设计初期即推行“多云备份”和“数据库兼容抽象层”，确保随时可以无缝迁移至另一家云平台，夺回商务主动权。</li>
+<li><strong>物理边界条件</strong>：去中心化备份需要付出一定的前置开发和维护成本，需在“安全边际”与“研发成本”之间做好权衡。</li>
+<li><strong>关联卡片</strong>：<code>Card 01</code>, <code>Card 02</code></li>
+<li>页 33-35</li>
+<br>
+<p>---</p>
+                </div>
+            </div>
+            
+
+            <div class="card slate" data-id="card-05" data-module="模块二" data-type="Model" onclick="openCard('card-05')">
+                <div class="card-header">
+                    <span class="card-tag slate">Model Card</span>
+                    <span class="card-num">05</span>
+                </div>
+                <h3>高姿态行为表征 (Up-playing Status) </h3>
+                <div class="card-body">
+                    <li><strong>定义与本质</strong>：指通过一系列有规律的非言语肢体和语言策略，夸大个人的地位与权威。其本质是为了在系统内建立<strong>权威与掌控感 (Authority & Dominance)</strong>，以便提供秩序和方向。</li>
+<p><div class="math-block">高姿态感知 \propto 空间占用率 \times \frac{1}{微动作频次 \times 语速}</div></p>
+<li><strong>核心特征清单</strong>：</li>
+<p><em>   </em>空间控制*：身体挺直，占据更多物理面积，双脚平稳与肩同宽；</p>
+<p><em>   </em>动作沉稳*：消除频繁摸脸、推眼镜、按压圆珠笔等潜意识防卫性小动作；</p>
+<p><em>   </em>声音控制*：调低音调，放慢语速，使用肯定的句式；</p>
+<p><em>   </em>眼神接触*：眼神平静扫视全场，敢于与人长久直视，不主动回避视线。</p>
+<li><strong>适用与失效边界</strong>：在需要收集信息、破冰或激发团队灵感时，过度使用高姿态会堵塞沟通反馈，导致信息茧房。</li>
+<li><strong>关联卡片</strong>：<code>Card 06</code>, <code>Card 09</code></li>
+<li>页 38-42</li>
+                </div>
+            </div>
+            
+
+            <div class="card slate" data-id="card-06" data-module="模块二" data-type="Method" onclick="openCard('card-06')">
+                <div class="card-header">
+                    <span class="card-tag slate">Method Card</span>
+                    <span class="card-num">06</span>
+                </div>
+                <h3>高姿态空间与语音控制 </h3>
+                <div class="card-body">
+                    <li><strong>操作步骤</strong>：</li>
+<div class='list-num-item'><strong>1.</strong> <strong>物理姿态锁定</strong>：双肩向后扩展，微微抬起下巴，将双手平放在桌面上，防止身体由于防御性本能缩成一团。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>呼吸与声带降频</strong>：深呼吸，利用腹式呼吸发声，降低音调，消除由于紧张引起的尖锐颤音。</div>
+<div class='list-num-item'><strong>3.</strong> <strong>强行停顿控制</strong>：在表达核心论点后，强行闭口停顿 2-3 秒，敢于承受谈判桌上的沉默压力，绝不急于用无意义的词汇（如“额”、“然后”）填满空隙。</div>
+<li><strong>错误示范</strong>：主管在宣布重组方案时，因为内心发虚，频繁眨眼、揉脖子，说话速度极快且带有尾音，导致台下听众察觉其底气不足。</li>
+<li><strong>正确动作</strong>：危机发布会上，技术专家站在讲台前，身体保持静止，语速放慢一倍，用肯定的语气发布整改计划，瞬间稳住全场情绪。</li>
+<li><strong>物理边界条件</strong>：高姿态空间控制必须建立在基本的专业事实底座上，空洞的强硬姿态一旦被细节事实戳穿，会退化为滑稽的表演。</li>
+<li><strong>关联卡片</strong>：<code>Card 05</code>, <code>Card 15</code></li>
+<li>页 43-46</li>
+                </div>
+            </div>
+            
+
+            <div class="card slate" data-id="card-07" data-module="模块二" data-type="Model" onclick="openCard('card-07')">
+                <div class="card-header">
+                    <span class="card-tag slate">Model Card</span>
+                    <span class="card-num">07</span>
+                </div>
+                <h3>低姿态行为表征 (Down-playing Status) </h3>
+                <div class="card-body">
+                    <li><strong>定义与本质</strong>：指通过收敛个人的权威和姿态，拉近与他人的心理距离。其本质是为了建立<strong>亲和力与信任连接 (Affiliation & Connection)</strong>，以便获取真实信息并促进高效协作。</li>
+<p><div class="math-block">低姿态感知 \propto 前倾角度 \times 提问占比 \times 自嘲频次</div></p>
+<li><strong>核心特征清单</strong>：</li>
+<p><em>   </em>体态示弱*：身体微微前倾，头部轻微向侧面歪斜（表示专注倾听）；</p>
+<p><em>   </em>空间缩减*：拉近物理距离，主动寻求平视，不站在高处或讲台后；</p>
+<p><em>   </em>言语下沉*：多用疑问句、征求口吻，主动分享自己曾犯过的错误与脆弱；</p>
+<p><em>   </em>反馈接收*：用提问代替指令，多点头给予积极反馈。</p>
+<li><strong>经典案例</strong>：好莱坞导演在片场指导演员时，会从高高的导演椅上走下来，坐在地上与演员平视，甚至分享自己年轻时的尴尬失败经历，以此释放演员的灵感（p. 56）。</li>
+<li><strong>适用与失效边界</strong>：在面临规则被破坏或安全紧急事故时，使用低姿态会导致执行拖沓、威信坍塌。</li>
+<li><strong>关联卡片</strong>：<code>Card 08</code>, <code>Card 09</code></li>
+<li>页 48-52</li>
+                </div>
+            </div>
+            
+
+            <div class="card slate" data-id="card-08" data-module="模块二" data-type="Method" onclick="openCard('card-08')">
+                <div class="card-header">
+                    <span class="card-tag slate">Method Card</span>
+                    <span class="card-num">08</span>
+                </div>
+                <h3>低姿态体态与言语下沉 </h3>
+                <div class="card-body">
+                    <li><strong>操作步骤</strong>：</li>
+<div class='list-num-item'><strong>1.</strong> <strong>拉近身位</strong>：商务沟通时，不隔着宽大的办公桌，选择与对方在沙发或长椅呈 90 度角落座，缩短物理隔阂。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>倾听身体微调</strong>：保持目光接触，微微歪头，每当对方阐述完毕后，停顿 1 秒再回应，显示经过深度思考。</div>
+<div class='list-num-item'><strong>3.</strong> <strong>主动示弱起手</strong>：在需要跨部门技术配合时，以“这块技术细节我不是专家，特别需要向您请教……”为开场白，解除对方戒备。</div>
+<li><strong>错误示范</strong>：资深高管去一线研发部门调研，双手叉腰站在工位旁，用居高临下的姿态命令对方“说说真实感受”，导致员工一言不发。</li>
+<li><strong>正确动作</strong>：产品经理在需求脑暴会上，主动拉椅子坐在角落，拿着本子记录，并宣布“今天我只听点子，不设限制，这方面大家才是专家”。</li>
+<li><strong>物理边界条件</strong>：低姿态必须是诚恳的，若被对方感知为虚伪的拉拢和高高在上的表演，会适得其反。</li>
+<li><strong>关联卡片</strong>：<code>Card 07</code>, <code>Card 14</code></li>
+<li>页 53-55</li>
+                </div>
+            </div>
+            
+
+            <div class="card slate" data-id="card-09" data-module="模块二" data-type="Model" onclick="openCard('card-09')">
+                <div class="card-header">
+                    <span class="card-tag slate">Model Card</span>
+                    <span class="card-num">09</span>
+                </div>
+                <h3>权力的两面平衡论 </h3>
+                <div class="card-body">
+                    <li><strong>定义与本质</strong>：卓越的领导力并非单纯的高姿态或低姿态，而是像演员一样，在权威与亲和力之间建立动态平衡。</li>
+<p><div class="math-block">领导力健康度 = \text{Authority (权威/高姿态)} \times \text{Affiliation (亲和/低姿态)}</div></p>
+<br>
+<p>| 地位暗示维度 | 高姿态 (Up-playing / 权威) | 低姿态 (Down-playing / 亲和力) |</p>
+<p>| :--- | :--- | :--- |</p>
+<p>| <strong>底层核心功能</strong> | 提供方向、确立秩序、划定红线。 | 促进同理、激发协作、建立信任。 |</p>
+<p>| <strong>行为过度危害</strong> | 傲慢自负、滋生特权、团队陷入恐惧。 | 威信丧失、团队失去凝聚力、执行拖沓。 |</p>
+<p>| <strong>适宜情境</strong> | 危机决策、纪律整顿、需要强力拍板。 | 跨部门破冰、人才激励、民主脑暴。 |</p>
+<li><strong>适用与失效边界</strong>：高低姿态必须根据具体情境动态切换，一旦身位发生错置（如脑暴时用高姿态，事故发布会用低姿态），管理系统将立即陷入故障。</li>
+<li><strong>关联卡片</strong>：<code>Card 05</code>, <code>Card 07</code>, <code>Card 10</code></li>
+<li>页 56-58</li>
+                </div>
+            </div>
+            
+
+            <div class="card slate" data-id="card-10" data-module="模块二" data-type="Method" onclick="openCard('card-10')">
+                <div class="card-header">
+                    <span class="card-tag slate">Method Card</span>
+                    <span class="card-num">10</span>
+                </div>
+                <h3>地位失配与动态身位校准 </h3>
+                <div class="card-body">
+                    <li><strong>操作步骤</strong>：</li>
+<div class='list-num-item'><strong>1.</strong> <strong>判断失配症状</strong>：如果团队开会死气沉沉，无人提出质疑，说明你过于高姿态（偏向过度支配）；如果指令下达后拖延推诿，说明你过于低姿态（偏向过度迎合）。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>实施反向校准</strong>：</div>
+<li><em>过度支配时</em>：强行闭嘴，在接下来的会议中至少 80% 的时间只做倾听、记录和提问，并将决策权分授下去。</li>
+<li><em>过度迎合时</em>：在下一个项目节点上，站直身体，缩短语速，使用毫无保留的肯定句下达具体时间点的指令。</li>
+<li><strong>正确动作</strong>：新晋主管发现下属开会都在迎合自己，立刻重置行为：他将自己移出核心讨论圈，坐到后排扮演观察员角色，交出发言主控权，团队氛围瞬间活跃。</li>
+<li><strong>物理边界条件</strong>：身位校准必须以组织的实际产出和沟通健康度为唯一评估标准，避免陷入频繁自我审查的心理内耗。</li>
+<li><strong>关联卡片</strong>：<code>Card 09</code></li>
+<li>页 59-62</li>
+<br>
+<p>---</p>
+                </div>
+            </div>
+            
+
+            <div class="card moss" data-id="card-11" data-module="模块三" data-type="Model" onclick="openCard('card-11')">
+                <div class="card-header">
+                    <span class="card-tag moss">Model Card</span>
+                    <span class="card-num">11</span>
+                </div>
+                <h3>舞台演剧与职业盔甲入戏 </h3>
+                <div class="card-body">
+                    <li><strong>定义与本质</strong>：社会交往是一场表演。岗位本身不是私人的你，而是一个集体托付的“角色剧本”。当个人感到“我不配坐在这个位置”时（冒名顶替综合征），破局的关键在于穿上职业盔甲，为集体的利益扮演好这个角色。</li>
+<li><strong>经典案例</strong>：舞台上的演员在后台可能极度内向、不自信；但一旦穿上戏服、跨过侧幕条，就会由于剧本和观众的锁定，瞬间爆发出强大的威严气场。这证明角色可以塑造并赋予个体行为力量（p. 128）。</li>
+<li><strong>商业/科技映射</strong>：一位内向的技术宅被升任为总监，需要面对大客户作汇报。他在登台前将西装扣子扣好，暗示自己：“现在，我是代表公司总监这个角色在发声，而不是私下的我。”从而气场全开，成功完成汇报。</li>
+<li><strong>适用与失效边界</strong>：职业盔甲必须与岗位的信托责任相符。脱离了岗位的职责约束，盔甲会沦为个人膨胀和推卸责任的借口。</li>
+<li><strong>关联卡片</strong>：<code>Card 12</code>, <code>Card 28-Exp 1</code></li>
+<li>页 125-129</li>
+                </div>
+            </div>
+            
+
+            <div class="card moss" data-id="card-12" data-module="模块三" data-type="Method" onclick="openCard('card-12')">
+                <div class="card-header">
+                    <span class="card-tag moss">Method Card</span>
+                    <span class="card-num">12</span>
+                </div>
+                <h3>冒名顶替综合征消除 </h3>
+                <div class="card-body">
+                    <li><strong>操作步骤</strong>：</li>
+<div class='list-num-item'><strong>1.</strong> <strong>剥离私人身份</strong>：明确职位权力是“租来的”，不是“你拥有”的。把职位看作是集体租给你使用的一套“戏服”。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>仪式化入戏（Role-priming）</strong>：在重要谈判或发言前，通过整理衣装、深呼吸、舒展双肩等物理动作，在大脑中完成“戏服穿戴”的心理暗示。</div>
+<div class='list-num-item'><strong>3.</strong> <strong>遵循剧本底线</strong>：当面临决策冲突时，自问：“根据当前总监/CEO的角色剧本，为了集体利益，我现在最应该下达什么指令？”而非“我个人怕不怕尴尬”。</div>
+<li><strong>错误示范</strong>：因为觉得自己年轻资历浅，在跨部门高管会上畏首畏尾，不敢代表本部门去争取合理预算，导致团队利益受损。</li>
+<li><strong>正确动作</strong>：HR主管在面对高管违规需要通报时，摒弃私人顾虑，以严肃、客观的职业面孔出面，严格遵循合规条款和法务剧本要求执行处理，维护了公司纪律。</li>
+<li><strong>物理边界条件</strong>：消除虚假感需要持续的日常角色演练，不可等危机来临时临时抱佛脚。</li>
+<li><strong>关联卡片</strong>：<code>Card 11</code></li>
+<li>页 130-132</li>
+                </div>
+            </div>
+            
+
+            <div class="card moss" data-id="card-13" data-module="模块三" data-type="Model" onclick="openCard('card-13')">
+                <div class="card-header">
+                    <span class="card-tag moss">Model Card</span>
+                    <span class="card-num">13</span>
+                </div>
+                <h3>甘当配角的授权自退机制 </h3>
+                <div class="card-body">
+                    <li><strong>定义与本质</strong>：卓越领导力的终极体现是“学会下台”。在团队执行阶段，管理者必须主动收敛自己的高姿态光芒，扮演低姿态的“支持者”和“配角”，将舞台和聚光灯让给具体干活的技术骨干。</li>
+<li><strong>经典案例</strong>：英特尔前 CEO 葛洛夫（Andrew Grove）在推行重大改革决策时会表现出极高姿态的严厉；但当研发团队脑暴新技术时，他会选择坐在角落一言不发，甚至给下属倒水，以此营造安全的建言氛围（p. 112）。</li>
+<li><strong>商业/科技映射</strong>：在技术评审会上，部门总监把发言位置让给负责开发的资深工程师，自己则作为“资源后勤兵”坐在侧边，不仅极大地提高了工程师的成就感，也避开了外行指导内行的风险。</li>
+<li><strong>适用与失效边界</strong>：在项目遭遇重大事故、方向偏离或团队丧失信心时，管理者必须立即从配角退回主角，挺身而出稳住阵脚。</li>
+<li><strong>关联卡片</strong>：<code>Card 03</code>, <code>Card 14</code></li>
+<li>页 111-114</li>
+                </div>
+            </div>
+            
+
+            <div class="card moss" data-id="card-14" data-module="模块三" data-type="Method" onclick="openCard('card-14')">
+                <div class="card-header">
+                    <span class="card-tag moss">Method Card</span>
+                    <span class="card-num">14</span>
+                </div>
+                <h3>交出聚光灯与最后发言规则 </h3>
+                <div class="card-body">
+                    <li><strong>操作步骤</strong>：</li>
+<div class='list-num-item'><strong>1.</strong> <strong>发言位移</strong>：在部门周会或脑暴会中，管理者作为主持人，除开场介绍外，主动在第一阶段保持沉默。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>实施“最后发言”（Speak Last）</strong>：让团队骨干和初级成员先发表意见，自己主要负责记录、微笑点头和追问细节，把定调性的发言留到会议的最后 10%。</div>
+<div class='list-num-item'><strong>3.</strong> <strong>公开背书与把关</strong>：对下属提出的好点子公开给予预算支持，并在汇报上级时写明下属的名字。</div>
+<li><strong>错误示范</strong>：开会时，领导抢先发表一小时的宏大叙意，随后说“大家谈谈看法”，全场只能被迫附和，导致会议失去实质纠偏意义。</li>
+<li><strong>正确动作</strong>：项目总监在立项脑暴会上，给每位年轻研发发一张白卡纸写创意，自己默默收集记录，在大家充分讨论后，才出来归纳并进行预算背书。</li>
+<li><strong>物理边界条件</strong>：交出聚光灯的前提是团队成员已经具备了一定的自主思考与执行能力；对毫无经验的新兵，管理者仍需先进行手把手的剧本指导。</li>
+<li><strong>关联卡片</strong>：<code>Card 08</code>, <code>Card 13</code></li>
+<li>页 115-117</li>
+                </div>
+            </div>
+            
+
+            <div class="card moss" data-id="card-15" data-module="模块三" data-type="Scenario" onclick="openCard('card-15')">
+                <div class="card-header">
+                    <span class="card-tag moss">Scenario Card</span>
+                    <span class="card-num">15</span>
+                </div>
+                <h3>新晋主管权威立威与交接 </h3>
+                <div class="card-body">
+                    <li><strong>操作步骤</strong>：</li>
+<div class='list-num-item'><strong>1.</strong> <strong>高姿态切入</strong>：上任首会上面带微笑但身体挺直，动作幅度减小，不讲多余的客套话。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>宣示角色定位</strong>：明确告知团队，你的角色剧本是“为团队协调资源、扫清项目障碍”，同时你的职责也是“坚守交付质量的红线”。</div>
+<div class='list-num-item'><strong>3.</strong> <strong>划定客观交付红线</strong>：不与下属进行过度低姿态的“大打成一片”，保持得体的职业距离，确立工作标准的权威度。</div>
+<p><em>   <strong>话术模板</strong>：</em>“各位，很高兴和大家并肩作战。作为主管，我的剧本是帮大家协调资源、清扫项目障碍，同时我的职责也是守住公司的交付红线。本周我们的首要任务是[具体任务X]，我会安排好每日的进度同步，大家各司其职，保证按时上线。”*</p>
+<li><strong>物理边界条件</strong>：立威不是霸凌，高姿态的切入必须配以切实解决下属实际资源痛点的“信托动作”，否则会被定性为外强中干。</li>
+<li><strong>关联卡片</strong>：<code>Card 06</code>, <code>Card 12</code></li>
+<li>页 120-122</li>
+<br>
+<p>---</p>
+                </div>
+            </div>
+            
+
+            <div class="card gold" data-id="card-16" data-module="模块四" data-type="Model" onclick="openCard('card-16')">
+                <div class="card-header">
+                    <span class="card-tag gold">Model Card</span>
+                    <span class="card-num">16</span>
+                </div>
+                <h3>自我关注焦虑模型 </h3>
+                <div class="card-body">
+                    <li><strong>定义与本质</strong>：登台路演、向高管汇报时，手抖、心跳过速是正常的肾上腺素生理反应。焦虑之所以会恶化为临场失控，是因为大脑陷入了<strong>“自我关注”（Self-focused attention）</strong>的恶性反馈环路：越盯着自己的生理不适，就越怀疑自己的能力，最终导致理性大脑瞬间停机。</li>
+<p><div class="math-block">表演焦虑度 \propto 自我关注度 \times 完美表现期望值</div></p>
+<li><strong>经典案例</strong>：许多奥斯卡影帝或顶级歌唱家在登台前，在后台依然会因为极度紧张而呕吐。但他们一旦走上聚光灯，焦虑感便神奇消退。这是因为他们的心智在入戏的瞬间，实现了由自我向角色的“意念去中心化”转移（p. 128）。</li>
+<li><strong>商业/科技映射</strong>：研发骨干第一次面对大客户路演，在台下看着自己的手抖，脑中充满“他们会觉得我很蠢”的自恋焦虑，导致一上台就忘词。</li>
+<li><strong>适用与失效边界</strong>：当演讲者完全不了解听众需求，或者准备工作极度不充分时，去中心化也无法弥补物理知识储备的缺失。</li>
+<li><strong>关联卡片</strong>：<code>Card 17</code>, <code>Card 28-Exp 4</code></li>
+<li>页 135-138</li>
+                </div>
+            </div>
+            
+
+            <div class="card gold" data-id="card-17" data-module="模块四" data-type="Method" onclick="openCard('card-17')">
+                <div class="card-header">
+                    <span class="card-tag gold">Method Card</span>
+                    <span class="card-num">17</span>
+                </div>
+                <h3>表演焦虑去中心化机制 </h3>
+                <div class="card-body">
+                    <li><strong>操作步骤</strong>：</li>
+<div class='list-num-item'><strong>1.</strong> <strong>截断生理自检</strong>：当感到心跳加速时，接受这一生理唤醒，暗示自己“这代表我身体已充满能量，准备好入戏了”，停止对心跳和手抖的关注。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>启动“意念去中心化”</strong>：上台前，强行将思想对准受众和使命——“台下的听众正面临XX痛点，我今天的演讲是为了给他们送伞的，我不能让他们失望。”</div>
+<div class='list-num-item'><strong>3.</strong> <strong>聚焦具体物理客体</strong>：将视线固定在台下某位面带微笑、点头反馈的听众身上，或紧盯着PPT的特定逻辑图表，让注意力的物理带宽被客观内容占满。</div>
+<li><strong>错误示范</strong>：在台上不断向听众道歉说“不好意思我今天有点紧张”，试图通过示弱（低姿态过度迎合）来寻求同情，反而破坏了专业气场。</li>
+<li><strong>正确动作</strong>：创业者在路演前，在后台闭眼默念：“这场演讲不关乎我的面子，而关乎如何帮客户省下30%云成本。”上台后大声自信开场，焦虑感在两分钟内自然平复。</li>
+<li><strong>物理边界条件</strong>：去中心化必须建立在明确知道“我的演讲如何能帮到听众”的前提下，需要前置的客户需求调研支撑。</li>
+<li><strong>关联卡片</strong>：<code>Card 16</code>, <code>Card 18</code></li>
+<li>页 139-142</li>
+                </div>
+            </div>
+            
+
+            <div class="card gold" data-id="card-18" data-module="模块四" data-type="Scenario" onclick="openCard('card-18')">
+                <div class="card-header">
+                    <span class="card-tag gold">Scenario Card</span>
+                    <span class="card-num">18</span>
+                </div>
+                <h3>临场大型演讲筹备流程 </h3>
+                <div class="card-body">
+                    <li><strong>操作步骤</strong>：</li>
+<div class='list-num-item'><strong>1.</strong> <strong>T-2小时 (生理平抑)</strong>：深呼吸，长吐气；喝温水，禁止摄入过量咖啡因，避免引发过度生理颤抖。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>T-1小时 (意念转移)</strong>：闭上眼，启动去中心化推演，把脑中的“我好不好看”切换为“听众的痛点是什么，我能带给他们什么干货”。</div>
+<div class='list-num-item'><strong>3.</strong> <strong>T-10分钟 (入戏热身)</strong>：活动肩关节，深呼吸暗示“现在是专家角色入戏”。</div>
+<div class='list-num-item'><strong>4.</strong> <strong>T-0分钟 (第一声威)</strong>：上台第一句话适当提高音量，声音洪亮地吐出前三个字，瞬间用物理气场压制怯场。</div>
+<li><strong>效果</strong>：通过结构化的物理与心理热身，阻断临场焦虑对心智的劫持。</li>
+<li><strong>物理边界条件</strong>：必须预留出这 2 小时的无打扰时间窗口，若临场前还在处理紧急业务垃圾邮件，焦虑管理将彻底失效。</li>
+<li><strong>关联卡片</strong>：<code>Card 17</code></li>
+<li>页 145-147</li>
+<br>
+<p>---</p>
+                </div>
+            </div>
+            
+
+            <div class="card terracotta" data-id="card-19" data-module="模块五" data-type="Model" onclick="openCard('card-19')">
+                <div class="card-header">
+                    <span class="card-tag terracotta">Model Card</span>
+                    <span class="card-num">19</span>
+                </div>
+                <h3>权力腐败与同理心退化 </h3>
+                <div class="card-body">
+                    <li><strong>定义与本质</strong>：研究表明，拥有权力会降低大脑中“镜像神经元”的活跃度，导致<strong>同理心退化（Empathy Deficit）</strong>。权力持有者因为不再需要依赖他人的脸色来获取资源，其心智会自动关闭对他人情绪和痛苦的感知，进而滋生特权感，甚至无视社会规则。</li>
+<li><strong>经典案例</strong>：斑马线豪华轿车违规统计。社会心理学研究表明，在斑马线前，廉价汽车司机会 100% 礼让行人；而开豪车的司机中，有近 50% 会违法强行抢道。这证明了高社会权力对日常规则和他人安全的漠视（p. 158）。</li>
+<li><strong>商业/科技映射</strong>：高管习惯了迟到，或者默认自己可以绕过合规的差旅报销审批，逐渐发展为在重大商业决策上违背国家法律红线。</li>
+<li><strong>适用与失效边界</strong>：只要有强制的外部独立审计（如CFO一票否决权或法律红线制约），特权心理就无法转化为违法动作。</li>
+<li><strong>关联卡片</strong>：<code>Card 21</code>, <code>Card 28-Exp 2</code>, <code>Card 28-Exp 3</code></li>
+<li>页 155-160</li>
+                </div>
+            </div>
+            
+
+            <div class="card terracotta" data-id="card-20" data-module="模块五" data-type="Model" onclick="openCard('card-20')">
+                <div class="card-header">
+                    <span class="card-tag terracotta">Model Card</span>
+                    <span class="card-num">20</span>
+                </div>
+                <h3>“无权感权力者”暴虐狂怒机制 </h3>
+                <div class="card-body">
+                    <li><strong>定义与本质</strong>：最容易在组织内发起职场霸凌、咆哮和歇斯底里越界控制的，往往不是内心自信的强者，而是<strong>“身处高位却内心极度无能无力的人” (feeling powerless while holding power)</strong>。这种人由于缺乏真正的管理能力或安全感，会通过欺压下属的病态控制欲，来向自己和外界证明自己的权力存在。</li>
+<li><strong>经典案例</strong>：心理学家与威廉斯（Melissa Williams）的实验。在实时聊天中，那些在现实生活中没有权力、但在实验中被随机分配扮演“主管”的男性，向女性虚拟拍档发送带有明显性暗示和敌意攻击信息的频次最高。这揭示了内心无权感的权力持有者具有极高的攻击性补偿心理（p. 176）。</li>
+<li><strong>商业/科技映射</strong>：新上任的项目经理因不懂底层技术，害怕被开发团队边缘化，于是通过疯狂催促交付进度、在群里公开点名批评技术骨干、插手微观细节，来刷存在感。</li>
+<li><strong>适用与失效边界</strong>：给此类管理者提供清晰的安全感边界，或通过制度限制其越界指挥权，可有效降低其暴虐度。</li>
+<li><strong>关联卡片</strong>：<code>Card 23</code>, <code>Card 28-Exp 5</code></li>
+<li>页 173-178</li>
+                </div>
+            </div>
+            
+
+            <div class="card terracotta" data-id="card-21" data-module="模块五" data-type="Scenario" onclick="openCard('card-21')">
+                <div class="card-header">
+                    <span class="card-tag terracotta">Scenario Card</span>
+                    <span class="card-num">21</span>
+                </div>
+                <h3>高管自我反省匿名镜子审计 </h3>
+                <div class="card-body">
+                    <li><strong>操作步骤</strong>：</li>
+<div class='list-num-item'><strong>1.</strong> <strong>设立匿名反馈通道</strong>：每季度由第三方HR部门发起 360 度匿名工作作风审计，避开高管的权力压制。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>执行自我四项警示自检</strong>：</div>
+<li><em>审计 1</em>：本周我是否曾因为急躁而打断了下属解释业务漏洞的发言？</li>
+<li><em>审计 2</em>：我是否在报销、考勤或流程审批上，习惯性行使了特殊绿色通道？</li>
+<li><em>审计 3</em>：当遇到重大失误时，我的第一本能是反思流程，还是开始在心里寻找“替罪羊员工”？</li>
+<li><em>审计 4</em>：我的团队里，是否还有人敢于在开会时公开向我的决定提出质疑？</li>
+<div class='list-num-item'><strong>3.</strong> <strong>引入外部制衡顾问</strong>：在核心决策会上，配置一名“专门负责唱反调”的独立顾问，强制打碎信息茧房。</div>
+<li><strong>物理边界条件</strong>：高管必须拥有真正的反思意愿，若将 360 反馈当做揪出“不听话员工”的工具，反馈系统会彻底死亡。</li>
+<li><strong>关联卡片</strong>：<code>Card 19</code></li>
+<li>页 180-182</li>
+                </div>
+            </div>
+            
+
+            <div class="card terracotta" data-id="card-22" data-module="模块五" data-type="Model" onclick="openCard('card-22')">
+                <div class="card-header">
+                    <span class="card-tag terracotta">Model Card</span>
+                    <span class="card-num">22</span>
+                </div>
+                <h3>受害者习得性无助摆脱 </h3>
+                <div class="card-body">
+                    <li><strong>定义与本质</strong>：处于低权力位置的个体在长期遭受打压后，容易陷入“习得性无助”的受害者心理，认为自己做任何挣扎都无济于事，从而主动放弃抗争，甚至在内心为施害者的越界行为进行合理化。</li>
+<li><strong>经典案例</strong>：关于习得性无助的最早动物实验。被关在笼子里受到电击但无法控制电击停止的狗，在经历反复折磨后，即使后来笼门被打开，也只会趴在地上哀鸣而不再尝试逃跑；而学会了按下控制杆停止电击的狗，则会积极寻找逃生通道（p. 72）。</li>
+<li><strong>商业/科技映射</strong>：一名初级测试人员长期被项目主管言语羞辱，他放弃了向HR申诉或投递简历的努力，默认了“天下乌鸦一般黑，我只能忍受霸凌”的软弱剧本。</li>
+<li><strong>适用与失效边界</strong>：当受害者完全丧失了物理退场能力（如唯一的生存资金被对方控制），且外部无任何合规支持时，打破这一局面的代价会呈非线性上升。</li>
+<li><strong>关联卡片</strong>：<code>Card 23</code>, <code>Card 28-Exp 6</code></li>
+<li>页 71-74</li>
+                </div>
+            </div>
+            
+
+            <div class="card terracotta" data-id="card-23" data-module="模块五" data-type="Method" onclick="openCard('card-23')">
+                <div class="card-header">
+                    <span class="card-tag terracotta">Method Card</span>
+                    <span class="card-num">23</span>
+                </div>
+                <h3>Assertive 坚定沟通与对抗霸凌 </h3>
+                <div class="card-body">
+                    <li><strong>操作步骤</strong>：</li>
+<div class='list-num-item'><strong>1.</strong> <strong>剔除情绪词汇</strong>：在沟通中严禁使用“你太自私”、“你在故意针对我”等指责性、主观性评价。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>客观陈述事实 (Facts)</strong>：列出无法推翻的物理数据或具体事件（如加班时间、任务更改记录）。</div>
+<div class='list-num-item'><strong>3.</strong> <strong>明确划定红线 (Red-line Action)</strong>：清晰表明为了保证工作质量，你将采取的具体行动边界。</div>
+<li><strong>话术公式</strong>：</li>
+<p><div class="math-block">\text{Assertive 沟通} = \text{客观观察事实 (Facts)} + \text{为了[集体/交付效益]} + \text{我将执行的红线边界 (Red-line)}</div></p>
+<p><em>   <strong>话术模板</strong>：</em>“李总，我非常愿意为了项目交付在工作时间内全力以赴。但是，这周我已经连续三次在半夜12点收到您的非紧急报表任务（事实）。为了能保证白天正常交付的质量，以及我个人的身心健康，今后非紧急事项我将统一在工作时间处理（红线）。请您理解。”*</p>
+<li><strong>物理边界条件</strong>：实施这一步需要具备“随时可以退场”的心理建设与底牌储备（如备用资金或面试机会），无底牌的硬刚容易导致物理出局。</li>
+<li><strong>关联卡片</strong>：<code>Card 22</code></li>
+<li>页 182-185</li>
+<br>
+<p>---</p>
+                </div>
+            </div>
+            
+
+            <div class="card indigo" data-id="card-24" data-module="模块六" data-type="Model" onclick="openCard('card-24')">
+                <div class="card-header">
+                    <span class="card-tag indigo">Model Card</span>
+                    <span class="card-num">24</span>
+                </div>
+                <h3>旁观者冷漠与多元无知死锁 </h3>
+                <div class="card-body">
+                    <li><strong>定义与本质</strong>：在紧急危机中，如果旁观者众多，每个人都倾向于通过观察别人的反应来判断这是否是一场真正的危机。由于每个人都在装作镇定自若，导致群体陷入“多元无知”（Pluralistic Ignorance）死锁，责任被无限扩散，最终没有任何人站出来施救。</li>
+<li><strong>经典案例</strong>：基蒂·吉诺维斯（Kitty Genovese）谋杀案。吉诺维斯在街头被袭击折磨了 35 分钟，38 位市民在公寓窗前目击了袭击，但没有一个人拨打报警电话，因为大家都以为“别人肯定已经报了警”（p. 190）。</li>
+<li><strong>商业/科技映射</strong>：在跨部门沟通群中，系统监控突然弹出高危安全漏洞。群里有几十位高管和架构师，因为没人出声，每个人都默认“别人应该会去处理”，导致漏洞长达 12 小时无人修复。</li>
+<li><strong>适用与失效边界</strong>：只要有任意一个人打破沉寂第一个站出来行动，多元无知网罗就会瞬间被撕裂，周围群众会立刻转化为协作者。</li>
+<li><strong>关联卡片</strong>：<code>Card 25</code>, <code>Card 28-Exp 7</code></li>
+<li>页 189-192</li>
+                </div>
+            </div>
+            
+
+            <div class="card indigo" data-id="card-25" data-module="模块六" data-type="Model" onclick="openCard('card-25')">
+                <div class="card-header">
+                    <span class="card-tag indigo">Model Card</span>
+                    <span class="card-num">25</span>
+                </div>
+                <h3>旁观者干预五阶段模型 </h3>
+                <div class="card-body">
+                    <li><strong>定义与本质</strong>：第三方（旁观者）在面对不公或霸凌时，拥有极低的博弈风险，是打破组织内恶劣行为的关键力量。成功的旁观者干预必须经历五个连续的心智动作：</li>
+<p><div class="math-block">\text{注意 (Notice)} → \text{判定紧急 (Interpret)} → \text{承担责任 (Assume)} → \text{决定方式 (Decide)} → \text{付诸干预 (Act)}</div></p>
+<li><strong>五阶段拆解</strong>：</li>
+<div class='list-num-item'><strong>1.</strong> <strong>注意</strong>：意识到现场发生了异常或冲突。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>理解</strong>：判定这一情况为“需要帮助”的状态，而非正常的职场打闹。</div>
+<div class='list-num-item'><strong>3.</strong> <strong>承担责任</strong>：打破“责任分散”心理，明确“我不帮就没人帮”。</div>
+<div class='list-num-item'><strong>4.</strong> <strong>决定行动方式</strong>：评估自身风险，选择直接制止、转移注意力或事后联合申诉。</div>
+<div class='list-num-item'><strong>5.</strong> <strong>实施干预</strong>：付诸行动，打破死锁。</div>
+<li><strong>适用与失效边界</strong>：当干预者自身的物理安全受到直接暴力威胁，且缺乏报警工具时，应当优先选择间接报警而非肉身硬刚。</li>
+<li><strong>关联卡片</strong>：<code>Card 24</code>, <code>Card 26</code></li>
+<li>页 193-196</li>
+                </div>
+            </div>
+            
+
+            <div class="card indigo" data-id="card-26" data-module="模块六" data-type="Scenario" onclick="openCard('card-26')">
+                <div class="card-header">
+                    <span class="card-tag indigo">Scenario Card</span>
+                    <span class="card-num">26</span>
+                </div>
+                <h3>盟友声援与非对抗性打断 </h3>
+                <div class="card-body">
+                    <li><strong>操作步骤</strong>：</li>
+<div class='list-num-item'><strong>1.</strong> <strong>锁定霸凌现场</strong>：当看到同事或下属在会议上被高层进行人身攻击或无底线羞辱时。</div>
+<div class='list-num-item'><strong>2.</strong> <strong>实施善意打断</strong>：不与施害者发生直接的情绪对抗，通过“插话并引入客观技术背景”将话题拉回业务本身。</div>
+<div class='list-num-item'><strong>3.</strong> <strong>分流施压压力</strong>：帮助受害者承接部分解释工作，为其腾出心理缓冲和整理思绪的时间。</div>
+<p><em>   <strong>话术模板</strong>：</em>“王总，我打断一下。关于刚才提到的小李负责的那部分指标，其实我们在上周多部门联调会上面对的数据背景是非常复杂的，当时的技术链路也存在客观瓶颈。为了帮项目更好推进，我觉得我们可以一起看看如何优化这块的配置，李工其实已经梳理了解决方案，我们可以听听李工的说明。”*</p>
+<li><strong>物理边界条件</strong>：干预者的姿态要保持极度冷静和专业，不可卷入情绪宣泄，否则会引发更大尺度的部门对立。</li>
+<li><strong>关联卡片</strong>：<code>Card 25</code></li>
+<li>页 198-200</li>
+                </div>
+            </div>
+            
+
+            <div class="card indigo" data-id="card-27" data-module="模块六" data-type="Reference" onclick="openCard('card-27')">
+                <div class="card-header">
+                    <span class="card-tag indigo">Reference Card</span>
+                    <span class="card-num">27</span>
+                </div>
+                <h3>权力演剧与地位博弈核心术语表 </h3>
+                <div class="card-body">
+                    <p>本术语表用于快速统一团队的博弈话语体系，回源锚定原书物理概念：</p>
+<li><strong>资源依赖 (Resource Dependency)</strong>：权力的物理底座，当A需要B掌控的资源且无法替代时，B对A即拥有权力（见 <code>Card 01</code>）。</li>
+<li><strong>信托型权力 (Stewardship)</strong>：将权力视为集体托付的受托管理资产，以保护和赋能集体为第一性（见 <code>Card 03</code>）。</li>
+<li><strong>高姿态 (Up-playing)</strong>：通过占据空间、放慢语速动作等非言语动作夸大地位展示，用以树立权威（见 <code>Card 05</code>）。</li>
+<li><strong>低姿态 (Down-playing)</strong>：通过缩小空间、身体前倾倾听、自嘲示弱拉近心理距离，用以建立信任共情（见 <code>Card 07</code>）。</li>
+<li><strong>职业盔甲 (Professional Armor)</strong>：将岗位视为剧本角色，用仪式化手段入戏以消除冒名顶替感的心智工具（见 <code>Card 11</code>）。</li>
+<li><strong>去中心化 (De-centering)</strong>：将注意力由“自我表现”转移至“利他使命”，平抑临场表演焦虑的策略（见 <code>Card 17</code>）。</li>
+<li><strong>同理心退化 (Empathy Deficit)</strong>：高权力导致大脑镜像神经元活跃度降低、丧失感受他人情绪的生理本能（见 <code>Card 19</code>）。</li>
+<li><strong>无权感恶霸 (Powerless Bully)</strong>：身处高位内心却感无力者，通过疯狂控制欺压他人进行心理补偿的病态现象（见 <code>Card 20</code>）。</li>
+<li><strong>Assertive 沟通</strong>：摒弃情绪评价，通过“客观事实+红线边界”捍卫个人博弈主权的坚定表达方式（见 <code>Card 23</code>）。</li>
+<li><strong>多元无知 (Pluralistic Ignorance)</strong>：群体通过观察他人的冷漠反应自我暗示，导致责任分散、集体保持沉默的社会陷阱（见 <code>Card 24</code>）。</li>
+                </div>
+            </div>
+            
+
+            <div class="card indigo" data-id="card-28" data-module="模块六" data-type="Reference" onclick="openCard('card-28')">
+                <div class="card-header">
+                    <span class="card-tag indigo">Reference Card</span>
+                    <span class="card-num">28</span>
+                </div>
+                <h3>组织行为学与地位心理学核心实验索引 </h3>
+                <div class="card-body">
+                    <p>本索引收录《权力》一书论证其“情境角色与地位博弈”框架的 7 个里程碑式学术研究与实验：</p>
+<div class='list-num-item'><strong>1.</strong> <strong>津巴多斯坦福监狱角色扮演实验 (1971)</strong> (Ch 6)</div>
+<p><em>   </em>验证内容*：大学生被分配为看守与囚犯后迅速改变行为，证实了社会角色剧本对人性与权力的支配力量。</p>
+<div class='list-num-item'><strong>2.</strong> <strong>达娜·卡尼约会头像扩张姿态实验</strong> (Ch 8)</div>
+<p><em>   </em>验证内容*：外表姿态越呈物理扩张（霸道姿态）的人，在网络约会平台上获得的青睐与配对率越高，证实体态在地位信号中的普适性。</p>
+<div class='list-num-item'><strong>3.</strong> <strong>达彻尔·凯尔特纳曲奇饼怪兽实验</strong> (Ch 7)</div>
+<p><em>   </em>验证内容*：三人分四块饼干，被随机赋予权力的人更倾向于拿走最后一块，且吃相更难看（吃口张开、碎屑散落），证实高权力导致礼仪与同理心衰退。</p>
+<div class='list-num-item'><strong>4.</strong> <strong>达顿与阿伦温哥华吊桥生理唤醒实验 (1974)</strong> (Ch 7)</div>
+<p><em>   </em>验证内容*：走过摇晃高空吊桥的男性对女性调查员的打电话约会率极高，证实了恐惧焦虑的生理激起极易被大脑误归转换为浪漫吸引。</p>
+<div class='list-num-item'><strong>5.</strong> <strong>格林菲尔德与威廉斯无权感角色性暗示实验 (2017)</strong> (Ch 7)</div>
+<p><em>   </em>验证内容*：被临时指派为“主管”但在实际生活中感到无力（Powerless）的男性，发出的敌意和骚扰性信息最多，证实了“无权感权力持有者”的暴力补偿心理。</p>
+<div class='list-num-item'><strong>6.</strong> <strong>塞利格曼狗电击与习得性无助实验 (1967)</strong> (Ch 8)</div>
+<p><em>   </em>验证内容*：无法通过物理按板停止电击的狗，后来即使笼门大开也选择趴着承受电击，证实了长期无法掌控局势会导致习得性无助死锁。</p>
+<div class='list-num-item'><strong>7.</strong> <strong>拉塔内与达利多元无知旁观者实验</strong> (Ch 9)</div>
+<p><em>   </em>验证内容*：当周围有其他冷漠的旁观者在场时，个体的紧急呼救干预率下降了 60% 以上，证实了责任分散与多元无知对社会救援的劫持。</p>
+<br>
+<p>---</p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- TAB 3: WORKSPACE AUDIT -->
+    <div id="audit-tab" class="tab-content">
+        <div class="workspace-grid">
+            <div class="glass-box">
+                <div class="box-title">🧭 T1. 个人权力姿态与身位匹配自评量表 (Interactive Calculator)</div>
+                <p style="margin-bottom: 15px; opacity:0.8; font-size:0.9rem;">请针对您的日常沟通习惯在下列指标中打分 (0-1为过度顺从，2-3为动态中性，4-5为强支配)。选择分值后系统将实时为您自动结算心智档案形态。</p>
+                <div style="overflow-x: auto;">
+                    <table class="audit-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">物理通道指标</th>
+                                <th style="width: 20%;">低姿态 (0-1分)</th>
+                                <th style="width: 20%;">中性姿态 (2-3分)</th>
+                                <th style="width: 20%;">高姿态 (4-5分)</th>
+                                <th style="width: 15%;">您的评分 (0-5)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr>
+                                <td><strong>1. 物理空间占用</strong></td>
+                                <td>身体蜷缩、双手扣紧、占用极小桌面。</td>
+                                <td>自然落座、双臂放在身前。</td>
+                                <td>双腿叉开、双臂向外扩展、霸占整张桌子。</td>
+                                <td>
+                                    <select class="audit-select" onchange="calculateAuditScore()">
+                                        <option value="0">0 分</option>
+                                        <option value="1">1 分</option>
+                                        <option value="2" selected>2 分</option>
+                                        <option value="3">3 分</option>
+                                        <option value="4">4 分</option>
+                                        <option value="5">5 分</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            
+
+                            <tr>
+                                <td><strong>2. 微动作频次</strong></td>
+                                <td>频繁摸下巴、推眼镜、转笔、抓耳朵。</td>
+                                <td>偶尔调整姿势，手势配合说话。</td>
+                                <td>身体保持极其稳定的静止，极少有防御性碎动作。</td>
+                                <td>
+                                    <select class="audit-select" onchange="calculateAuditScore()">
+                                        <option value="0">0 分</option>
+                                        <option value="1">1 分</option>
+                                        <option value="2" selected>2 分</option>
+                                        <option value="3">3 分</option>
+                                        <option value="4">4 分</option>
+                                        <option value="5">5 分</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            
+
+                            <tr>
+                                <td><strong>3. 声音与语速</strong></td>
+                                <td>语速极快、音调尖锐、句尾带疑问声。</td>
+                                <td>正常语调、平稳述职。</td>
+                                <td>语速极慢、音调沉稳、核心句后有 2 秒物理停顿。</td>
+                                <td>
+                                    <select class="audit-select" onchange="calculateAuditScore()">
+                                        <option value="0">0 分</option>
+                                        <option value="1">1 分</option>
+                                        <option value="2" selected>2 分</option>
+                                        <option value="3">3 分</option>
+                                        <option value="4">4 分</option>
+                                        <option value="5">5 分</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            
+
+                            <tr>
+                                <td><strong>4. 眼神与面部</strong></td>
+                                <td>频繁眨眼、回避与高位者的目光直视。</td>
+                                <td>平静的对视，适时进行微笑点头。</td>
+                                <td>敢于长时间直视对方，扫视全场，极少有讨好微笑。</td>
+                                <td>
+                                    <select class="audit-select" onchange="calculateAuditScore()">
+                                        <option value="0">0 分</option>
+                                        <option value="1">1 分</option>
+                                        <option value="2" selected>2 分</option>
+                                        <option value="3">3 分</option>
+                                        <option value="4">4 分</option>
+                                        <option value="5">5 分</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            
+
+                            <tr>
+                                <td><strong>5. 语言沟通结构</strong></td>
+                                <td>句式多用“是不是”、“您看可以吗”。</td>
+                                <td>正常讨论业务逻辑。</td>
+                                <td>多用肯定句，敢于打断他人，有明确交付时限指令。</td>
+                                <td>
+                                    <select class="audit-select" onchange="calculateAuditScore()">
+                                        <option value="0">0 分</option>
+                                        <option value="1">1 分</option>
+                                        <option value="2" selected>2 分</option>
+                                        <option value="3">3 分</option>
+                                        <option value="4">4 分</option>
+                                        <option value="5">5 分</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+                <div class="result-panel">
+                    <div style="font-weight: 700; font-size: 0.95rem; opacity: 0.8;">您当前姿态的综合演剧得分：</div>
+                    <div class="result-score" id="audit-total-score">10</div>
+                    <div class="result-desc" id="audit-desc">动态身位（最佳区间）</div>
+                    <p style="margin-top: 10px; font-size: 0.85rem; opacity: 0.8;" id="audit-explanation">您的表现处于高低姿态的最佳切换区间，能够根据具体情境实施自如调频，在树立秩序（Authority）的同时兼备共情协作力（Affiliation）。</p>
+                </div>
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <div class="glass-box">
+                    <div class="box-title">🧭 T2. 职场舞台剧本规划与授权审计表单</div>
+                    <div style="font-size: 0.9rem;">
+                        {t2_html}
+                    </div>
+                </div>
+                
+                <div class="glass-box">
+                    <div class="box-title">🧭 T3. 跨书冲突与协同矩阵 (Conflict Map)</div>
+                    <div style="font-size: 0.9rem;">
+                        {t3_html}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Dialog for Card details -->
+<div class="modal-overlay" id="card-modal" onclick="closeCard(event)">
+    <div class="modal-box" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeCard(null)">×</button>
+        <div id="modal-card-header" style="margin-bottom: 20px; border-bottom: 1px solid var(--active-border); padding-bottom: 15px;">
+            <span class="card-tag plum" id="modal-tag">TYPE</span>
+            <span style="font-size: 0.85rem; font-weight: 700; margin-left: 10px; opacity: 0.7;" id="modal-module">MODULE</span>
+            <span style="float: right; font-family:'Outfit'; font-size: 1.5rem; font-weight: 800; opacity: 0.7;" id="modal-num">01</span>
+        </div>
+        <h2 id="modal-title" style="color:var(--gold); font-size:1.4rem; font-weight:800; margin-bottom: 20px;">Card Title</h2>
+        <div id="modal-body" style="font-size: 1rem; line-height: 1.7;">
+            Card Body
+        </div>
+    </div>
+</div>
+
+<script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {{
+        document.body.classList.toggle('light-mode');
+        if (document.body.classList.contains('light-mode')) {{
+            themeToggle.textContent = '切换暗黑模式';
+        }} else {{
+            themeToggle.textContent = '切换明亮模式';
+        }}
+    }});
+
+    // Tab Switching
+    function switchTab(tabId, btn) {{
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        
+        document.getElementById(tabId).classList.add('active');
+        btn.classList.add('active');
+    }}
+
+    // Cards data lookup
+    const cardsData = [{"id": "card-01", "num": "01", "title": "权力的关系属性定义 (Model Card)", "type": "Model", "module": "模块一", "color": "plum", "body_html": "<li><strong>定义与本质</strong>：权力不是你带进房间的性格特征，而是房间里的人对你产生资源依赖的结果。权力存在于关系之中，随着依赖关系的变化而动态调整。</li>\n<p><div class="math-block">权力影响力 = f(资源依赖度) \\quad [依赖度 → 1, 权力 → \\infty]</div></p>\n<li><strong>经典案例</strong>：父母与婴儿的权力关系。婴儿在食物、安全和情感资源上对父母有100%的绝对依赖，此时父母拥有绝对权力；但当孩子成年、财务独立后，这种资源依赖解耦，原有的权力结构自动瓦解（p. 25）。</li>\n<li><strong>商业/科技映射</strong>：在软件开发团队中，某位老员工掌握了唯一的旧版核心代码库修改权。新架构调整必须依赖他，因此即便他没有任何管理头衔，也在该项目节点上拥有极高的隐性权力。</li>\n<li><strong>适用与失效边界</strong>：只要有第二条低成本路径可以获取同等资源，现有的权力依赖就会立即坍塌。</li>\n<li><strong>关联卡片</strong>：<code>Card 02</code>, <code>Card 04</code></li>\n<li>页 23-26</li>"}, {"id": "card-02", "num": "02", "title": "资源依赖三要素模型 (Model Card)", "type": "Model", "module": "模块一", "color": "plum", "body_html": "<li><strong>定义与本质</strong>：决定一个人或部门权力大小的，是其所控制的资源在系统中的依赖性度量，它由三个核心指标决定：</li>\n<p><div class="math-block">\\text{依赖性} = \\text{重要性 (Importance)} \\times \\text{稀缺性 (Scarcity)} \\times \\text{不可替代性 (Non-substitutability)}</div></p>\n<li><strong>要素拆解</strong>：</li>\n<div class=\"list-num-item\"><strong>1.</strong> <strong>重要性</strong>：该资源对于团队生存或目标达成的关键度。</div>\n<div class=\"list-num-item\"><strong>2.</strong> <strong>稀缺性</strong>：资源掌控在极少数人手里，没有广泛流通。</div>\n<div class=\"list-num-item\"><strong>3.</strong> <strong>不可替代性</strong>：没有其他低成本的备用手段可以获取该资源。</div>\n<li><strong>商业/科技映射</strong>：在云计算时代，若某云服务商掌握了全球唯一的AI算力芯片供货渠道，这块算力资源便具有高重要性、高稀缺性与强不可替代性，该芯片厂商对所有AI初创公司拥有最大谈判特权。</li>\n<li><strong>适用与失效边界</strong>：当行业出现可完全兼容的国产替代芯片，且产能充足时，原有芯片厂商的“不可替代性”清零，其特权随之大幅贬值。</li>\n<li><strong>关联卡片</strong>：<code>Card 01</code></li>\n<li>页 27-29</li>"}, {"id": "card-03", "num": "03", "title": "权力的集体信托本质 (Model Card)", "type": "Model", "module": "模块一", "color": "plum", "body_html": "<li><strong>定义与本质</strong>：在社会和组织系统里，权力并不是个人的私有财产，而是集体“托付”（Stewardship）给个体的。托付的目的是为了让持有者代表集体利益进行秩序维系、资源分派和方向指引，这意味着权力天然伴随保护责任。</li>\n<li><strong>经典案例</strong>：在空难分析中，副驾驶即使发现了机长的操作失误，也由于绝对的层级权力压制而选择保持沉默，最终导致飞机坠毁（致命的沉默）。这揭示了当权力被误当做个人权威而非集体信托时，对集体的生存所造成的毁灭性打击（p. 30）。</li>\n<li><strong>商业/科技映射</strong>：公司董事会授予CEO财权和审批权。若CEO将该权力用来为私人谋利或大搞一言堂，即违背了信托契约，会导致组织效率低下和核心人才流失。</li>\n<li><strong>适用与失效边界</strong>：当权力持有者不再履行对被托付人的保护职责时，集体收回其权力的合法性斗争便会自发启动。</li>\n<li><strong>关联卡片</strong>：<code>Card 13</code>, <code>Card 28-Exp 1</code></li>\n<li>页 29-32</li>"}, {"id": "card-04", "num": "04", "title": "关系依赖去中心化备份 (Method Card)", "type": "Method", "module": "模块一", "color": "plum", "body_html": "<li><strong>操作步骤</strong>：</li>\n<div class="list-num-item"><strong>1.</strong> <strong>识别依赖红线</strong>：审计团队或个人是否在关键技术、资金或客户渠道上对单一上游存在 100% 的资源依赖。</div>\n<div class="list-num-item"><strong>2.</strong> <strong>寻找第二渠道</strong>：在资源未枯竭前，寻找并引入备用供应商或开源方案。</div>\n<div class="list-num-item"><strong>3.</strong> <strong>实施技术解耦</strong>：将核心业务逻辑模块化，确保即使更换底层核心组件，也不会发生整体崩溃。</div>\n<li><strong>错误示范</strong>：某初创公司将所有用户数据和底层算法完全部署在单一云服务商上，并在对方无预警涨价时，只能默默接受，丧失全部博弈权。</li>\n<li><strong>正确动作</strong>：技术总监在项目设计初期即推行“多云备份”和“数据库兼容抽象层”，确保随时可以无缝迁移至另一家云平台，夺回商务主动权。</li>\n<li><strong>物理边界条件</strong>：去中心化备份需要付出一定的前置开发和维护成本，需在“安全边际”与“研发成本”之间做好权衡。</li>\n<li><strong>关联卡片</strong>：<code>Card 01</code>, <code>Card 02</code></li>\n<li>页 33-35</li>\n<br>\n<p>---</p>"}, {"id": "card-05", "num": "05", "title": "高姿态行为表征 (Up-playing Status) (Model Card)", "type": "Model", "module": "模块二", "color": "slate", "body_html": "<li><strong>定义与本质</strong>：指通过一系列有规律的非言语肢体和语言策略，夸大个人的地位与权威。其本质是为了在系统内建立<strong>权威与掌控感 (Authority & Dominance)</strong>，以便提供秩序和方向。</li>\n<p><div class="math-block">高姿态感知 \\propto 空间占用率 \\times \\frac{1}{微动作频次 \\times 语速}</div></p>\n<li><strong>核心特征清单</strong>：</li>\n<p><em>   </em>空间控制*：身体挺直，占据更多物理面积，双脚平稳与肩同宽；</p>\n<p><em>   </em>动作沉稳*：消除频繁摸脸、推眼镜、按压圆珠笔等潜意识防卫性小动作；</p>\n<p><em>   </em>声音控制*：调低音调，放慢语速，使用肯定的句式；</p>\n<p><em>   </em>眼神接触*：眼神平静扫视全场，敢于与人长久直视，不主动回避视线。</p>\n<li><strong>适用与失效边界</strong>：在需要收集信息、破冰或激发团队灵感时，过度使用高姿态会堵塞沟通反馈，导致信息茧房。</li>\n<li><strong>关联卡片</strong>：<code>Card 06</code>, <code>Card 09</code></li>\n<li>页 38-42</li>"}, {"id": "card-06", "num": "06", "title": "高姿态空间与语音控制 (Method Card)", "type": "Method", "module": "模块二", "color": "slate", "body_html": "<li><strong>操作步骤</strong>：</li>\n<div class="list-num-item"><strong>1.</strong> <strong>物理姿态锁定</strong>：双肩向后扩展，微微抬起下巴，将双手平放在桌面上，防止身体由于防御性本能缩成一团。</div>\n<div class="list-num-item"><strong>2.</strong> <strong>呼吸与声带降频</strong>：深呼吸，利用腹式呼吸发声，降低音调，消除由于紧张引起的尖锐颤音。</div>\n<div class="list-num-item"><strong>3.</strong> <strong>强行停顿控制</strong>：在表达核心论点后，强行闭口停顿 2-3 秒，敢于承受谈判桌上的沉默压力，绝不急于用无意义的词汇（如“额”、“然后”）填满空隙。</div>\n<li><strong>错误示范</strong>：主管在宣布重组方案时，因为内心发虚，频繁眨眼、揉脖子，说话速度极快且带有尾音，导致台下听众察觉其底气不足。</li>\n<li><strong>正确动作</strong>：危机发布会上，技术专家站在讲台前，身体保持静止，语速放慢一倍，用肯定的语气发布整改计划，瞬间稳住全场情绪。</li>\n<li><strong>物理边界条件</strong>：高姿态空间控制必须建立在基本的专业事实底座上，空洞的强硬姿态一旦被细节事实戳穿，会退化为滑稽的表演。</li>\n<li><strong>关联卡片</strong>：<code>Card 05</code>, <code>Card 15</code></li>\n<li>页 43-46</li>"}, {"id": "card-07", "num": "07", "title": "低姿态行为表征 (Down-playing Status) (Model Card)", "type": "Model", "module": "模块二", "color": "slate", "body_html": "<li><strong>定义与本质</strong>：指通过收敛个人的权威和姿态，拉近与他人的心理距离。其本质是为了建立<strong>亲和力与信任连接 (Affiliation & Connection)</strong>，以便获取真实信息并促进高效协作。</li>\n<p><div class="math-block">低姿态感知 \\propto 前倾角度 \\times 提问占比 \\times 自嘲频次</div></p>\n<li><strong>核心特征清单</strong>：</li>\n<p><em>   </em>体态示弱*：身体微微前倾，头部轻微向侧面歪斜（表示专注倾听）；</p>\n<p><em>   </em>空间缩减*：拉近物理距离，主动寻求平视，不站在高处或讲台后；</p>\n<p><em>   </em>言语下沉*：多用疑问句、征求口吻，主动分享自己曾犯过的错误与脆弱；</p>\n<p><em>   </em>反馈接收*：用提问代替指令，多点头给予积极反馈。</p>\n<li><strong>经典案例</strong>：好莱坞导演在片场指导演员时，会从高高的导演椅上走下来，坐在地上与演员平视，甚至分享自己年轻时的尴尬失败经历，以此释放演员的灵感（p. 56）。</li>\n<li><strong>适用与失效边界</strong>：在面临规则被破坏或安全紧急事故时，使用低姿态会导致执行拖沓、威信坍塌。</li>\n<li><strong>关联卡片</strong>：<code>Card 08</code>, <code>Card 09</code></li>\n<li>页 48-52</li>"}, {"id": "card-08", "num": "08", "title": "低姿态体态与言语下沉 (Method Card)", "type": "Method", "module": "模块二", "color": "slate", "body_html": "<li><strong>操作步骤</strong>：</li>\n<div class="list-num-item"><strong>1.</strong> <strong>拉近身位</strong>：商务沟通时，不隔着宽大的办公桌，选择与对方在沙发或长椅呈 90 度角落座，缩短物理隔阂。</div>\n<div class="list-num-item"><strong>2.</strong> <strong>倾听身体微调</strong>：保持目光接触，微微歪头，每当对方阐述完毕后，停顿 1 秒再回应，显示经过深度思考。</div>\n<div class="list-num-item"><strong>3.</strong> <strong>主动示弱起手</strong>：在需要跨部门技术配合时，以“这块技术细节我不是专家，特别需要向您请教……”为开场白，解除对方戒备。</div>\n<li><strong>错误示范</strong>：资深高管去一线研发部门调研，双手叉腰站在工位旁，用居高临下的姿态命令对方“说说真实感受”，导致员工一言不发。</li>\n<li><strong>正确动作</strong>：产品经理在需求脑暴会上，主动拉椅子坐在角落，拿着本子记录，并宣布“今天我只听点子，不设限制，这方面大家才是专家”。</li>\n<li><strong>物理边界条件</strong>：低姿态必须是诚恳的，若被对方感知为虚伪的拉拢和高高在上的表演，会适得其反。</li>\n<li><strong>关联卡片</strong>：<code>Card 07</code>, <code>Card 14</code></li>\n<li>页 53-55</li>"}, {"id": "card-09", "num": "09", "title": "权力的两面平衡论 (Model/Matrix Card)", "type": "Model", "module": "模块二", "color": "slate", "body_html": "<li><strong>定义与本质</strong>：卓越的领导力并非单纯的高姿态或低姿态，而是像演员一样，在权威与亲和力之间建立动态平衡。</li>\n<p><div class="math-block">领导力健康度 = \\text{Authority (权威/高姿态)} \\times \\text{Affiliation (亲和/低姿态)}</div></p>\n<br>\n<p>| 地位暗示维度 | 高姿态 (Up-playing / 权威) | 低姿态 (Down-playing / 亲和力) |</p>\n<p>| :--- | :--- | :--- |</p>\n<p>| <strong>底层核心功能</strong> | 提供方向、确立秩序、划定红线。 | 促进同理、激发协作、建立信任。 |</p>\n<p>| <strong>行为过度危害</strong> | 傲慢自负、滋生特权、团队陷入恐惧。 | 威信丧失、团队失去凝聚力、执行拖沓。 |</p>\n<p>| <strong>适宜情境</strong> | 危机决策、纪律整顿、需要强力拍板。 | 跨部门破冰、人才激励、民主脑暴。 |</p>\n<li><strong>适用与失效边界</strong>：高低姿态必须根据具体情境动态切换，一旦身位发生错置（如脑暴时用高姿态，事故发布会用低姿态），管理系统将立即陷入故障。</li>\n<li><strong>关联卡片</strong>：<code>Card 05</code>, <code>Card 07</code>, <code>Card 10</code></li>\n<li>页 56-58</li>"}, {"id": "card-10", "num": "10", "title": "地位失配与动态身位校准 (Method Card)", "type": "Method", "module": "模块二", "color": "slate", "body_html": "<li><strong>操作步骤</strong>：</li>\n<div class="list-num-item"><strong>1.</strong> <strong>判断失配症状</strong>：如果团队开会死气沉沉，无人提出质疑，说明你过于高姿态（偏向过度支配）；如果指令下达后拖延推诿，说明你过于低姿态（偏向过度迎合）。</div>\n<div class="list-num-item"><strong>2.</strong> <strong>实施反向校准</strong>：</div>\n<li><em>过度支配时</em>：强行闭嘴，在接下来的会议中至少 80% 的时间只做倾听、记录和提问，并将决策权分授下去。</li>\n<li><em>过度迎合时</em>：在下一个项目节点上，站直身体，缩短语速，使用毫无保留的肯定句下达具体时间点的指令。</li>\n<li><strong>正确动作</strong>：新晋主管发现下属开会都在迎合自己，立刻重置行为：他将自己移出核心讨论圈，坐到后排扮演观察员角色，交出发言主控权，团队氛围瞬间活跃。</li>\n<li><strong>物理边界条件</strong>：身位校准必须以组织的实际产出和沟通健康度为唯一评估标准，避免陷入频繁自我审查的心理内耗。</li>\n<li><strong>关联卡片</strong>：<code>Card 09</code></li>\n<li>页 59-62</li>\n<br>\n<p>---</p>"}, {"id": "card-11", "num": "11", "title": "舞台演剧与职业盔甲入戏 (Model Card)", "type": "Model", "module": "模块三", "color": "moss", "body_html": "<li><strong>定义与本质</strong>：社会交往是一场表演。岗位本身不是私人的你，而是一个集体托付的“角色剧本”。当个人感到“我不配坐在这个位置”时（冒名顶替综合征），破局的关键在于穿上职业盔甲，为集体的利益扮演好这个角色。</li>\n<li><strong>经典案例</strong>：舞台上的演员在后台可能极度内向、不自信；但一旦穿上戏服、跨过侧幕条，就会由于剧本和观众的锁定，瞬间爆发出强大的威严气场。这证明角色可以塑造并赋予个体行为力量（p. 128）。</li>\n<li><strong>商业/科技映射</strong>：一位内向的技术宅被升任为总监，需要面对大客户作汇报。他在登台前将西装扣子扣好，暗示自己：“现在，我是代表公司总监这个角色在发声，而不是私下的我。”从而气场全开，成功完成汇报。</li>\n<li><strong>适用与失效边界</strong>：职业盔甲必须与岗位的信托责任相符。脱离了岗位的职责约束，盔甲会沦为个人膨胀和推卸责任的借口。</li>\n<li><strong>关联卡片</strong>：<code>Card 12</code>, <code>Card 28-Exp 1</code></li>\n<li>页 125-129</li>"}, {"id": "card-12", "num": "12", "title": "冒名顶替综合征消除 (Method Card)", "type": "Method", "module": "模块三", "color": "moss", "body_html": "<li><strong>操作步骤</strong>：</li>\n<div class="list-num-item"><strong>1.</strong> <strong>剥离私人身份</strong>：明确职位权力是“租来的”，不是“你拥有”的。把职位看作是集体租给你使用的一套“戏服”。</div>\n<div class="list-num-item"><strong>2.</strong> <strong>仪式化入戏（Role-priming）</strong>：在重要谈判或发言前，通过整理衣装、深呼吸、舒展双肩等物理动作，在大脑中完成“戏服穿戴”的心理暗示。</div>\n<div class="list-num-item"><strong>3.</strong> <strong>遵循剧本底线</strong>：当面临决策冲突时，自问：“根据当前总监/CEO的角色剧本，为了集体利益，我现在最应该下达什么指令？”而非“我个人怕不怕尴尬”。</div>\n<li><strong>错误示范</strong>：因为觉得自己年轻资历浅，在跨部门高管会上畏首畏尾，不敢代表本部门去争取合理预算，导致团队利益受损。</li>\n<li><strong>正确动作</strong>：HR主管在面对高管违规需要通报时，摒弃私人顾虑，以严肃、客观的职业面孔出面，严格遵循合规条款和法务剧本要求执行处理，维护了公司纪律。</li>\n<li><strong>物理边界条件</strong>：消除虚假感需要持续的日常角色演练，不可等危机来临时临时抱佛脚。</li>\n<li><strong>关联卡片</strong>：<code>Card 11</code></li>\n<li>页 130-132</li>"}, {"id": "card-13", "num": "13", "title": "甘当配角的授权自退机制 (Model Card)", "type": "Model", "module": "模块三", "color": "moss", "body_html": "<li><strong>定义与本质</strong>：卓越领导力的终极体现是“学会下台”。在团队执行阶段，管理者必须主动收敛自己的高姿态光芒，扮演低姿态的“支持者”和“配角”，将舞台和聚光灯让给具体干活的技术骨干。</li>\n<li><strong>经典案例</strong>：英特尔前 CEO 葛洛夫（Andrew Grove）在推行重大改革决策时会表现出极高姿态的严厉；但当研发团队脑暴新技术时，他会选择坐在角落一言不发，甚至给下属倒水，以此营造安全的建言氛围（p. 112）。</li>\n<li><strong>商业/科技映射</strong>：在技术评审会上，部门总监把发言位置让给负责开发的资深工程师，自己则作为“资源后勤兵”坐在侧边，不仅极大地提高了工程师的成就感，也避开了外行指导内行的风险。</li>\n<li><strong>适用与失效边界</strong>：在项目遭遇重大事故、方向偏离或团队丧失信心时，管理者必须立即从配角退回主角，挺身而出稳住阵脚。</li>\n<li><strong>关联卡片</strong>：<code>Card 03</code>, <code>Card 14</code></li>\n<li>页 111-114</li>"}, {"id": "card-14", "num": "14", "title": "交出聚光灯与最后发言规则 (Method Card)", "type": "Method", "module": "模块三", "color": "moss", "body_html": "<li><strong>操作步骤</strong>：</li>\n<div class="list-num-item"><strong>1.</strong> <strong>发言位移</strong>：在部门周会或脑暴会中，管理者作为主持人，除开场介绍外，主动在第一阶段保持沉默。</div>\n<div class="list-num-item"><strong>2.</strong> <strong>实施“最后发言”（Speak Last）</strong>：让团队骨干和初级成员先发表意见，自己主要负责记录、微笑点头和追问细节，把定调性的发言留到会议的最后 10%。</div>\n<div class="list-num-item"><strong>3.</strong> <strong>公开背书与把关</strong>：对下属提出的好点子公开给予预算支持，并在汇报上级时写明下属的名字。</div>\n<li><strong>错误示范</strong>：开会时，领导抢先发表一小时的宏大叙意，随后说“大家谈谈看法”，全场只能被迫附和，导致会议失去实质纠偏意义。</li>\n<li><strong>正确动作</strong>：项目总监在立项脑暴会上，给每位年轻研发发一张白卡纸写创意，自己默默收集记录，在大家充分讨论后，才出来归纳并进行预算背书。</li>\n<li><strong>物理边界条件</strong>：交出聚光灯的前提是团队成员已经具备了一定的自主思考与执行能力；对毫无经验的新兵，管理者仍需先进行手把手的剧本指导。</li>\n<li><strong>关联卡片</strong>：<code>Card 08</code>, <code>Card 13</code></li>\n<li>页 115-117</li>"}, {"id": "card-15", "num": "15", "title": "新晋主管权威立威与交接 (Scenario Card)", "type": "Scenario", "module": "模块三", "color": "moss", "body_html": "<li><strong>操作步骤</strong>：</li>\n<div class="list-num-item"><strong>1.</strong> <strong>高姿态切入</strong>：上任首会上面带微笑但身体挺直，动作幅度减小，不讲多余的客套话。</div>\n<div class="list-num-item"><strong>2.</strong> <strong>宣示角色定位</strong>：明确告知团队，你的角色剧本是“为团队协调资源、扫清项目障碍”，同时你的职责也是“坚守交付质量的红线”。</div>\n<div class="list-num-item"><strong>3.</strong> <strong>划定客观交付红线</strong>：不与下属进行过度低姿态的“大打成一片”，保持得体的职业距离，确立工作标准的权威度。</div>\n<p><em>   <strong>话术模板</strong>：</em>“各位，很高兴和大家并肩作战。作为主管，我的剧本是帮大家协调资源、清扫项目障碍，同时我的职责也是守住公司的交付红线。本周我们的首要任务是[具体任务X]，我会安排好每日的进度同步，大家各司其职，保证按时上线。”*</p>\n<li><strong>物理边界条件</strong>：立威不是霸凌，高姿态的切入必须配以切实解决下属实际资源痛点的“信托动作”，否则会被定性为外强中干。</li>\n<li><strong>关联卡片</strong>：<code>Card 06</code>, <code>Card 12</code></li>\n<li>页 120-122</li>\n<br>\n<p>---</p>"}, {"id": "card-16", "num": "16", "title": "自我关注焦虑模型 (Model Card)", "type": "Model", "module": "模块四", "color": "gold", "body_html": "<li><strong>定义与本质</strong>：登台路演、向高管汇报时，手抖、心跳过速是正常的肾上腺素生理反应。焦虑之所以会恶化为临场失控，是因为大脑陷入了<strong>“自我关注”（Self-focused attention）</strong>的恶性反馈环路：越盯着自己的生理不适，就越怀疑自己的能力，最终导致理性大脑瞬间停机。</li>\n<p><div class="math-block">表演焦虑度 \\propto 自我关注度 \\times 完美表现期望值</div></p>\n<li><strong>经典案例</strong>：许多奥斯卡影帝或顶级歌唱家在登台前，在后台依然会因为极度紧张而呕吐。但他们一旦走上聚光灯，焦虑感便神奇消退。这是因为他们的心智在入戏的瞬间，实现了由自我向角色的“意念去中心化”转移（p. 128）。</li>\n<li><strong>商业/科技映射</strong>：研发骨干第一次面对大客户路演，在台下看着自己的手抖，脑中充满“他们会觉得我很蠢”的自恋焦虑，导致一上台就忘词。</li>\n<li><strong>适用与失效边界</strong>：当演讲者完全不了解听众需求，或者准备工作极度不充分时，去中心化也无法弥补物理知识储备的缺失。</li>\n<li><strong>关联卡片</strong>：<code>Card 17</code>, <code>Card 28-Exp 4</code></li>\n<li>页 135-138</li>"}, {"id": "card-17", "num": "17", "title": "表演焦虑去中心化机制 (Method Card)", "type": "Method", "module": "模块四", "color": "gold", "body_html": "<li><strong>操作步骤</strong>：</li>\n<div class="list-num-item"><strong>1.</strong> <strong>截断生理自检</strong>：当感到心跳加速时，接受这一生理唤醒，暗示自己“这代表我身体已充满能量，准备好入戏了”，停止对心跳和手抖的关注。</div>\n<div class="list-num-item"><strong>2.</strong> <strong>启动“意念去中心化”</strong>：上台前，强行将思想对准受众和使命——“台下的听众正面临XX痛点，我今天的演讲是为了给他们送伞的，我不能让他们失望。”</div>\n<div class="list-num-item"><strong>3.</strong> <strong>聚焦具体物理客体</strong>：将视线固定在台下某位面带微笑、点头反馈的听众身上，或紧盯着PPT的特定逻辑图表，让注意力的物理带宽被客观内容占满。</div>\n<li><strong>错误示范</strong>：在台上不断向听众道歉说“不好意思我今天有点紧张”，试图通过示弱（低姿态过度迎合）来寻求同情，反而破坏了专业气场。</li>\n<li><strong>正确动作</strong>：创业者在路演前，在后台闭眼默念：“这场演讲不关乎我的面子，而关乎如何帮客户省下30%云成本。”上台后大声自信开场，焦虑感在两分钟内自然平复。</li>\n<li><strong>物理边界条件</strong>：去中心化必须建立在明确知道“我的演讲如何能帮到听众”的前提下，需要前置的客户需求调研支撑。</li>\n<li><strong>关联卡片</strong>：<code>Card 16</code>, <code>Card 18</code></li>\n<li>页 139-142</li>"}, {"id": "card-18", "num": "18", "title": "临场大型演讲筹备流程 (Scenario Card)", "type": "Scenario", "module": "模块四", "color": "gold", "body_html": "<li><strong>操作步骤</strong>：</li>\n<div class="list-num-item"><strong>1.</strong> <strong>T-2小时 (生理平抑)</strong>：深呼吸，长吐气；喝温水，禁止摄入过量咖啡因，避免引发过度生理颤抖。</div>\n<div class="list-num-item"><strong>2.</strong> <strong>T-1小时 (意念转移)</strong>：闭上眼，启动去中心化推演，把脑中的“我好不好看”切换为“听众的痛点是什么，我能带给他们什么干货”。</div>\n<div class="list-num-item"><strong>3.</strong> <strong>T-10分钟 (入戏热身)</strong>：活动肩关节，深呼吸暗示“现在是专家角色入戏”。</div>\n<div class="list-num-item"><strong>4.</strong> <strong>T-0分钟 (第一声威)</strong>：上台第一句话适当提高音量，声音洪亮地吐出前三个字，瞬间用物理气场压制怯场。</div>\n<li><strong>效果</strong>：通过结构化的物理与心理热身，阻断临场焦虑对心智的劫持。</li>\n<li><strong>物理边界条件</strong>：必须预留出这 2 小时的无打扰时间窗口，若临场前还在处理紧急业务垃圾邮件，焦虑管理将彻底失效。</li>\n<li><strong>关联卡片</strong>：<code>Card 17</code></li>\n<li>页 145-147</li>\n<br>\n<p>---</p>"}, {"id": "card-19", "num": "19", "title": "权力腐败与同理心退化 (Model Card)", "type": "Model", "module": "模块五", "color": "terracotta", "body_html": "<li><strong>定义与本质</strong>：研究表明，拥有权力会降低大脑中“镜像神经元”的活跃度，导致<strong>同理心退化（Empathy Deficit）</strong>。权力持有者因为不再需要依赖他人的脸色来获取资源，其心智会自动关闭对他人情绪和痛苦的感知，进而滋生特权感，甚至无视社会规则。</li>\n<li><strong>经典案例</strong>：斑马线豪华轿车违规统计。社会心理学研究表明，在斑马线前，廉价汽车司机会 100% 礼让行人；而开豪车的司机中，有近 50% 会违法强行抢道。这证明了高社会权力对日常规则和他人安全的漠视（p. 158）。</li>\n<li><strong>商业/科技映射</strong>：高管习惯了迟到，或者默认自己可以绕过合规的差旅报销审批，逐渐发展为在重大商业决策上违背国家法律红线。</li>\n<li><strong>适用与失效边界</strong>：只要有强制的外部独立审计（如CFO一票否决权或法律红线制约），特权心理就无法转化为违法动作。</li>\n<li><strong>关联卡片</strong>：<code>Card 21</code>, <code>Card 28-Exp 2</code>, <code>Card 28-Exp 3</code></li>\n<li>页 155-160</li>"}, {"id": "card-20", "num": "20", "title": "“无权感权力者”暴虐狂怒机制 (Model Card)", "type": "Model", "module": "模块五", "color": "terracotta", "body_html": "<li><strong>定义与本质</strong>：最容易在组织内发起职场霸凌、咆哮和歇斯底里越界控制的，往往不是内心自信的强者，而是<strong>“身处高位却内心极度无能无力的人” (feeling powerless while holding power)</strong>。这种人由于缺乏真正的管理能力或安全感，会通过欺压下属的病态控制欲，来向自己和外界证明自己的权力存在。</li>\n<li><strong>经典案例</strong>：心理学家与威廉斯（Melissa Williams）的实验。在实时聊天中，那些在现实生活中没有权力、但在实验中被随机分配扮演“主管”的男性，向女性虚拟拍档发送带有明显性暗示和敌意攻击信息的频次最高。这揭示了内心无权感的权力持有者具有极高的攻击性补偿心理（p. 176）。</li>\n<li><strong>商业/科技映射</strong>：新上任的项目经理因不懂底层技术，害怕被开发团队边缘化，于是通过疯狂催促交付进度、在群里公开点名批评技术骨干、插手微观细节，来刷存在感。</li>\n<li><strong>适用与失效边界</strong>：给此类管理者提供清晰的安全感边界，或通过制度限制其越界指挥权，可有效降低其暴虐度。</li>\n<li><strong>关联卡片</strong>：<code>Card 23</code>, <code>Card 28-Exp 5</code></li>\n<li>页 173-178</li>"}, {"id": "card-21", "num": "21", "title": "高管自我反省匿名镜子审计 (Scenario Card)", "type": "Scenario", "module": "模块五", "color": "terracotta", "body_html": "<li><strong>操作步骤</strong>：</li>\n<div class="list-num-item"><strong>1.</strong> <strong>设立匿名反馈通道</strong>：每季度由第三方HR部门发起 360 度匿名工作作风审计，避开高管的权力压制。</div>\n<div class="list-num-item"><strong>2.</strong> <strong>执行自我四项警示自检</strong>：</div>\n<li><em>审计 1</em>：本周我是否曾因为急躁而打断了下属解释业务漏洞的发言？</li>\n<li><em>审计 2</em>：我是否在报销、考勤或流程审批上，习惯性行使了特殊绿色通道？</li>\n<li><em>审计 3</em>：当遇到重大失误时，我的第一本能是反思流程，还是开始在心里寻找“替罪羊员工”？</li>\n<li><em>审计 4</em>：我的团队里，是否还有人敢于在开会时公开向我的决定提出质疑？</li>\n<div class="list-num-item"><strong>3.</strong> <strong>引入外部制衡顾问</strong>：在核心决策会上，配置一名“专门负责唱反调”的独立顾问，强制打碎信息茧房。</div>\n<li><strong>物理边界条件</strong>：高管必须拥有真正的反思意愿，若将 360 反馈当做揪出“不听话员工”的工具，反馈系统会彻底死亡。</li>\n<li><strong>关联卡片</strong>：<code>Card 19</code></li>\n<li>页 180-182</li>"}, {"id": "card-22", "num": "22", "title": "受害者习得性无助摆脱 (Model Card)", "type": "Model", "module": "模块五", "color": "terracotta", "body_html": "<li><strong>定义与本质</strong>：处于低权力位置的个体在长期遭受打压后，容易陷入“习得性无助”的受害者心理，认为自己做任何挣扎都无济于事，从而主动放弃抗争，甚至在内心为施害者的越界行为进行合理化。</li>\n<li><strong>经典案例</strong>：关于习得性无助的最早动物实验。被关在笼子里受到电击但无法控制电击停止的狗，在经历反复折磨后，即使后来笼门被打开，也只会趴在地上哀鸣而不再尝试逃跑；而学会了按下控制杆停止电击的狗，则会积极寻找逃生通道（p. 72）。</li>\n<li><strong>商业/科技映射</strong>：一名初级测试人员长期被项目主管言语羞辱，他放弃了向HR申诉或投递简历的努力，默认了“天下乌鸦一般黑，我只能忍受霸凌”的软弱剧本。</li>\n<li><strong>适用与失效边界</strong>：当受害者完全丧失了物理退场能力（如唯一的生存资金被对方控制），且外部无任何合规支持时，打破这一局面的代价会呈非线性上升。</li>\n<li><strong>关联卡片</strong>：<code>Card 23</code>, <code>Card 28-Exp 6</code></li>\n<li>页 71-74</li>"}, {"id": "card-23", "num": "23", "title": "Assertive 坚定沟通与对抗霸凌 (Method Card)", "type": "Method", "module": "模块五", "color": "terracotta", "body_html": "<li><strong>操作步骤</strong>：</li>\n<div class=\"list-num-item\"><strong>1.</strong> <strong>剔除情绪词汇</strong>：在沟通中严禁使用“你太自私”、“你在故意针对我”等指责性、主观性评价。</div>\n<div class=\"list-num-item\"><strong>2.</strong> <strong>客观陈述事实 (Facts)</strong>：列出无法推翻的物理数据或具体事件（如加班时间、任务更改记录）。</div>\n<div class=\"list-num-item\"><strong>3.</strong> <strong>明确划定红线 (Red-line Action)</strong>：清晰表明为了保证工作质量，你将采取的具体行动边界。</div>\n<li><strong>话术公式</strong>：</li>\n<p><div class="math-block">\\text{Assertive 沟通} = \\text{客观观察事实 (Facts)} + \\text{为了[集体/交付效益]} + \\text{我将执行的红线边界 (Red-line)}</div></p>\n<p><em>   <strong>话术模板</strong>：</em>“李总，我非常愿意为了项目交付在工作时间内全力以赴。但是，这周我已经连续三次在半夜12点收到您的非紧急报表任务（事实）。为了能保证白天正常交付的质量，以及我个人的身心健康，今后非紧急事项我将统一在工作时间处理（红线）。请您理解。”*</p>\n<li><strong>物理边界条件</strong>：实施这一步需要具备“随时可以退场”的心理建设与底牌储备（如备用资金或面试机会），无底牌的硬刚容易导致物理出局。</li>\n<li><strong>关联卡片</strong>：<code>Card 22</code></li>\n<li>页 182-185</li>\n<br>\n<p>---</p>"}, {"id": "card-24", "num": "24", "title": "旁观者冷漠与多元无知死锁 (Model Card)", "type": "Model", "module": "模块六", "color": "indigo", "body_html": "<li><strong>定义与本质</strong>：在紧急危机中，如果旁观者众多，每个人都倾向于通过观察别人的反应来判断这是否是一场真正的危机。由于每个人都在装作镇定自若，导致群体陷入“多元无知”（Pluralistic Ignorance）死锁，责任被无限扩散，最终没有任何人站出来施救。</li>\n<li><strong>经典案例</strong>：基蒂·吉诺维斯（Kitty Genovese）谋杀案。吉诺维斯在街头被袭击折磨了 35 分钟，38 位市民在公寓窗前目击了袭击，但没有一个人拨打报警电话，因为大家都以为“别人肯定已经报了警”（p. 190）。</li>\n<li><strong>商业/科技映射</strong>：在跨部门沟通群中，系统监控突然弹出高危安全漏洞。群里有几十位高管和架构师，因为没人出声，每个人都默认“别人应该会去处理”，导致漏洞长达 12 小时无人修复。</li>\n<li><strong>适用与失效边界</strong>：只要有任意一个人打破沉寂第一个站出来行动，多元无知网罗就会瞬间被撕裂，周围群众会立刻转化为协作者。</li>\n<li><strong>关联卡片</strong>：<code>Card 25</code>, <code>Card 28-Exp 7</code></li>\n<li>页 189-192</li>"}, {"id": "card-25", "num": "25", "title": "旁观者干预五阶段模型 (Model Card)", "type": "Model", "module": "模块六", "color": "indigo", "body_html": "<li><strong>定义与本质</strong>：第三方（旁观者）在面对不公或霸凌时，拥有极低的博弈风险，是打破组织内恶劣行为的关键力量。成功的旁观者干预必须经历五个连续的心智动作：</li>\n<p><div class="math-block">\\text{注意 (Notice)} → \\text{判定紧急 (Interpret)} → \\text{承担责任 (Assume)} → \\text{决定方式 (Decide)} → \\text{付诸干预 (Act)}</div></p>\n<li><strong>五阶段拆解</strong>：</li>\n<div class=\"list-num-item\"><strong>1.</strong> <strong>注意</strong>：意识到现场发生了异常或冲突。</div>\n<div class=\"list-num-item\"><strong>2.</strong> <strong>理解</strong>：判定这一情况为“需要帮助”的状态，而非正常的职场打闹。</div>\n<div class=\"list-num-item\"><strong>3.</strong> <strong>承担责任</strong>：打破“责任分散”心理，明确“我不帮就没人帮”。</div>\n<div class=\"list-num-item\"><strong>4.</strong> <strong>决定行动方式</strong>：评估自身风险，选择直接制止、转移注意力或事后联合申诉。</div>\n<div class=\"list-num-item\"><strong>5.</strong> <strong>实施干预</strong>：付诸行动，打破死锁。</div>\n<li><strong>适用与失效边界</strong>：当干预者自身的物理安全受到直接暴力威胁，且缺乏报警工具时，应当优先选择间接报警而非肉身硬刚。</li>\n<li><strong>关联卡片</strong>：<code>Card 24</code>, <code>Card 26</code></li>\n<li>页 193-196</li>"}, {"id": "card-26", "num": "26", "title": "盟友声援与非对抗性打断 (Scenario Card)", "type": "Scenario", "module": "模块六", "color": "indigo", "body_html": "<li><strong>操作步骤</strong>：</li>\n<div class="list-num-item"><strong>1.</strong> <strong>锁定霸凌现场</strong>：当看到同事或下属在会议上被高层进行人身攻击或无底线羞辱时。</div>\n<div class="list-num-item"><strong>2.</strong> <strong>实施善意打断</strong>：不与施害者发生直接的情绪对抗，通过“插话并引入客观技术背景”将话题拉回业务本身。</div>\n<div class="list-num-item"><strong>3.</strong> <strong>分流施压压力</strong>：帮助受害者承接部分解释工作，为其腾出心理缓冲和整理思绪的时间。</div>\n<p><em>   <strong>话术模板</strong>：</em>“王总，我打断一下。关于刚才提到的小李负责的那部分指标，其实我们在上周多部门联调会上面对的数据背景是非常复杂的，当时的技术链路也存在客观瓶颈。为了帮项目更好推进，我觉得我们可以一起看看如何优化这块的配置，李工其实已经梳理了解决方案，我们可以听听李工的说明。”*</p>\n<li><strong>物理边界条件</strong>：干预者的姿态要保持极度冷静和专业，不可卷入情绪宣泄，否则会引发更大尺度的部门对立。</li>\n<li><strong>关联卡片</strong>：<code>Card 25</code></li>\n<li>页 198-200</li>"}, {"id": "card-27", "num": "27", "title": "权力演剧与地位博弈核心术语表 (Reference Card)", "type": "Reference", "module": "模块六", "color": "indigo", "body_html": "<p>本术语表用于快速统一团队的博弈话语体系，回源锚定原书物理概念：</p>\n<li><strong>资源依赖 (Resource Dependency)</strong>：权力的物理底座，当A需要B掌控的资源且无法替代时，B对A即拥有权力（见 <code>Card 01</code>）。</li>\n<li><strong>信托型权力 (Stewardship)</strong>：将权力视为集体托付的受托管理资产，以保护和赋能集体为第一性（见 <code>Card 03</code>）。</li>\n<li><strong>高姿态 (Up-playing)</strong>：通过占据空间、放慢语速动作等非言语动作夸大地位展示，用以树立权威（见 <code>Card 05</code>）。</li>\n<li><strong>低姿态 (Down-playing)</strong>：通过缩小空间、身体前倾倾听、自嘲示弱拉近心理距离，用以建立信任共情（见 <code>Card 07</code>）。</li>\n<li><strong>职业盔甲 (Professional Armor)</strong>：将岗位视为剧本角色，用仪式化手段入戏以消除冒名顶替感的心智工具（见 <code>Card 11</code>）。</li>\n<li><strong>去中心化 (De-centering)</strong>：将注意力由“自我表现”转移至“利他使命”，平抑临场表演焦虑的策略（见 <code>Card 17</code>）。</li>\n<li><strong>同理心退化 (Empathy Deficit)</strong>：高权力导致大脑镜像神经元活跃度降低、丧失感受他人情绪的生理本能（见 <code>Card 19</code>）。</li>\n<li><strong>无权感恶霸 (Powerless Bully)</strong>：身处高位内心却感无力者，通过疯狂控制欺压他人进行心理补偿的病态现象（见 <code>Card 20</code>）。</li>\n<li><strong>Assertive 沟通</strong>：摒弃情绪评价，通过“客观事实+红线边界”捍卫个人博弈主权的坚定表达方式（见 <code>Card 23</code>）。</li>\n<li><strong>多元无知 (Pluralistic Ignorance)</strong>：群体通过观察他人的冷漠反应自我暗示，导致责任分散、集体保持沉默的社会陷阱（见 <code>Card 24</code>）。</li>"}, {"id": "card-28", "num": "28", "title": "组织行为学与地位心理学核心实验索引 (Reference Card)", "type": "Reference", "module": "模块六", "color": "indigo", "body_html": "<p>本索引收录《权力》一书论证其“情境角色与地位博弈”框架的 7 个里程碑式学术研究与实验：</p>\n<div class="list-num-item"><strong>1.</strong> <strong>津巴多斯坦福监狱角色扮演实验 (1971)</strong> (Ch 6)</div>\n<p><em>   </em>验证内容*：大学生被分配为看守与囚犯后迅速改变行为，证实了社会角色剧本对人性与权力的支配力量。</p>\n<div class="list-num-item"><strong>2.</strong> <strong>达娜·卡尼约会头像扩张姿态实验</strong> (Ch 8)</div>\n<p><em>   </em>验证内容*：外表姿态越呈物理扩张（霸道姿态）的人，在网络约会平台上获得的青睐与配对率越高，证实体态在地位信号中的普适性。</p>\n<div class="list-num-item"><strong>3.</strong> <strong>达彻尔·凯尔特纳曲奇饼怪兽实验</strong> (Ch 7)</div>\n<p><em>   </em>验证内容*：三人分四块饼干，被随机赋予权力的人更倾向于拿走最后一块，且吃相更难看（吃口张开、碎屑散落），证实高权力导致礼仪与同理心衰退。</p>\n<div class="list-num-item"><strong>4.</strong> <strong>达顿与阿伦温哥华吊桥生理唤醒实验 (1974)</strong> (Ch 7)</div>\n<p><em>   </em>验证内容*：走过摇晃高空吊桥的男性对女性调查员的打电话约会率极高，证实了恐惧焦虑的生理激起极易被大脑误归转换为浪漫吸引。</p>\n<div class="list-num-item"><strong>5.</strong> <strong>格林菲尔德与威廉斯无权感角色性暗示实验 (2017)</strong> (Ch 7)</div>\n<p><em>   </em>验证内容*：被临时指派为“主管”但在实际生活中感到无力（Powerless）的男性，发出的敌意和骚扰性信息最多，证实了“无权感权力持有者”的暴力补偿心理。</p>\n<div class="list-num-item"><strong>6.</strong> <strong>塞利格曼狗电击与习得性无助实验 (1967)</strong> (Ch 8)</div>\n<p><em>   </em>验证内容*：无法通过物理按板停止电击的狗，后来即使笼门大开也选择趴着承受电击，证实了长期无法掌控局势会导致习得性无助死锁。</p>\n<div class="list-num-item"><strong>7.</strong> <strong>拉塔内与达利多元无知旁观者实验</strong> (Ch 9)</div>\n<p><em>   </em>验证内容*：当周围有其他冷漠的旁观者在场时，个体的紧急呼救干预率下降了 60% 以上，证实了责任分散与多元无知对社会救援的劫持。</p>\n<br>\n<p>---</p>"}];
+
+    // Card filter states
+    let activeModule = 'All';
+    let activeType = 'All';
+
+    function filterModule(moduleName, btn) {{
+        const btnGroup = btn.parentNode;
+        btnGroup.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeModule = moduleName;
+        applyFilters();
+    }}
+
+    function filterType(typeName, btn) {{
+        const btnGroup = btn.parentNode;
+        btnGroup.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeType = typeName;
+        applyFilters();
+    }}
+
+    function applyFilters() {{
+        const container = document.getElementById('cards-container');
+        const cardsEl = container.getElementsByClassName('card');
+        const searchQuery = document.getElementById('search-bar').value.toLowerCase();
+        
+        for (let i = 0; i < cardsEl.length; i++) {{
+            const card = cardsEl[i];
+            const cModule = card.getAttribute('data-module');
+            const cType = card.getAttribute('data-type');
+            
+            const matchesModule = (activeModule === 'All' || cModule === activeModule);
+            const matchesType = (activeType === 'All' || cType === activeType);
+            
+            const cardTitle = card.getElementsByTagName('h3')[0].textContent.toLowerCase();
+            const cardBody = card.getElementsByClassName('card-body')[0].textContent.toLowerCase();
+            const matchesSearch = (!searchQuery || cardTitle.includes(searchQuery) || cardBody.includes(searchQuery));
+            
+            if (matchesModule && matchesType && matchesSearch) {{
+                card.style.display = 'block';
+            }} else {{
+                card.style.display = 'none';
+            }}
+        }}
+    }}
+
+    function searchCards() {{
+        applyFilters();
+    }}
+
+    // Card Modal details
+    function openCard(cardId) {{
+        const num = cardId.replace('card-', '');
+        const cardObj = cardsData.find(c => c.num === num);
+        if (cardObj) {{
+            document.getElementById('modal-title').textContent = cardObj.title.replace(/\([^)]+\)/g, '');
+            document.getElementById('modal-tag').textContent = cardObj.type + " CARD";
+            document.getElementById('modal-tag').className = "card-tag " + cardObj.color;
+            document.getElementById('modal-module').textContent = cardObj.module;
+            document.getElementById('modal-num').textContent = cardObj.num;
+            document.getElementById('modal-body').innerHTML = cardObj.body_html;
+            document.getElementById('card-modal').style.display = 'flex';
+        }}
+    }}
+
+    function closeCard(event) {{
+        if (!event || event.target.id === 'card-modal' || event.target.className === 'modal-close') {{
+            document.getElementById('card-modal').style.display = 'none';
+        }}
+    }}
+
+    // Interactive self audit calculations
+    function calculateAuditScore() {{
+        const selects = document.querySelectorAll('.audit-select');
+        let total = 0;
+        selects.forEach(sel => {{
+            total += parseInt(sel.value);
+        }});
+        
+        document.getElementById('audit-total-score').textContent = total;
+        
+        const descEl = document.getElementById('audit-desc');
+        const expEl = document.getElementById('audit-explanation');
+        
+        if (total <= 10) {{
+            descEl.textContent = '过度顺从（极度低姿态）';
+            descEl.style.color = 'var(--slate)';
+            expEl.textContent = '您的得分低于 11 分。在人际交往和职场协作中，您过度使用了安抚性微笑、畏缩体态和迎合式言语。这导致您极易在他人故事中被分配为弱者或受害者角色，难以独立拍板事务，建议强制在特定会议场景中尝试高姿态（Up-playing）以夺回身位。';
+        }} else if (total <= 19) {{
+            descEl.textContent = '动态身位（最佳区间）';
+            descEl.style.color = 'var(--gold)';
+            expEl.textContent = '您的表现处于高低姿态的最佳切换区间，能够根据具体情境实施自如调频，在树立秩序（Authority）以稳定局面的同时，兼备共情协作力（Affiliation）以拉近团队距离，符合优秀领导力要求。';
+        }} else {{
+            descEl.textContent = '过度支配（极度高姿态）';
+            descEl.style.color = 'var(--plum)';
+            expEl.textContent = '您的得分已达到或超过 20 分。在日常沟通中，您霸占了过多的物理空间和谈话带宽，声音语速过于强势，并缺少防御性微动作的缓和。这极易让下属对您产生防御和恐惧感，从而关闭真实的反馈通道，建议每周设定固定的“低姿态配角日”进行制度化授权自退。';
+        }}
+    }}
+
+    // Initialize Calculator
+    calculateAuditScore();
+</script>
+
+</body>
+</html>

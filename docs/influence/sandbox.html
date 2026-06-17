@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>影响力 说服与反操纵心智工作坊 | 开发者心智系统 developer-mind-OS</title>
+    <style>
+        /* =====================================================================
+           Etsy-Inspired Morandi Light Luxury Styling & Theme Colors (Slate Blue & Red)
+           ===================================================================== */
+        :root {
+            --bg-color: #F8FAF9;
+            --sidebar-bg: #FFFFFF;
+            --card-bg: #FFFFFF;
+            --text-main: #2D3748;
+            --text-muted: #718096;
+            --primary: #4A5568;     /* Steel Blue */
+            --green: #2B6CB0;       /* Lighter Blue */
+            --red: #9B2C2C;         /* Crimson Red */
+            --charcoal: #2D3748;
+            --border: #E2E8F0;
+            --accent: #EDF2F7;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Basic Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft YaHei", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 290px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            overflow-y: auto;
+        }
+
+        .sidebar-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar-subtitle {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
+        }
+
+        .nav-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .nav-category {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 18px;
+            margin-bottom: 4px;
+            padding: 4px 6px;
+            border-bottom: 1px dashed var(--border);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-category:first-of-type {
+            margin-top: 0;
+        }
+
+        .nav-item {
+            padding: 10px 14px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-muted);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-item:hover {
+            background-color: var(--bg-color);
+            color: var(--primary);
+        }
+
+        .nav-item.active {
+            background-color: var(--accent);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 24px;
+            font-size: 11px;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+        }
+
+        /* Main Content Area */
+        .content {
+            margin-left: 290px;
+            flex-grow: 1;
+            padding: 40px 60px;
+            max-width: 1200px;
+        }
+
+        .header {
+            margin-bottom: 32px;
+            text-align: center;
+            display: block;
+        }
+
+        .book-meta {
+            font-size: 12px;
+            color: var(--primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .title {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .actions-bar {
+            display: flex;
+            gap: 12px;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 8px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            background-color: #FFFFFF;
+            color: var(--text-main);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            border-color: var(--text-main);
+            background-color: var(--bg-color);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: #FFFFFF;
+            border-color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background-color: #384252;
+            border-color: #384252;
+        }
+
+        /* Category Navigation (Top of content) */
+        .category-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            background-color: #FFFFFF;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .category-btn:hover {
+            border-color: var(--text-main);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+        }
+
+        .category-btn.active {
+            background-color: var(--primary);
+            color: #FFFFFF;
+            border-color: var(--primary);
+            box-shadow: 0 4px 10px rgba(74, 85, 104, 0.2);
+        }
+
+        /* Template Container & Cards */
+        .template-section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .template-section.active {
+            display: block;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+
+        .card-header {
+            margin-bottom: 24px;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 12px;
+        }
+
+        .card-tag {
+            font-size: 11px;
+            color: var(--primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        /* Form Controls */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .form-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 12px;
+            font-size: 13px;
+            font-family: inherit;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            resize: vertical;
+            color: var(--text-main);
+            transition: var(--transition);
+            background-color: #FAFAFA;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background-color: #FFFFFF;
+            box-shadow: 0 0 0 3px rgba(74, 85, 104, 0.1);
+        }
+
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 13px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-main);
+            transition: var(--transition);
+            background-color: #FAFAFA;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            background-color: #FFFFFF;
+        }
+
+        /* Checkbox list */
+        .checklist {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background-color: #FAFAFA;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .check-item:hover {
+            border-color: var(--text-muted);
+            background-color: #FFFFFF;
+        }
+
+        .check-item input[type="checkbox"] {
+            margin-top: 4px;
+            accent-color: var(--primary);
+            width: 16px;
+            height: 16px;
+        }
+
+        .check-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        /* Sliders / Allocator */
+        .slider-item {
+            margin-bottom: 16px;
+        }
+
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .slider-val {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--primary);
+            height: 6px;
+            border-radius: 9999px;
+            background-color: var(--border);
+            outline: none;
+        }
+
+        /* Declarations & Output boxes */
+        .declaration-box {
+            background-color: #FFFDF5;
+            border: 1px dashed #FCD34D;
+            padding: 24px;
+            border-radius: 8px;
+            position: relative;
+            margin-top: 20px;
+        }
+
+        .declaration-quote {
+            font-size: 14px;
+            font-style: italic;
+            color: #78350F;
+            font-weight: 500;
+            position: relative;
+            z-index: 2;
+        }
+
+        .declaration-fill {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #78350F;
+            color: #78350F;
+            font-weight: 700;
+            font-size: 14px;
+            padding: 0 4px;
+            text-align: center;
+            outline: none;
+            width: auto;
+            min-width: 100px;
+            display: inline-block;
+        }
+
+        .diagnostic-box {
+            padding: 16px;
+            border-radius: 8px;
+            background-color: #FFF5F5;
+            border: 1px solid #FED7D7;
+            margin-top: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--red);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .diagnostic-box.safe {
+            background-color: #F0FDF4;
+            border-color: #BBF7D0;
+            color: #166534;
+        }
+
+        /* Double Column Layout */
+        .double-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .double-column {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Print Media Queries */
+        @media print {
+            body {
+                background-color: #FFFFFF;
+                color: #000000;
+                display: block;
+                font-size: 12pt;
+            }
+
+            .sidebar, .category-nav {
+                display: none !important;
+            }
+
+            .content {
+                margin-left: 0 !important;
+                padding: 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+
+            .header, .actions-bar, .btn, .form-desc, .sidebar-footer {
+                display: none !important;
+            }
+
+            .template-section {
+                display: none !important;
+            }
+
+            .template-section.active {
+                display: block !important;
+            }
+
+            .card {
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                background: transparent !important;
+            }
+
+            .card-header {
+                border-bottom: 2px solid #000000 !important;
+                margin-bottom: 20px !important;
+            }
+
+            textarea, input[type="text"], input[type="number"], select {
+                border: none !important;
+                border-bottom: 1px solid #718096 !important;
+                border-radius: 0 !important;
+                background-color: transparent !important;
+                padding: 4px 0 !important;
+                font-size: 11pt !important;
+            }
+
+            input[type="range"] {
+                display: none !important;
+            }
+
+            .slider-val {
+                border-bottom: 1px solid #000000;
+                padding: 0 10px;
+            }
+
+            .check-item {
+                border: none !important;
+                background: transparent !important;
+                padding: 4px 0 !important;
+            }
+
+            .check-item input[type="checkbox"] {
+                border: 1px solid #000000 !important;
+            }
+
+            .declaration-box {
+                background: transparent !important;
+                border: 1px dashed #000000 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR NAVIGATION -->
+    <div class="sidebar">
+        <div class="sidebar-title">《影响力》</div>
+        <div class="sidebar-subtitle">说服与反操纵心智审计工作坊</div>
+        
+        <ul class="nav-list">
+            <li class="nav-category">🛡️ 影响武器与互惠原理 (1-2)</li>
+            <li class="nav-item active" onclick="switchTab(1)">
+                <span>1.</span> 自动武器与对比定价
+            </li>
+            <li class="nav-item" onclick="switchTab(2)">
+                <span>2.</span> 互惠负债测算与拆弹话术
+            </li>
+            
+            <li class="nav-category">🌀 承诺一致与社会认同 (3-4)</li>
+            <li class="nav-item" onclick="switchTab(3)">
+                <span>3.</span> 承诺一致与低球合同审计
+            </li>
+            <li class="nav-item" onclick="switchTab(4)">
+                <span>4.</span> 旁观者救援与责任精准指派
+            </li>
+            
+            <li class="nav-category">👤 喜好原理与权威服从 (5-6)</li>
+            <li class="nav-item" onclick="switchTab(5)">
+                <span>5.</span> 喜好离线解离与陌生人置换
+            </li>
+            <li class="nav-item" onclick="switchTab(6)">
+                <span>6.</span> 权威双轨拦截与诚实骗局过滤
+            </li>
+            
+            <li class="nav-category">🔥 稀缺原理与即时影响力 (7)</li>
+            <li class="nav-item" onclick="switchTab(7)">
+                <span>7.</span> 稀缺冲动平息与冷静计时器
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <div>作者：罗伯特·西奥迪尼</div>
+            <div style="margin-top: 4px; font-size: 10px;">Etsy 莫兰迪 Slate Blue 版式</div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="content">
+        <!-- HEADER -->
+        <div class="header" style="text-align: center; display: block; margin-bottom: 32px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <div class="book-meta" style="margin-bottom: 0;">Influence & Compliance Worksheets</div>
+                <div class="actions-bar" style="margin-bottom: 0;">
+                    <button class="btn" onclick="resetAll()">重置输入</button>
+                    <button class="btn btn-primary" onclick="window.print()">打印 / 导出 PDF</button>
+                </div>
+            </div>
+            <h1 class="title" style="font-size: 28px; font-weight: 800; color: var(--primary); margin-bottom: 12px; text-align: center;">《影响力》说服与反操纵心智审计工作坊</h1>
+            <p class="subtitle" style="font-size: 13px; color: var(--text-muted); max-width: 800px; margin: 0 auto 24px auto; line-height: 1.6; text-align: center;">
+                基于罗伯特·西奥迪尼社会心理学经典《影响力》开发。请选择下方的依从武器分类卡片，进行高密度的说服审计与决策抗噪防线拦截。
+            </p>
+        </div>
+
+        <!-- CATEGORY TABS -->
+        <div class="category-nav">
+            <button class="category-btn active" id="cat-btn-1" onclick="switchCategory(1)">
+                <span>🛡️</span> 1. 影响武器与互惠原理
+            </button>
+            <button class="category-btn" id="cat-btn-2" onclick="switchCategory(2)">
+                <span>🌀</span> 2. 承诺一致与社会认同
+            </button>
+            <button class="category-btn" id="cat-btn-3" onclick="switchCategory(3)">
+                <span>👤</span> 3. 喜好原理与权威服从
+            </button>
+            <button class="category-btn" id="cat-btn-4" onclick="switchCategory(4)">
+                <span>🔥</span> 4. 稀缺原理与即时影响力
+            </button>
+        </div>
+
+        <!-- 1. 自动武器与对比定价 -->
+        <div id="tab-1" class="template-section active">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Template 01</div>
+                    <div class="card-title">自动反应“卡嗒，哗”与对比定价审计表</div>
+                    <div class="card-desc">适用场景：评估订阅服务、SaaS定价套餐，或者商家的“高低价格锚定对比”策略。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">1. SaaS / 商务对比定价审计（Contrast Price Auditor）</label>
+                    <div class="form-desc">输入你正在评估的各档位价格（从最高到最低输入）：</div>
+                    <div style="display:flex; gap:10px; margin-bottom:10px;">
+                        <input type="number" id="t1-p1" placeholder="最高锚定档 (如1999)" oninput="updateContrast()">
+                        <input type="number" id="t1-p2" placeholder="主推黄金档 (如99)" oninput="updateContrast()">
+                        <input type="number" id="t1-p3" placeholder="低端基础档 (如29)" oninput="updateContrast()">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="declaration-box" style="margin-top: 10px;">
+                        <div class="declaration-quote" id="t1-analysis">
+                            正在计算对比度放大感知值...
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top:20px;">
+                    <label class="form-label">2. “自动续费/限时免费”磁带拦截 (Click-Whirr Shield)</label>
+                    <div class="form-desc">对方给出的看似极其省力、免费的“咔哒”触发器是什么（如免费体验3天且自动绑卡）：</div>
+                    <textarea id="t1-trigger" placeholder="描述诱导动作..."></textarea>
+                    <div class="form-desc" style="margin-top:10px;">如果我不管不问，它自动滑动下去的“哗”负面结果是：</div>
+                    <textarea id="t1-result" placeholder="描述自动续费、忘记取消的自动财务损失..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. 互惠负债测算与拆弹话术 -->
+        <div id="tab-2" class="template-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Template 02</div>
+                    <div class="card-title">互惠负债测算与“限度拆弹”话术生成器</div>
+                    <div class="card-desc">适用场景：对方赠送了免费礼物、样品、或者主动请客，随后提出让你买单或合作的非对称请求。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">1. 心理负债赤字计算器 (Reciprocity Debt Calculator)</label>
+                    <div class="form-desc">描述对方赠予你的“好意 / 恩惠”具体内容：</div>
+                    <input type="text" id="t2-favor-desc" placeholder="例如：一杯免费定制星巴克咖啡、赠送的高精SOP手册" style="margin-bottom:15px;">
+                    
+                    <div class="slider-item">
+                        <div class="slider-header">
+                            <span>恩惠的物理与精力成本估值 (Favor Cost)</span>
+                            <span class="slider-val"><span id="t2-cost-txt">5</span> / 10 分</span>
+                        </div>
+                        <input type="range" id="t2-cost" min="1" max="10" value="5" oninput="updateT2Debt()">
+                    </div>
+
+                    <div class="slider-item">
+                        <div class="slider-header">
+                            <span>接受恩惠时的公众目击度 (Public Witness)</span>
+                            <span class="slider-val"><span id="t2-witness-txt">5</span> / 10 分</span>
+                        </div>
+                        <input type="range" id="t2-witness" min="1" max="10" value="5" oninput="updateT2Debt()">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">对方随后向我提出的具体“顺从/依从”要求 (The Compliance Request)：</label>
+                    <textarea id="t2-request" placeholder="对方随后要求我：如买下一份并不急需的理财、在采购合同上签字..." oninput="updateT2Debt()"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <div id="t2-status" class="diagnostic-box">
+                        正在计算心理负债度...
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 20px;">
+                    <label class="form-label">2. “互惠拆弹”脱钩话术 (Gratitude Decoupling Script)</label>
+                    <div class="declaration-box" style="margin-top: 10px;">
+                        <div class="declaration-quote">
+                            “我承认并接受了对方给予的【 <span id="t2-out-favor" style="font-weight:700; border-bottom:1px solid #78350F;">免费咖啡</span> 】。但在理智上，我将其定性为**商业促销策略**，而非私人恩善。互惠原理不要求我用真正的利益去回报‘销售把戏’。我拒绝为其付费。”
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. 承诺一致与低球合同审计 -->
+        <div id="tab-3" class="template-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Template 03</div>
+                    <div class="card-title">承诺一致性套牢与“低球/抛低球”加价拦截审计</div>
+                    <div class="card-desc">适用场景：谈判或交易后期，对方突然拿走最初承诺的优惠条件，诱导你接受加价。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">1. 最初诱人的虚低报价或口头承诺 (The Initial Deal)：</label>
+                    <input type="text" id="t3-initial-deal" placeholder="例如：裸车优惠1万元，或者首月SaaS服务费仅需9元" style="margin-bottom:15px;">
+
+                    <label class="form-label">我先前已经做出的“心理锁定”动作（符合打勾）：</label>
+                    <div class="checklist">
+                        <label class="check-item">
+                            <input type="checkbox" id="t3-c1" onchange="updateT3Alarm()">
+                            <div>
+                                <span class="check-label">已填写了意向表单、定车合同或导入了工作坊数据。</span>
+                            </div>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" id="t3-c2" onchange="updateT3Alarm()">
+                            <div>
+                                <span class="check-label">已向同事、朋友公开宣称我已经决定购买此方案。</span>
+                            </div>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" id="t3-c3" onchange="updateT3Alarm()">
+                            <div>
+                                <span class="check-label">已花费了大量时间精力与其对接，大脑产生了沉没成本。</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top:20px;">
+                    <label class="form-label">2. 对方临时加码/涨价后的最新合同价格或条件 (The Final Price)：</label>
+                    <input type="text" id="t3-final-deal" placeholder="例如：计算错误要收手续费5000元，或者系统故障必须付原价" style="margin-bottom:15px;">
+
+                    <label class="form-label">自省：我大脑中帮这个新合同“找出来的借口”是什么（自我合理化理由）：</label>
+                    <textarea id="t3-reasons" placeholder="如：反正别家也麻烦、我已经大老远跑过来了、这个牌子确实也还行..." oninput="updateT3Alarm()"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">3. 时光倒流自省（The Heart-to-Stomach Test）：</label>
+                    <div class="form-desc" style="color:var(--red); font-weight:700;">如果能让时光倒流回第一天，在得知今天所有欺诈和加价真相的前提下，我还会选择做出最初的决定吗？</div>
+                    <select id="t3-time-machine" onchange="updateT3Alarm()">
+                        <option value="">请选择你的真实答案...</option>
+                        <option value="yes">是（我依然会选它，与加价无关）</option>
+                        <option value="no">否（如果第一天知道要这个价，我绝不会碰它）</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <div id="t3-alarm" class="diagnostic-box">
+                        请输入完整数据进行承诺一致性安全性诊断...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. 旁观者救援与责任精准指派 -->
+        <div id="tab-4" class="template-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Template 04</div>
+                    <div class="card-title">旁观者冷漠与多元无知“责任指向”一键指派器</div>
+                    <div class="card-desc">适用场景：在几十人甚至百人的 Slack 工作群里报警突发严重技术事故，或在人多口杂的公共场所突发人身危机。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">1. 当前发生的严重紧急危机情况 (The Crisis)：</label>
+                    <textarea id="t4-crisis" placeholder="例如：我呼吸困难、低血糖快晕倒了；或者生产环境数据库连接数暴涨系统全面瘫痪..." oninput="generateT4Command()"></textarea>
+                </div>
+
+                <div class="double-column">
+                    <div class="form-group">
+                        <label class="form-label">2. 选定现场一个具有极其醒目物理特征的人/群内特定成员 (The Bystander)：</label>
+                        <input type="text" id="t4-bystander" placeholder="例如：那个穿红色羽绒服的戴眼镜女士；或者群里的主开发 @张三" oninput="generateT4Command()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">3. 指派其立即执行的唯一、清晰的拯救性物理动作 (The Direct Action)：</label>
+                        <input type="text" id="t4-action" placeholder="例如：帮我拨打120并从我包里拿速效救心丸；或者立刻回滚十分钟前上线的代码包" oninput="generateT4Command()">
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top:20px;">
+                    <label class="form-label">4. 责任强指向“打破多元无知”大声呼喊口令 (The Disrupter Command)：</label>
+                    <div class="declaration-box">
+                        <div class="declaration-quote" id="t4-output" style="font-weight:700; color:var(--red); font-size:16px;">
+                            请在输入框填入内容...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. 喜好离线解离与陌生人置换 -->
+        <div id="tab-5" class="template-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Template 05</div>
+                    <div class="card-title">喜好反射解离与谈判对手“陌生人置换”冷核算</div>
+                    <div class="card-desc">适用场景：销售谈判对手极其风趣、面善，或频繁使用赞美与巴甫洛夫式条件反射，导致你因为喜欢她而忽略了合同的性价比缺陷。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">1. 迎合策略与喜好度自检 (Liking Auditor)</label>
+                    <div class="form-desc">对方销售/谈判代表的姓名或特征：</div>
+                    <input type="text" id="t5-sales" placeholder="例如：金牌中介小王、非常热情热心的顾问" style="margin-bottom:15px;">
+
+                    <div class="slider-item">
+                        <div class="slider-header">
+                            <span>我对该代表的个人好感与喜欢程度 (Liking Score)</span>
+                            <span class="slider-val"><span id="t5-like-txt">5</span> / 10 分</span>
+                        </div>
+                        <input type="range" id="t5-like" min="1" max="10" value="5" oninput="updateT5Reflect()">
+                    </div>
+
+                    <div class="slider-item">
+                        <div class="slider-header">
+                            <span>该代表刻意展示出的相似度/对我的赞美度 (Similarity/Praise)</span>
+                            <span class="slider-val"><span id="t5-similar-txt">5</span> / 10 分</span>
+                        </div>
+                        <input type="range" id="t5-similar" min="1" max="10" value="5" oninput="updateT5Reflect()">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">2. 谈判交易的核心产品与拟签约总价 (The Deal)：</label>
+                    <input type="text" id="t5-deal" placeholder="例如：总价 10 万元的商务系统订阅一年" style="margin-bottom:15px;">
+                </div>
+
+                <div class="form-group" style="margin-top: 20px;">
+                    <label class="form-label">3. 脑区去魅——“陌生人置换”离线核算 (Decoupling Simulator)</label>
+                    <div class="declaration-box" style="margin-top: 10px;">
+                        <div class="declaration-quote" id="t5-swapped-text" style="color:var(--text-main); font-size:14px; font-weight:500;">
+                            正在置换...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. 权威双轨拦截与诚实骗局过滤 -->
+        <div id="tab-6" class="template-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Template 06</div>
+                    <div class="card-title">权威服从盲点双轨拦截与“诚实套路”过滤审计</div>
+                    <div class="card-desc">适用场景：面对行业专家、穿白大褂的名医、或者带着高级名校头衔的人向你极力推荐特定消费行为。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">1. 权威主体的基本资料：</label>
+                    <input type="text" id="t6-name" placeholder="例如：养生讲座中的张教授、白大褂营养师" style="margin-bottom:15px;">
+                </div>
+
+                <div class="double-column">
+                    <div class="form-group">
+                        <label class="form-label">2. 双轨拦截自检过滤 (Two-Track Filter)：</label>
+                        <div class="form-desc" style="font-weight:700;">轨线一：这位权威真的是这方面的专业垂直专家吗？</div>
+                        <select id="t6-q1" onchange="updateT6Diagnosis()">
+                            <option value="">请选择...</option>
+                            <option value="yes">是（他在此垂直领域有极高的真实研究与实践经验）</option>
+                            <option value="no">否（他只是跨领域权威，或者是演员/假头衔）</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">. </label>
+                        <div class="form-desc" style="font-weight:700;">轨线二：我们在这件事上是否会让他获得隐性利益？</div>
+                        <select id="t6-q2" onchange="updateT6Diagnosis()">
+                            <option value="">请选择...</option>
+                            <option value="no">否（他只是中立的第三方，无任何销售利益分成）</option>
+                            <option value="yes">是（他推荐此产品会拿到直接的回扣、广告费或分成）</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top:20px;">
+                    <label class="form-label">3. 警惕：“诚实骗局”反向切入技术 (The Honesty Trap)</label>
+                    <div class="form-desc">对方是否先假意承认了自己产品的某个“无关痛痒的微小缺点”（如味道不好、物流慢），然后再顺理成章地推荐其高价主力产品？</div>
+                    <select id="t6-q3" onchange="updateT6Diagnosis()">
+                        <option value="">请选择...</option>
+                        <option value="no">没有（他通篇在夸大产品）</option>
+                        <option value="yes">有（他先说缺点以包装诚实，随后推出了他想卖的东西）</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <div id="t6-diagnosis" class="diagnostic-box">
+                        请输入完整数据进行权威信誉度判定...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. 稀缺冲动平息与冷静计时器 -->
+        <div id="tab-7" class="template-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Template 07</div>
+                    <div class="card-title">短缺与即时影响力“占有欲 vs 效用”冷却平息表</div>
+                    <div class="card-desc">适用场景：面临“仅剩最后 2 件”、“倒计时 1 分钟”或者有其他对手拼抢的情境，心跳加速，冲动抢购。</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">1. 面临抢夺/短缺的商品或机会名称 (The Scarce Item)：</label>
+                    <input type="text" id="t7-item" placeholder="例如：学区房一套、限量名表、限时打折的服务器主机" style="margin-bottom:15px;">
+
+                    <div class="slider-item">
+                        <div class="slider-header">
+                            <span>现场拼抢惨烈程度/竞争者数量 (Competitor Threat)</span>
+                            <span class="slider-val"><span id="t7-threat-txt">5</span> / 10 分</span>
+                        </div>
+                        <input type="range" id="t7-threat" min="1" max="10" value="5" oninput="updateT7Stabilizer()">
+                    </div>
+                </div>
+
+                <div class="form-group" style="border-top:1px solid var(--border); padding-top:20px;">
+                    <label class="form-label">2. 购买动机分拆审计（总和必须为 100%）：</label>
+                    <div class="form-desc">拖动滑块，诚实地拆分你在该冲动中的欲望占比：</div>
+
+                    <div class="slider-item">
+                        <div class="slider-header">
+                            <span>使用价值需求度 (因为我吃/穿/用的功能性需要)</span>
+                            <span class="slider-val"><span id="t7-utility-txt">50</span>%</span>
+                        </div>
+                        <input type="range" id="t7-utility" min="0" max="100" step="5" value="50" oninput="adjustSliders(1)">
+                    </div>
+
+                    <div class="slider-item">
+                        <div class="slider-header">
+                            <span>竞争占有欲需求度 (仅仅为了抢赢对手、防止权利丧失的满足感)</span>
+                            <span class="slider-val"><span id="t7-possession-txt">50</span>%</span>
+                        </div>
+                        <input type="range" id="t7-possession" min="0" max="100" step="5" value="50" oninput="adjustSliders(2)">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div id="t7-status" class="diagnostic-box">
+                        正在评估心理抗拒度...
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top:20px; text-align:center;">
+                    <button class="btn btn-primary" id="t7-cool-btn" onclick="startCoolDown()" style="margin: 0 auto; padding: 12px 30px;">
+                        启动 3 分钟情绪避险冷却计时器
+                    </button>
+                    <div id="t7-timer-txt" style="margin-top: 10px; font-weight:700; color:var(--red); font-size:15px; display:none;">
+                        冷却计时中：180 秒
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JAVASCRIPT FOR DYNAMIC INTERACTIVE BEHAVIOR -->
+    <script>
+        // Tab switching
+        function switchTab(tabNum) {
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            document.querySelectorAll('.template-section').forEach(section => section.classList.remove('active'));
+            
+            // Add active class
+            const items = document.querySelectorAll('.nav-item');
+            if (items[tabNum - 1]) {
+                items[tabNum - 1].classList.add('active');
+            }
+            const targetSection = document.getElementById(`tab-${tabNum}`);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+
+            // Update category nav buttons active state
+            let catNum = 1;
+            if (tabNum >= 1 && tabNum <= 2) catNum = 1;
+            else if (tabNum >= 3 && tabNum <= 4) catNum = 2;
+            else if (tabNum >= 5 && tabNum <= 6) catNum = 3;
+            else if (tabNum >= 7 && tabNum <= 7) catNum = 4;
+
+            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+            const activeCatBtn = document.getElementById(`cat-btn-${catNum}`);
+            if (activeCatBtn) {
+                activeCatBtn.classList.add('active');
+            }
+        }
+
+        // Category switching
+        function switchCategory(catNum) {
+            const catFirstTabs = {
+                1: 1,  // Category 1 -> Tab 1
+                2: 3,  // Category 2 -> Tab 3
+                3: 5,  // Category 3 -> Tab 5
+                4: 7   // Category 4 -> Tab 7
+            };
+            switchTab(catFirstTabs[catNum]);
+        }
+
+        // T1 Contrast pricing calculator
+        function updateContrast() {
+            const p1 = parseFloat(document.getElementById('t1-p1').value) || 0;
+            const p2 = parseFloat(document.getElementById('t1-p2').value) || 0;
+            const p3 = parseFloat(document.getElementById('t1-p3').value) || 0;
+            const output = document.getElementById('t1-analysis');
+            
+            if (p1 <= 0 || p2 <= 0) {
+                output.innerText = "请输入最高锚定价格与主推价格进行对比估值...";
+                return;
+            }
+
+            const diffPercent = ((p1 - p2) / p1) * 100;
+            let conclusion = "";
+            if (diffPercent >= 80) {
+                conclusion = `【极强价格诱敌】：主推价相比最高锚定价有极端的降幅 (节省了 ${diffPercent.toFixed(0)}%)。这极大地触发了人类对第二件刺激的“超常低价感知”。请注意：你已经被高额锚定价劫持了视线，请问独立评估这件商品是否真的值这个钱？`;
+            } else if (diffPercent >= 50) {
+                conclusion = `【中度对比偏倚】：降幅为 ${diffPercent.toFixed(0)}%。这是经典的商业套餐锚定，用几乎无法成交的最高价为第二价包装出‘高性价比’的视觉错觉。`;
+            } else {
+                conclusion = `【轻度对比偏倚】：降幅为 ${diffPercent.toFixed(0)}%。处于正常商业波动范围。`;
+            }
+            output.innerText = conclusion;
+            saveData();
+        }
+
+        // T2 Reciprocity debt calculator
+        function updateT2Debt() {
+            const cost = parseInt(document.getElementById('t2-cost').value);
+            const witness = parseInt(document.getElementById('t2-witness').value);
+            const favorDesc = document.getElementById('t2-favor-desc').value || '免费恩惠';
+            const request = document.getElementById('t2-request').value || '...';
+
+            document.getElementById('t2-cost-txt').innerText = cost;
+            document.getElementById('t2-witness-txt').innerText = witness;
+            document.getElementById('t2-out-favor').innerText = favorDesc;
+
+            const debtIndex = (cost * 3) + (witness * 2);
+            const statusBox = document.getElementById('t2-status');
+
+            if (debtIndex < 20) {
+                statusBox.className = "diagnostic-box safe";
+                statusBox.innerText = `状态安全：内心负债指数为 ${debtIndex} 分 (低)。常规社交互动，无心理防卫压力。`;
+            } else if (debtIndex >= 20 && debtIndex < 35) {
+                statusBox.className = "diagnostic-box";
+                statusBox.innerText = `⚠️ 警告 (中度负债)：负债指数为 ${debtIndex} 分。你心里正滋生微弱的报答倾向，决策已受影响！`;
+            } else {
+                statusBox.className = "diagnostic-box";
+                statusBox.innerText = `⚠️ 高危警告 (重度道德负债)：负债指数为 ${debtIndex} 分！对方在通过公开赠礼【${favorDesc}】对你施加强大的道德绑架，迫使你用大代价去回报【${request}】！`;
+            }
+            saveData();
+        }
+
+        // T3 Lowballing trap auditor
+        function updateT3Alarm() {
+            const initial = document.getElementById('t3-initial-deal').value || '最初的承诺';
+            const final = document.getElementById('t3-final-deal').value || '加价后的条件';
+            const reasons = document.getElementById('t3-reasons').value || '我脑中寻找的各种自我合理化说辞';
+            const timeMachine = document.getElementById('t3-time-machine').value;
+            const alarmBox = document.getElementById('t3-alarm');
+
+            let score = 0;
+            if (document.getElementById('t3-c1').checked) score += 30;
+            if (document.getElementById('t3-c2').checked) score += 30;
+            if (document.getElementById('t3-c3').checked) score += 40;
+
+            if (!timeMachine) {
+                alarmBox.className = "diagnostic-box";
+                alarmBox.innerText = "请输入完整数据并填写【时光倒流自省问题】以判定承诺套牢状态...";
+                return;
+            }
+
+            if (timeMachine === "no") {
+                alarmBox.className = "diagnostic-box";
+                alarmBox.innerHTML = `⚠️ <strong>【承诺一致性自洽死锁 - 警报触发】</strong>：如果时光倒流你不会选它，说明你现在的犹豫完全被先前承诺的沉没成本套牢了！你为它找出的理由【${reasons}】全部是假想支柱！<br><br><strong>防守纠偏话术：</strong>“因为你们单方面拿走了最初约定的条件【${initial}】，这属于欺诈性抛低球。我选择收回承诺并终止交易，再见。”`;
+            } else {
+                alarmBox.className = "diagnostic-box safe";
+                alarmBox.innerText = `诊断安全：决策权重不依赖于初始承诺。即使发生了加价【${final}】，也是基于客观刚需做出的决定。`;
+            }
+            saveData();
+        }
+
+        // T4 Emergency bystander command generator
+        function generateT4Command() {
+            const crisis = document.getElementById('t4-crisis').value || '危机情况';
+            const bystander = document.getElementById('t4-bystander').value || '[穿红羽绒服戴眼镜的女士/开发@某某]';
+            const action = document.getElementById('t4-action').value || '[清晰唯一的拯救性物理动作]';
+            const output = document.getElementById('t4-output');
+
+            output.innerHTML = `📢 <strong>打破多元无知救援令 (请在现场直接大声喊出)：</strong><br><br>“ 遭遇紧急状况：${crisis}！${bystander}，我现在需要你，且只有你，立刻去执行：${action}！其他人请保持频道静默/不要动！ ”`;
+            saveData();
+        }
+
+        // T5 Liking decoupling swap
+        function updateT5Reflect() {
+            const sales = document.getElementById('t5-sales').value || '该代表';
+            const like = parseInt(document.getElementById('t5-like').value);
+            const similar = parseInt(document.getElementById('t5-similar').value);
+            const deal = document.getElementById('t5-deal').value || '该交易';
+
+            document.getElementById('t5-like-txt').innerText = like;
+            document.getElementById('t5-similar-txt').innerText = similar;
+
+            const swappedBox = document.getElementById('t5-swapped-text');
+            let content = `🤖 <strong>【心智“陌生人置换”无感测试】</strong>：<br>请在脑中将和蔼可亲、对你百般赞美的【${sales}】强制抹去，并**置换为一个态度冷漠、言语生硬、让你心生厌烦的自动化终端/陌生机器人**。<br><br>`;
+            
+            if (like >= 7) {
+                content += `⚠️ <strong>好感偏倚高危</strong>：你对该代表的个人喜欢度高达 ${like} 分。请在这个生硬机器人的界面上阅读价格条款【${deal}】。如果这只是冷冰冰的机器，你还会爽快签合同吗？如果犹豫，说明你正在为“人情面子”付出额外的财务溢价，请果断终止决策！`;
+            } else {
+                content += `好感偏离安全：你受人际感情的干扰较小，可以理性对齐交易内容本身的价值。`;
+            }
+            swappedBox.innerHTML = content;
+            saveData();
+        }
+
+        // T6 Authority diagnostic filter
+        function updateT6Diagnosis() {
+            const name = document.getElementById('t6-name').value || '权威主体';
+            const q1 = document.getElementById('t6-q1').value;
+            const q2 = document.getElementById('t6-q2').value;
+            const q3 = document.getElementById('t6-q3').value;
+            const diagBox = document.getElementById('t6-diagnosis');
+
+            if (!q1 || !q2 || !q3) {
+                diagBox.className = "diagnostic-box";
+                diagBox.innerText = "请回答所有轨线拦截问题以评估权威防线...";
+                return;
+            }
+
+            let text = "";
+            let risk = false;
+
+            if (q1 === "no") {
+                text += `⚠️ <strong>【符号虚假欺诈】</strong>：【${name}】并非在此具体垂直领域的科学研究者，这只是其包装头衔、衣着带来的盲目权威符号压力。<br>`;
+                risk = true;
+            }
+            if (q2 === "yes") {
+                text += `⚠️ <strong>【商业利益冲突】</strong>：该权威在此次商业推广中存在直接经济分成，其言论完全带有趋利属性，不是中立第三方专家，立场与你天然对立。<br>`;
+                risk = true;
+            }
+            if (q3 === "yes") {
+                text += `⚠️ <strong>【警惕“假真诚”套路】</strong>：对方使用“先暴露小缺点以获取信任，随后推销高利润主打套餐”的经典顺从技术，切勿掉进其设计的‘真诚陷阱’！`;
+                risk = true;
+            }
+
+            if (risk) {
+                diagBox.className = "diagnostic-box";
+                diagBox.innerHTML = `⚠️ <strong>权威高风险警告：</strong><br><br>${text}<br><br><strong>防守动作：</strong>强制阻断大脑服从磁带，剥离其所有头衔制服，只核算产品核心物理参数。`;
+            } else {
+                diagBox.className = "diagnostic-box safe";
+                diagBox.innerText = `诊断安全：该权威具备该领域真实资历，且与销售无经济纠葛，可供理性参考。`;
+            }
+            saveData();
+        }
+
+        // T7 Scarcity slider and cooling timer
+        function adjustSliders(activeSlider) {
+            const s1 = document.getElementById('t7-utility');
+            const s2 = document.getElementById('t7-possession');
+            let v1 = parseInt(s1.value);
+            let v2 = parseInt(s2.value);
+
+            if (activeSlider === 1) {
+                v2 = 100 - v1;
+                s2.value = v2;
+            } else {
+                v1 = 100 - v2;
+                s1.value = v1;
+            }
+
+            document.getElementById('t7-utility-txt').innerText = v1;
+            document.getElementById('t7-possession-txt').innerText = v2;
+
+            updateT7Stabilizer();
+        }
+
+        function updateT7Stabilizer() {
+            const item = document.getElementById('t7-item').value || '该商品';
+            const threat = parseInt(document.getElementById('t7-threat').value);
+            const possession = parseInt(document.getElementById('t7-possession').value);
+            document.getElementById('t7-threat-txt').innerText = threat;
+
+            const statusBox = document.getElementById('t7-status');
+
+            if (possession > 50) {
+                statusBox.className = "diagnostic-box";
+                statusBox.innerHTML = `⚠️ <strong>警告 (抢夺性占有欲占主导)：</strong><br>你对【${item}】的抢购动力中，有高达 ${possession}% 是为了‘防止被别人抢走（丧失选择权）’。这完全是心理抗拒引起的假性稀缺！抢赢了只能获得占有的瞬间爽感，但该商品**绝对无法提升其一丁点使用体验**。`;
+            } else {
+                statusBox.className = "diagnostic-box safe";
+                statusBox.innerText = `状态安全：你更多是因为实际使用需要 (占 ${100-possession}%) 而做出的理性考量。`;
+            }
+            saveData();
+        }
+
+        let coolDownTimer = null;
+        function startCoolDown() {
+            const btn = document.getElementById('t7-cool-btn');
+            const txt = document.getElementById('t7-timer-txt');
+            btn.style.display = "none";
+            txt.style.display = "block";
+
+            let timeLeft = 180;
+            txt.innerText = `冷却机制运行中：为了阻断心理抗拒，系统已锁定核心按钮。请强行关闭屏幕或离开现场！倒计时 ${timeLeft} 秒...`;
+
+            coolDownTimer = setInterval(() => {
+                timeLeft--;
+                if (timeLeft <= 0) {
+                    clearInterval(coolDownTimer);
+                    txt.style.display = "none";
+                    btn.style.display = "block";
+                    btn.innerText = "冷却完毕，可重新决策";
+                } else {
+                    txt.innerText = `冷却机制运行中：为了阻断心理抗拒，系统已锁定核心按钮。请强行关闭屏幕或离开现场！倒计时 ${timeLeft} 秒...`;
+                }
+            }, 100); // Fast mock timer for dev feel
+        }
+
+        // =====================================================================
+        // LocalStorage auto-save and state restore
+        // =====================================================================
+        const storageKey = 'yilingli_worksheets_data';
+
+        function saveData() {
+            const data = {};
+            // Gather all text, number, select and textarea inputs
+            document.querySelectorAll('input[type="text"], input[type="number"], select, textarea').forEach(el => {
+                data[el.id] = el.value;
+            });
+            // Gather all checkboxes
+            document.querySelectorAll('input[type="checkbox"]').forEach(el => {
+                data[el.id] = el.checked;
+            });
+            // Gather range sliders
+            document.querySelectorAll('input[type="range"]').forEach(el => {
+                data[el.id] = el.value;
+            });
+            localStorage.setItem(storageKey, JSON.stringify(data));
+        }
+
+        function loadData() {
+            const raw = localStorage.getItem(storageKey);
+            if (!raw) return;
+            try {
+                const data = JSON.parse(raw);
+                // Restore text and numbers
+                document.querySelectorAll('input[type="text"], input[type="number"], select, textarea').forEach(el => {
+                    if (data[el.id] !== undefined) {
+                        el.value = data[el.id];
+                    }
+                });
+                // Restore checkboxes
+                document.querySelectorAll('input[type="checkbox"]').forEach(el => {
+                    if (data[el.id] !== undefined) {
+                        el.checked = data[el.id];
+                    }
+                });
+                // Restore range sliders
+                document.querySelectorAll('input[type="range"]').forEach(el => {
+                    if (data[el.id] !== undefined) {
+                        el.value = data[el.id];
+                    }
+                });
+                
+                // Recalculate
+                updateContrast();
+                updateT2Debt();
+                updateT3Alarm();
+                generateT4Command();
+                updateT5Reflect();
+                updateT6Diagnosis();
+                updateT7Stabilizer();
+            } catch (e) {
+                console.error("Failed to restore local draft: ", e);
+            }
+        }
+
+        function resetAll() {
+            if (confirm("确定要清空所有说服与反操纵模板中的输入内容并重置为默认值吗？")) {
+                localStorage.removeItem(storageKey);
+                // Reset textareas and inputs
+                document.querySelectorAll('input[type="text"], input[type="number"], select, textarea').forEach(el => {
+                    el.value = "";
+                });
+                // Reset checkboxes
+                document.querySelectorAll('input[type="checkbox"]').forEach(el => {
+                    el.checked = false;
+                });
+                // Reset range sliders
+                document.querySelectorAll('input[type="range"]').forEach(el => {
+                    el.value = "5"; // default middle value
+                });
+                // Recalculate
+                updateContrast();
+                updateT2Debt();
+                updateT3Alarm();
+                generateT4Command();
+                updateT5Reflect();
+                updateT6Diagnosis();
+                updateT7Stabilizer();
+            }
+        }
+
+        // Auto save inputs on change
+        document.body.addEventListener('input', saveData);
+        document.body.addEventListener('change', saveData);
+
+        // Run on load
+        window.onload = function() {
+            loadData();
+            // Pre-populate defaults
+            updateContrast();
+            updateT2Debt();
+            updateT3Alarm();
+            generateT4Command();
+            updateT5Reflect();
+            updateT6Diagnosis();
+            updateT7Stabilizer();
+        };
+    </script>
+</body>
+</html>
