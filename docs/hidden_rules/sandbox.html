@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>潜规则博弈与职场生存模拟器 | 开发者心智系统 developer-mind-OS</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f4f6f8;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --text-color: #2c3e50;
+            --primary: #5a738e;
+            --primary-hover: #485c72;
+            --accent: #d9a383;
+            --accent-light: #f5ece5;
+            --danger: #c87a7a;
+            --success: #7da08d;
+            --border-radius: 12px;
+            --box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.06);
+            --border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a1f26;
+            --card-bg: rgba(30, 37, 46, 0.85);
+            --text-color: #ecf0f1;
+            --primary: #8fa0b5;
+            --primary-hover: #a9b9cc;
+            --accent: #e5bfa7;
+            --accent-light: #2c2520;
+            --danger: #e09494;
+            --success: #97b5a4;
+            --box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            --border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        body {
+            font-family: 'Outfit', 'Noto Sans SC', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Tabs System */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(0,0,0,0.05);
+            color: var(--text-color);
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            box-shadow: var(--box-shadow);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .tab-btn.active {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Main Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: var(--border-radius);
+            border: var(--border);
+            padding: 2rem;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 2rem;
+        }
+
+        .card h2 {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            border-left: 4px solid var(--accent);
+            padding-left: 0.75rem;
+        }
+
+        /* Control UI */
+        .control-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .control-label {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .control-label span.desc {
+            color: #7f8c8d;
+            font-size: 0.85rem;
+            font-weight: 400;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            background: #ddd;
+            border-radius: 3px;
+            outline: none;
+            -webkit-appearance: none;
+            accent-color: var(--primary);
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+
+        /* Visualization Box */
+        .viz-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+            border: 1px dashed rgba(0,0,0,0.1);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            background: rgba(0,0,0,0.02);
+            position: relative;
+        }
+
+        /* Payoff Grid Table */
+        .payoff-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .payoff-table th, .payoff-table td {
+            border: 1px solid rgba(0,0,0,0.08);
+            padding: 0.75rem;
+            text-align: center;
+        }
+
+        .payoff-table th {
+            background-color: rgba(0,0,0,0.03);
+            font-weight: 600;
+        }
+
+        .payoff-table td.highlight {
+            background-color: var(--accent-light);
+            font-weight: 700;
+            border: 2px solid var(--accent);
+        }
+
+        .payoff-value {
+            display: block;
+            font-size: 0.75rem;
+            color: #7f8c8d;
+        }
+
+        /* Alerts & Presets */
+        .presets-bar {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .preset-btn {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .preset-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .alert-box {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .alert-box.success {
+            background-color: var(--accent-light);
+            border-left: 4px solid var(--success);
+            color: var(--success);
+        }
+
+        .alert-box.danger {
+            background-color: #fbeeed;
+            border-left: 4px solid var(--danger);
+            color: var(--danger);
+        }
+
+        /* SVG Flow Chart */
+        .svg-chart {
+            width: 100%;
+            height: 250px;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <button class="theme-toggle" id="themeBtn" title="切换主题">🌓</button>
+        <h1>🏛️ 潜规则博弈与职场生存模拟器</h1>
+        <p>通过“第一性原理”数学模型解构中国历史潜规则与现代公司博弈体系。用硬核逻辑，速通人情世故。</p>
+    </header>
+
+    <!-- Tabs Nav -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('tab1')">1. 合法伤害权勒索模型</button>
+        <button class="tab-btn" onclick="switchTab('tab2')">2. 官场规礼分赃网络</button>
+        <button class="tab-btn" onclick="switchTab('tab3')">3. 官场清官逆淘汰模型</button>
+    </div>
+
+    <!-- TAB 1: 合法伤害权 -->
+    <div id="tab1" class="tab-content active">
+        <div class="grid">
+            <!-- Left Control Panel -->
+            <div class="card">
+                <h2>博弈变量调优</h2>
+                
+                <div class="presets-bar">
+                    <button class="preset-btn" onclick="setPresetTab1('normal')">清明盛世 (高效自律团队)</button>
+                    <button class="preset-btn" onclick="setPresetTab1('corruption')">末期勒索 (过度打压加班)</button>
+                    <button class="preset-btn" onclick="setPresetTab1('rebellion')">官逼民反 (系统性崩溃)</button>
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>勒索强度 E <span class="desc">[衙役索贿 / KPI卡扣额外加班]</span></span>
+                        <span id="val_E">30</span>
+                    </div>
+                    <input type="range" id="slider_E" min="5" max="100" value="30" oninput="updateTab1()">
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>告状成本 C_p <span class="desc">[农民越级申诉 / 一线找HR投诉成本]</span></span>
+                        <span id="val_Cp">50</span>
+                    </div>
+                    <input type="range" id="slider_Cp" min="5" max="100" value="50" oninput="updateTab1()">
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>报复烈度 R <span class="desc">[衙役诬陷 / 中层针对边缘化阻碍晋升]</span></span>
+                        <span id="val_R">40</span>
+                    </div>
+                    <input type="range" id="slider_R" min="0" max="100" value="40" oninput="updateTab1()">
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>上级裁决概率 P_win <span class="desc">[知县秉公断案 / VP介入惩处贪腐概率]</span></span>
+                        <span id="val_Pwin">50%</span>
+                    </div>
+                    <input type="range" id="slider_Pwin" min="0" max="100" value="50" oninput="updateTab1()">
+                </div>
+            </div>
+
+            <!-- Right Visualization Panel -->
+            <div class="card">
+                <h2>博弈均衡演练沙盒</h2>
+                <div class="viz-box">
+                    <svg class="svg-chart" id="svg_tab1">
+                        <!-- Peasant node -->
+                        <circle cx="100" cy="120" r="30" fill="#7da08d" opacity="0.8"/>
+                        <text x="100" y="125" text-anchor="middle" fill="white" font-weight="700" font-size="12">农民 (IC)</text>
+                        
+                        <!-- Runner node -->
+                        <circle cx="350" cy="120" r="30" fill="#c87a7a" opacity="0.8"/>
+                        <text x="350" y="125" text-anchor="middle" fill="white" font-weight="700" font-size="12">衙役 (中层)</text>
+
+                        <!-- Link Line -->
+                        <path id="flow_path1" d="M 130 120 L 320 120" stroke="#5a738e" stroke-width="4" marker-end="url(#arrow)" fill="none"/>
+                        
+                        <!-- Labels -->
+                        <text x="225" y="100" id="flow_desc1" text-anchor="middle" font-size="12" font-weight="600">正常协作</text>
+                    </svg>
+
+                    <div id="verdict_box" class="alert-box success">
+                        加载中...
+                    </div>
+                </div>
+
+                <!-- Payoff Matrix Grid -->
+                <table class="payoff-table">
+                    <thead>
+                        <tr>
+                            <th rowspan="2" colspan="2">支付矩阵 (农民 \ 衙役)</th>
+                            <th colspan="2">衙役 (中层管理/审批人)</th>
+                        </tr>
+                        <tr>
+                            <th>不勒索 (正常协作)</th>
+                            <th>勒索 (强扣KPI/卡审批)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th rowspan="2" style="writing-mode: vertical-lr; text-align: center;">农民<br>(一线开发)</th>
+                            <th>顺从 (承受)</th>
+                            <td id="m_00">0, 0<span class="payoff-value">协作共赢</span></td>
+                            <td id="m_01" class="highlight">-30, 30<span class="payoff-value">农民出钱, 衙役得利</span></td>
+                        </tr>
+                        <tr>
+                            <th>反抗 (申诉)</th>
+                            <td id="m_10">0, 0<span class="payoff-value">无效防御</span></td>
+                            <td id="m_11">-70, -10<span class="payoff-value">两败俱伤</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 2: 规礼网络 -->
+    <div id="tab2" class="tab-content">
+        <div class="grid">
+            <div class="card">
+                <h2>分赃与存活链条</h2>
+                
+                <div class="presets-bar">
+                    <button class="preset-btn" onclick="setPresetTab2('stable')">系统稳定 (分配合理)</button>
+                    <button class="preset-btn" onclick="setPresetTab2('collapse')">资源耗尽 (下层崩塌)</button>
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>基层创造资源 S <span class="desc">[农民劳作 / 一线实际项目输出总值]</span></span>
+                        <span id="val_S">100</span>
+                    </div>
+                    <input type="range" id="slider_S" min="20" max="200" value="100" oninput="updateTab2()">
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>中层截留比例 K_run <span class="desc">[衙役抽成百分比 / 中层揽功并扣发绩效比例]</span></span>
+                        <span id="val_Krun">40%</span>
+                    </div>
+                    <input type="range" id="slider_Krun" min="10" max="90" value="40" oninput="updateTab2()">
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>上贡比例 K_mag <span class="desc">[衙役给知县送规礼比例 / 中层向上输送利益比例]</span></span>
+                        <span id="val_Kmag">50%</span>
+                    </div>
+                    <input type="range" id="slider_Kmag" min="10" max="90" value="50" oninput="updateTab2()">
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>利益输送流向拓扑</h2>
+                <div class="viz-box">
+                    <svg class="svg-chart" id="svg_tab2">
+                        <!-- Peasant -->
+                        <circle cx="80" cy="180" r="25" fill="#7da08d" opacity="0.8"/>
+                        <text x="80" y="184" text-anchor="middle" fill="white" font-size="10" font-weight="700">农民(开发)</text>
+                        
+                        <!-- Runner -->
+                        <circle cx="220" cy="120" r="25" fill="#c87a7a" opacity="0.8"/>
+                        <text x="220" y="124" text-anchor="middle" fill="white" font-size="10" font-weight="700">衙役(中层)</text>
+
+                        <!-- Magistrate -->
+                        <circle cx="360" cy="60" r="25" fill="#5a738e" opacity="0.8"/>
+                        <text x="360" y="64" text-anchor="middle" fill="white" font-size="10" font-weight="700">知县(VP)</text>
+
+                        <!-- Flows -->
+                        <path id="path_flow1" d="M 98 165 L 202 135" stroke="#7da08d" stroke-width="4" fill="none"/>
+                        <path id="path_flow2" d="M 238 105 L 342 75" stroke="#c87a7a" stroke-width="4" fill="none"/>
+
+                        <text x="145" y="140" id="flow_val1" text-anchor="middle" font-size="11" font-weight="600">50</text>
+                        <text x="290" y="80" id="flow_val2" text-anchor="middle" font-size="11" font-weight="600">25</text>
+                    </svg>
+                    
+                    <div id="verdict_box2" class="alert-box success">
+                        系统运作正常
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 3: 逆淘汰 -->
+    <div id="tab3" class="tab-content">
+        <div class="grid">
+            <div class="card">
+                <h2>系统选择压力设置</h2>
+
+                <div class="presets-bar">
+                    <button class="preset-btn" onclick="setPresetTab3('normal')">清明淘汰 (重技术重产出)</button>
+                    <button class="preset-btn" onclick="setPresetTab3('inverse')">官场逆淘汰 (拉帮结派横行)</button>
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>上级对规礼的偏好程度 <span class="desc">[领导对下属站队/吹捧/利益输送的偏爱]</span></span>
+                        <span id="val_bribe_pref">30%</span>
+                    </div>
+                    <input type="range" id="slider_bribe_pref" min="0" max="100" value="30" oninput="updateTab3()">
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>下属不合流时的拆台率 <span class="desc">[清官不送礼时，同僚和属下不配合比例]</span></span>
+                        <span id="val_sabotage">20%</span>
+                    </div>
+                    <input type="range" id="slider_sabotage" min="0" max="100" value="20" oninput="updateTab3()">
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>生存率与系统演化分析</h2>
+                <div class="viz-box">
+                    <div id="survival_chart" style="width: 100%; height: 180px; display: flex; align-items: flex-end; gap: 2rem; justify-content: center; padding-bottom: 20px;">
+                        <div style="display: flex; flex-direction: column; align-items: center;">
+                            <div id="bar_clean" style="width: 60px; height: 120px; background-color: var(--success); border-radius: 4px; transition: height 0.3s;"></div>
+                            <span style="font-size: 0.85rem; font-weight: 600; margin-top: 5px;">清官 (坚持原则)</span>
+                            <span id="surv_clean" style="font-size: 0.95rem; font-weight: 700; color: var(--success);">80%</span>
+                        </div>
+                        <div style="display: flex; flex-direction: column; align-items: center;">
+                            <div id="bar_corrupt" style="width: 60px; height: 30px; background-color: var(--danger); border-radius: 4px; transition: height 0.3s;"></div>
+                            <span style="font-size: 0.85rem; font-weight: 600; margin-top: 5px;">贪官 (利益站队)</span>
+                            <span id="surv_corrupt" style="font-size: 0.95rem; font-weight: 700; color: var(--danger);">20%</span>
+                        </div>
+                    </div>
+                    
+                    <div id="verdict_box3" class="alert-box success">
+                        评估中...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Tab switching
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        
+        document.getElementById(tabId).classList.add('active');
+        event.target.classList.add('active');
+        
+        // Init logic for switched tab
+        if(tabId === 'tab1') updateTab1();
+        if(tabId === 'tab2') updateTab2();
+        if(tabId === 'tab3') updateTab3();
+    }
+
+    // TAB 1 logic
+    function setPresetTab1(type) {
+        if (type === 'normal') {
+            document.getElementById('slider_E').value = 10;
+            document.getElementById('slider_Cp').value = 15;
+            document.getElementById('slider_R').value = 10;
+            document.getElementById('slider_Pwin').value = 85;
+        } else if (type === 'corruption') {
+            document.getElementById('slider_E').value = 40;
+            document.getElementById('slider_Cp').value = 60;
+            document.getElementById('slider_R').value = 50;
+            document.getElementById('slider_Pwin').value = 30;
+        } else if (type === 'rebellion') {
+            document.getElementById('slider_E').value = 85;
+            document.getElementById('slider_Cp').value = 90;
+            document.getElementById('slider_R').value = 80;
+            document.getElementById('slider_Pwin').value = 10;
+        }
+        updateTab1();
+    }
+
+    function updateTab1() {
+        const E = parseInt(document.getElementById('slider_E').value);
+        const Cp = parseInt(document.getElementById('slider_Cp').value);
+        const R = parseInt(document.getElementById('slider_R').value);
+        const Pwin = parseInt(document.getElementById('slider_Pwin').value) / 100.0;
+
+        document.getElementById('val_E').innerText = E;
+        document.getElementById('val_Cp').innerText = Cp;
+        document.getElementById('val_R').innerText = R;
+        document.getElementById('val_Pwin').innerText = Math.round(Pwin * 100) + '%';
+
+        // Calculate Payoffs
+        // Prisoner/Farmer payoff:
+        // Submit: -E
+        // Resist: -Cp - (1 - Pwin) * R
+        const payoff_submit = -E;
+        const payoff_resist = -Cp - Math.round((1 - Pwin) * R);
+
+        // Runner/Jailer payoff:
+        // No Extort: 0
+        // Extort: E - Pwin * Fine (assume Fine is 100)
+        const Fine = 100;
+        const payoff_extort = E - Math.round(Pwin * Fine);
+
+        // Update Matrix labels
+        document.getElementById('m_00').innerHTML = `0, 0<span class="payoff-value">正常协作</span>`;
+        document.getElementById('m_01').innerHTML = `${payoff_submit}, ${E}<span class="payoff-value">顺从潜规则</span>`;
+        document.getElementById('m_10').innerHTML = `0, 0<span class="payoff-value">无效告状</span>`;
+        document.getElementById('m_11').innerHTML = `${payoff_resist}, ${payoff_extort}<span class="payoff-value">博弈清算</span>`;
+
+        // Clear highlights
+        document.querySelectorAll('.payoff-table td').forEach(td => td.classList.remove('highlight'));
+
+        const verdict = document.getElementById('verdict_box');
+        const flowDesc = document.getElementById('flow_desc1');
+        const flowPath = document.getElementById('flow_path1');
+
+        // Determine Nash Equilibrium / Outcome
+        if (payoff_extort <= 0) {
+            // Runner chooses Not Extort
+            document.getElementById('m_00').classList.add('highlight');
+            verdict.className = "alert-box success";
+            verdict.innerText = "系统达成健康均衡：衙役选择“不勒索”(正常管理)，农民安心劳作。知县裁决概率高，潜规则被法制机制压制。";
+            flowDesc.innerText = "合理协作";
+            flowPath.setAttribute('stroke', 'var(--success)');
+        } else {
+            // Runner chooses Extort
+            if (payoff_submit >= payoff_resist) {
+                // Farmer chooses Submit
+                document.getElementById('m_01').classList.add('highlight');
+                verdict.className = "alert-box success";
+                verdict.style.backgroundColor = "var(--accent-light)";
+                verdict.style.color = "var(--accent)";
+                verdict.innerText = "系统达成灰色均衡：衙役选择“勒索”，农民被迫“顺从承受”。由于越级申诉/HR投诉成本太高，农民算账后发现‘破财免灾’是最优解。";
+                flowDesc.innerText = "剥削流向";
+                flowPath.setAttribute('stroke', 'var(--accent)');
+            } else {
+                // Farmer chooses Resist
+                document.getElementById('m_11').classList.add('highlight');
+                verdict.className = "alert-box danger";
+                verdict.innerText = "系统崩溃边缘 (官逼民反)：衙役疯狂“勒索”，农民选择“反抗/离职”。农民的承受极限已破，宁可砸碎系统也要搏死反击。";
+                flowDesc.innerText = "剧烈对抗";
+                flowPath.setAttribute('stroke', 'var(--danger)');
+            }
+        }
+    }
+
+    // TAB 2 logic
+    function setPresetTab2(type) {
+        if(type === 'stable') {
+            document.getElementById('slider_S').value = 120;
+            document.getElementById('slider_Krun').value = 30;
+            document.getElementById('slider_Kmag').value = 40;
+        } else {
+            document.getElementById('slider_S').value = 60;
+            document.getElementById('slider_Krun').value = 75;
+            document.getElementById('slider_Kmag').value = 80;
+        }
+        updateTab2();
+    }
+
+    function updateTab2() {
+        const S = parseInt(document.getElementById('slider_S').value);
+        const Krun = parseInt(document.getElementById('slider_Krun').value) / 100.0;
+        const Kmag = parseInt(document.getElementById('slider_Kmag').value) / 100.0;
+
+        document.getElementById('val_S').innerText = S;
+        document.getElementById('val_Krun').innerText = Math.round(Krun * 100) + '%';
+        document.getElementById('val_Kmag').innerText = Math.round(Kmag * 100) + '%';
+
+        // Calculate Tribute Flows
+        const extortion_total = Math.round(S * Krun);
+        const tribute_to_mag = Math.round(extortion_total * Kmag);
+        const runner_keep = extortion_total - tribute_to_mag;
+        const peasant_remain = S - extortion_total;
+
+        document.getElementById('flow_val1').innerText = extortion_total;
+        document.getElementById('flow_val2').innerText = tribute_to_mag;
+
+        const verdict = document.getElementById('verdict_box2');
+        const path1 = document.getElementById('path_flow1');
+        const path2 = document.getElementById('path_flow2');
+
+        // Path thickness based on value
+        path1.setAttribute('stroke-width', Math.max(1, extortion_total / 8));
+        path2.setAttribute('stroke-width', Math.max(1, tribute_to_mag / 8));
+
+        if (peasant_remain < 30) {
+            // Peasants cannot survive
+            verdict.className = "alert-box danger";
+            verdict.innerText = `系统彻底崩塌：农民截留资源(${peasant_remain})低于生存阈值30！上层截留过狠，基层开发人员面临大规模离职或系统瘫痪。`;
+            path1.setAttribute('stroke', 'var(--danger)');
+            path2.setAttribute('stroke', 'var(--danger)');
+        } else if (tribute_to_mag < 15) {
+            // Higher ups get too little, will replace runner
+            verdict.className = "alert-box danger";
+            verdict.style.backgroundColor = "#fff9e6";
+            verdict.style.color = "#d9a300";
+            verdict.innerText = `中层下马危机：上贡资源给知县(${tribute_to_mag})低于其满意度阈值15！中层管理者无法满足部门VP的业绩索求，即将被免职撤换。`;
+            path1.setAttribute('stroke', 'var(--success)');
+            path2.setAttribute('stroke', 'var(--accent)');
+        } else {
+            verdict.className = "alert-box success";
+            verdict.innerText = `系统稳定剥削：知县收益(${tribute_to_mag})，衙役收益(${runner_keep})，农民结余(${peasant_remain})。各层各司其职，处于剥削链条的黄金分配点。`;
+            path1.setAttribute('stroke', 'var(--success)');
+            path2.setAttribute('stroke', 'var(--primary)');
+        }
+    }
+
+    // TAB 3 logic
+    function setPresetTab3(type) {
+        if(type === 'normal') {
+            document.getElementById('slider_bribe_pref').value = 10;
+            document.getElementById('slider_sabotage').value = 5;
+        } else {
+            document.getElementById('slider_bribe_pref').value = 80;
+            document.getElementById('slider_sabotage').value = 75;
+        }
+        updateTab3();
+    }
+
+    function updateTab3() {
+        const bribe_pref = parseInt(document.getElementById('slider_bribe_pref').value) / 100.0;
+        const sabotage = parseInt(document.getElementById('slider_sabotage').value) / 100.0;
+
+        document.getElementById('val_bribe_pref').innerText = Math.round(bribe_pref * 100) + '%';
+        document.getElementById('val_sabotage').innerText = Math.round(sabotage * 100) + '%';
+
+        // Calculate survival rates
+        // Corrupt official base survival is higher if bribe_pref is high
+        const corrupt_survival = Math.round(20 + 80 * bribe_pref);
+        // Clean official survival drops when bribe_pref is high and sabotage is high
+        const clean_survival = Math.round(Math.max(5, 90 - 70 * bribe_pref - 20 * sabotage));
+
+        document.getElementById('bar_clean').style.height = (clean_survival * 1.5) + 'px';
+        document.getElementById('bar_corrupt').style.height = (corrupt_survival * 1.5) + 'px';
+
+        document.getElementById('surv_clean').innerText = clean_survival + '%';
+        document.getElementById('surv_corrupt').innerText = corrupt_survival + '%';
+
+        const verdict = document.getElementById('verdict_box3');
+        if (clean_survival >= corrupt_survival) {
+            verdict.className = "alert-box success";
+            verdict.innerText = "清明竞争体制：系统处于技术/能力导向。贪官生存率低，清官得到有效保护，系统具备长期成长活力。";
+        } else {
+            verdict.className = "alert-box danger";
+            verdict.innerText = "官场逆淘汰形成！劣币驱逐良币：不合流送礼的清官生存率低。清正廉洁者被迫离开，拉帮结派者彻底控制了系统主导权。";
+        }
+    }
+
+    // Light/Dark Theme Toggle
+    document.getElementById('themeBtn').addEventListener('click', () => {
+        const body = document.body;
+        if (body.getAttribute('data-theme') === 'dark') {
+            body.removeAttribute('data-theme');
+        } else {
+            body.setAttribute('data-theme', 'dark');
+        }
+    });
+
+    // Init onload
+    updateTab1();
+</script>
+</body>
+</html>
