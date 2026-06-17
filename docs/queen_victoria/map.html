@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>维多利亚女王传 知识图谱速查 | 开发者心智系统 developer-mind-OS</title>
+    <meta name="description" content="《维多利亚女王传》权力制衡与代理人治理 OS 知识图谱，涵盖白金汉宫行政中台、内阁首相赛马平衡、孀居悲情符号防御与欧洲地缘婚姻冷启动网。">
+    <meta name="keywords" content="维多利亚女王传, 权力制衡, 代理人治理, 行政中台, 赛马制衡, 软实力防御, 知识图谱, 商业同构">
+    <meta name="author" content="Antigravity">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "《维多利亚女王传》权力制衡与代理人治理 OS 知识图谱",
+      "description": "基于《维多利亚女王传》组织权力制衡与代理人治理 OS 框架，提供白金汉宫中台整顿、首相赛马、孀居悲情防御和联姻多备份冷启动模型。",
+      "inLanguage": "zh-CN",
+      "author": {
+        "@type": "Organization",
+        "name": "Antigravity Team"
+      }
+    }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0d0e12;
+            --card-bg: #14161e;
+            --text-color: #e2e8f0;
+            --accent-color: #4E6E8F;
+            --border-color: #222533;
+            --theme-slate: #4E6E8F;
+            --theme-green: #5D8061;
+            --theme-red: #A76565;
+            --theme-grey: #7A7A7A;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Outfit', 'Noto Sans SC', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 3rem 2rem;
+            line-height: 1.6;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #a5b4fc, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            color: #94a3b8;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        .btn {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.25s ease;
+        }
+        .btn:hover, .btn.active {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto 3rem auto;
+        }
+        .search-input {
+            width: 100%;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.25s ease;
+        }
+        .search-input:focus {
+            border-color: var(--accent-color);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: var(--card-color);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            border-color: var(--card-color);
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .card-id {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.08);
+            color: var(--card-color);
+        }
+        .card-module {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+        }
+        .card-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: white;
+        }
+        .card-preview {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            backdrop-filter: blur(8px);
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            max-width: 650px;
+            width: 100%;
+            border-radius: 16px;
+            padding: 2.5rem;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            animation: modalScale 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes modalScale {
+            from { transform: scale(0.9) translateY(20px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        .close-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            color: #64748b;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .close-btn:hover {
+            color: white;
+        }
+        .modal-id {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.3rem 0.7rem;
+            border-radius: 6px;
+            background-color: rgba(255, 255, 255, 0.08);
+            margin-bottom: 1rem;
+        }
+        .modal-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--modal-accent);
+            padding-left: 0.8rem;
+        }
+        .modal-body {
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+        .modal-body p {
+            margin-bottom: 1rem;
+        }
+        .modal-body li {
+            margin-left: 1.2rem;
+            margin-bottom: 0.5rem;
+            list-style-type: decimal;
+        }
+        .modal-body strong {
+            color: white;
+        }
+        .modal-body code {
+            font-family: monospace;
+            background-color: rgba(255,255,255,0.06);
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>《维多利亚女王传》权力制衡与代理人治理 OS 知识图谱</h1>
+    <p class="subtitle">通过 COO 行政中台、首相赛马、孀居悲情防御和地缘婚姻冷启动，透视大英帝国的系统级权力控制机制</p>
+</header>
+
+<div class="search-container">
+    <input type="text" id="searchInput" class="search-input" placeholder="输入关键词搜索卡片（如：中台、赛马、孀居）..." oninput="filterCards()">
+</div>
+
+<div class="controls">
+    <button class="btn active" onclick="filterModule('all', this)">全部</button>
+    <button class="btn" onclick="filterModule('M1', this)" style="border-left-color: var(--theme-slate)">COO中台与内廷整置</button>
+    <button class="btn" onclick="filterModule('M2', this)" style="border-left-color: var(--theme-green)">内阁赛马与官僚平衡</button>
+    <button class="btn" onclick="filterModule('M3', this)" style="border-left-color: var(--theme-red)">孀居隐退与悲情防御</button>
+    <button class="btn" onclick="filterModule('M4', this)" style="border-left-color: var(--theme-grey)">冷启动与地缘婚姻网</button>
+</div>
+
+<div class="grid" id="cardsGrid"></div>
+
+<!-- Modal Container -->
+<div class="modal" id="cardModal" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <span class="close-btn" onclick="hideModal()">&times;</span>
+        <div id="modalId" class="modal-id"></div>
+        <div id="modalTitle" class="modal-title"></div>
+        <div id="modalBody" class="modal-body"></div>
+    </div>
+</div>
+
+<script>
+    const cards = [{"id": "EP1", "module": "M1", "moduleName": "COO中台与内廷整置", "color": "#4E6E8F", "title": "代理隔离与中台路由法则", "body": "<li><strong>定义</strong>：所有者（所有权人/大股东）不应直接插手琐碎的日常运营，必须建立强力的行政中台，用专业路由器隔离外界噪声，以防决策层陷入系统性内耗。</li><li><strong>机制</strong>：架设专业的 COO 运营系统，作为唯一的上下行“信息中枢”。它过滤低频噪音与执行摩擦，仅向决策人呈现经过专业摘要、只需签字授权的关键决策。</li><li><strong>历史回源</strong>：[Page 1176] 艾伯特亲王作为王室 COO，整顿内廷多头推诿的乱象。所有内阁公文先由亲王审阅、做摘要并分类摆放，女王只需听取说明并最终签字。</li>"}, {"id": "EP2", "module": "M2", "moduleName": "内阁赛马与官僚平衡", "color": "#5D8061", "title": "动态赛马制衡法则", "body": "<li><strong>定义</strong>：防止单一代理人（职业经理人/CEO）因独揽大权而对总部形成信息垄断和要挟，必须利用平行在野势力进行多线制衡。</li><li><strong>机制</strong>：在同一业务生态内设置两个或多个竞争线，以公开竞争规则激活效率，通过在野审计与多线汇报打破代理人的“捷报互保”。</li><li><strong>历史回源</strong>：[Page 1186] 女王与墨尔本、帕默斯顿、皮尔、迪斯雷利等首相周旋，利用在野党对执政首相进行政治狙击，确保皇权无法被任何单一强人架空。</li>"}, {"id": "EP3", "module": "M3", "moduleName": "孀居隐退与悲情防御", "color": "#A76565", "title": "软实力道德溢价法则", "body": "<li><strong>定义</strong>：当组织的硬实力（市场红利、资金优势、物理主权）处于低谷或消退时，组织的存续取决于价值观输出和无可争议的品牌道德共识。</li><li><strong>机制</strong>：退守心智防线，将硬对抗转为软防御。通过自黑式的透明叙事、生活方式公开及价值观宣示，建立无可被法律和竞争者剥夺的心智护城河。</li><li><strong>历史回源</strong>：[Page 1274] 晚年王室失去对立法的实质干预权，女王退入巴尔莫勒尔，通过出版《我们在高地的生活日记》等畅销书展示简朴家庭道德，成功唤起大英帝国的全民心智共鸣。</li>"}, {"id": "EP4", "module": "M4", "moduleName": "冷启动与地缘婚姻网", "color": "#7A7A7A", "title": "对赌式冷启动法则", "body": "<li><strong>定义</strong>：在核心资产面临停摆的极端冷启动或继承危机下，必须通过分布式、多节点并行的联姻对赌，以较小代价快速建立备份网。</li><li><strong>机制</strong>：摒弃集中单点下注，在可能发生单点崩溃的节点设置多条外部资源联姻线。以概率与外部利益对赌为手段，确保系统的最终存续。</li><li><strong>历史回源</strong>：[Page 1108] 1817年继承人夏洛特逝世，英王室面临断代危机。多位已步入中年的王子紧急解除个人生活，多轨展开外部联姻对赌，最终肯特公爵成功诞下继承人。</li><p>---</p>"}, {"id": "ACM1", "module": "M3", "moduleName": "孀居隐退与悲情防御", "color": "#A76565", "title": "悲情符号的不对称否决", "body": "<li><strong>核心冲突</strong>：当控股大股东或创始人持股比例被稀释、失去多数表决权时，习惯于通过法理漏洞跟大资本硬碰硬，结果往往被强行驱逐。</li><li><strong>反常识主张</strong>：硬实力与股权越弱，越要善于利用“脆弱、悲情与创始人精神”等象征符号。以自身退隐和“系统熔断自杀”要挟，建立极强的不对称否决权。</li><li><strong>同构动作</strong>：在投资机构逼宫创始人交出控制权时，创始人不作法理对抗，而是向全体核心研发与客户发表“价值观告别信”，表明“失去我将导致品牌精神崩塌，项目将彻底出清”，以此迫使投资方让步。</li>"}, {"id": "ACM2", "module": "M4", "moduleName": "冷启动与地缘婚姻网", "color": "#7A7A7A", "title": "价值观存续退却", "body": "<li><strong>核心冲突</strong>：当企业主力产品利润干瘪、面临巨头低价围剿时，仍坚持以本伤人的价格战，最终耗尽现金流倒闭。</li><li><strong>反常识主张</strong>：放弃在物理红海（价格战、渠道战）中的实权纠缠，主动向后退却，转型为“精神象征、独立合规节点或第三方认证”，获取心智高溢价。</li><li><strong>同构动作</strong>：从自营销售的红海拼杀退场，将品牌开源并转型为“行业绿色合规审计与技术安全认证中心”，放弃直销分成而收取丰厚的品牌授权与标准年费。</li><p>---</p>"}, {"id": "M1", "module": "M1", "moduleName": "COO中台与内廷整置", "color": "#4E6E8F", "title": "职能重叠处的权责锁定", "body": "<li><strong>场景</strong>：跨部门联合公摊职能摩擦不断，流程繁琐（擦窗室内归宫务、室外归林务，导致互相推诿）。</li><li><strong>原理</strong>：用行政硬制度强行合并同类项，剥离多头参与的灰色空间，将公摊事务归口至单一中台，划定绝对的地理或职权边界。</li><li><strong>动作</strong>：白金汉宫重组，合并内务、厨部及侍从管理，全部收归艾伯特亲王主持的行政中台，责任到人。</li>"}, {"id": "M2", "module": "M1", "moduleName": "COO中台与内廷整置", "color": "#4E6E8F", "title": "信息中枢路由器过滤机制", "body": "<li><strong>场景</strong>：大股东或高级决策人每日陷入垃圾邮件、汇报纠纷与客户抱怨中，无法聚焦公司大盘。</li><li><strong>原理</strong>：决策人与日常运营之间必须设置物理过滤器。凡是呈报公文，必须先由中枢路由器进行精简、摘要并匹配决策分支，剥离低频噪声。</li><li><strong>动作</strong>：王夫担任“行政路由器”，先行过目所有内阁及部门往来信函，用红墨水加批注并整备好，女王只需进行最终决策“画圈签字”。</li>"}, {"id": "M3", "module": "M1", "moduleName": "COO中台与内廷整置", "color": "#4E6E8F", "title": "冗余代理人清理与出清", "body": "<li><strong>场景</strong>：组织臃肿，历史遗留老臣在内部结成密网，新政无法落地，且基础行政开支居高不下。</li><li><strong>原理</strong>：以客观效率审计和安全隐患为由，开展常态化低效岗位出清，以标准化中台团队物理隔离和解雇关系户。</li><li><strong>动作</strong>：王夫强行精简宫廷冗余供职员额，解雇了大批依靠裙带关系进宫却不劳而获的仆役，重划白金汉宫门禁，出清康罗伊等老臣势力。</li>"}, {"id": "M4", "module": "M2", "moduleName": "内阁赛马与官僚平衡", "color": "#5D8061", "title": "内阁代理人赛马制衡", "body": "<li><strong>场景</strong>：某一区域或核心产品线的总监功高震主，掌握全套供应链和客户，有随时要挟出走的风险。</li><li><strong>原理</strong>：在同一主营业务层级架设多条平行竞争的产品线，诱导其产生在野与在朝的政治竞争，打破高管之间的瞒报包庇。</li><li><strong>动作</strong>：利用辉格党与托利党内阁的尖锐竞争，每逢首相试图隐瞒外交失误或强行推进不利于皇室的法案时，默许在野党在下议院实施质询爆破。</li>"}, {"id": "M5", "module": "M2", "moduleName": "内阁赛马与官僚平衡", "color": "#5D8061", "title": "非对称否决权使用", "body": "<li><strong>场景</strong>：执行团队为了短期 KPI 或个人声望，强行推动带有极大系统风险的外交或商业冒险。</li><li><strong>原理</strong>：保留最终的“公文手稿修改权”作为一票否决杠杆，在字里行间注入缓和性条款，对激进的执行动作实施软拦截。</li><li><strong>动作</strong>：外交大臣帕默斯顿强推对美强硬外交公文，艾伯特亲王在临终前带病修改公文措辞，将最后通牒修改为缓和的外交试探，平息战争风险。</li>"}, {"id": "M6", "module": "M3", "moduleName": "孀居隐退与悲情防御", "color": "#A76565", "title": "悲伤防御与孀居静默", "body": "<li><strong>场景</strong>：在野或竞争对手组建联合阵线，试图对大股东或创始人进行逼宫，强推有利于买方的重组方案。</li><li><strong>原理</strong>：通过“彻底停止日常社会交往”的哀兵姿态，将个人的脆弱转化为无可指摘的道德盾牌，利用外部舆论同情形成坚固的政治壁垒。</li><li><strong>动作</strong>：艾伯特逝世后，女王隐居三十年，不参加一切世俗国家典礼，但每天高频批阅文件，内阁稍有越轨即去信痛陈“政权变动会要了我的残命”。</li>"}, {"id": "M7", "module": "M4", "moduleName": "冷启动与地缘婚姻网", "color": "#7A7A7A", "title": "继承危机多轨防御机制", "body": "<li><strong>场景</strong>：核心技术人才、单点供应商或接班人有单点崩溃风险，导致业务冷启动失败。</li><li><strong>原理</strong>：提前布置多轨、分布式、对赌式的外部资源引进渠道，以最终成活率为导向进行多点冷备份。</li><li><strong>动作</strong>：1817年英王室绝嗣危机爆发后，多位王子在复活节前紧急开始地缘联姻对赌，克拉伦斯与肯特两公爵同时结婚竞赛，肯特公爵最终在英国冷启动成功。</li>"}, {"id": "M8", "module": "M4", "moduleName": "冷启动与地缘婚姻网", "color": "#7A7A7A", "title": "软实力道德叙事溢价", "body": "<li><strong>场景</strong>：产品毛利耗尽，竞争对手以无底线低价争夺市场，企业需要低成本维护品牌合法性与高端定位。</li><li><strong>原理</strong>：退出实物价值层面的消耗战，通过创始人展示极简、道德与公众认同的生活方式，把产品转化为某种社群道德契约。</li><li><strong>动作</strong>：女王抛弃伦敦浮奢的宫廷社交，长年隐居在苏格兰高地的小木屋中，撰写并出版《高地生活日记》，成功与当时崛起的中产阶级家庭道德合流。</li><p>---</p>"}, {"id": "A1", "module": "M1", "moduleName": "COO中台与内廷整置", "color": "#4E6E8F", "title": "职能重组与物理边界划分", "body": "<li><strong>操作指南</strong>：对所有跨部门推诿事务，严禁使用“联合办公”或“共同负责”字眼。必须在流程中设定一道硬性物理交割线，以单方签字确认代替共同讨论。</li><li><strong>示例</strong>：设计部与开发部频繁为网页设计还原度扯皮。规定：“设计部必须交付精确到像素的 FIGMA 样式，开发部必须 100% 还原；凡有偏差，开发部扣减绩效；凡设计部未提供标注，开发部有权拒绝接收。”</li>"}, {"id": "A2", "module": "M1", "moduleName": "COO中台与内廷整置", "color": "#4E6E8F", "title": "行政隔离路由器架设", "body": "<li><strong>操作指南</strong>：决策人必须在自己与业务部门之间设立一道物理隔离。所有业务请示必须先发送至总办/COO 进行摘要，无“选择题选项”与“数据测算”的邮件一律过滤。</li><li><strong>示例</strong>：CEO 宣布除紧急合规事故外，不再直接查看研发总监的开发日志。总办主任每日将所有进度汇总为 500 字摘要，并标明：“方案A：延期一周且损失10万；方案B：砍掉X功能按时上线”，由 CEO 选择。</li>"}, {"id": "A3", "module": "M2", "moduleName": "内阁赛马与官僚平衡", "color": "#5D8061", "title": "在野势力审计引入", "body": "<li><strong>操作指南</strong>：内部推行核心项目时，必须在同一层级设置“在野红队”。允许红队调取项目组的运营数据，并以发现系统漏洞和谎报信息作为红队的核心 KPI。</li><li><strong>示例</strong>：在销售部之外成立“销售质量审计小组”，由另一位合规总监直接领导，每月在不通知销售部的情况下，对大客户进行匿名客诉调查，直接向董事会汇报。</li>"}, {"id": "A4", "module": "M3", "moduleName": "孀居隐退与悲情防御", "color": "#A76565", "title": "道德高地防御筑墙", "body": "<li><strong>操作指南</strong>：企业陷入公关或客诉危机时，不应在法理细节上与对方进行无限期拉锯。应当立即在公共媒体发布“企业的道德底线宣示”与“长期的社会责任日记”，以心智占领防御法理攻击。</li><li><strong>示例</strong>：食品企业被举报添加剂违规。企业不作化学成分自辩，而是立刻直播展示其在高原有机基地的老农采摘日记，向用户传递“我们只生产最干净的食物”心智。</li>"}, {"id": "A5", "module": "M4", "moduleName": "冷启动与地缘婚姻网", "color": "#7A7A7A", "title": "对赌式冷启动执行", "body": "<li><strong>操作指南</strong>：启动任何高风险新项目时，同时外包给两个没有交集的外部代理商，支付小额启动款，以规定时间内跑通最小盈利模型（MVP）者作为最终继承人。</li><li><strong>示例</strong>：公司需要开发出海 APP。同时授权给杭州与深圳的两家外包团队，规定两周内谁的留存率高，谁就获得长期代理合同，另一方自动出清。</li>"}, {"id": "A6", "module": "M4", "moduleName": "冷启动与地缘婚姻网", "color": "#7A7A7A", "title": "畅销书与人设溢价变现", "body": "<li><strong>操作指南</strong>：创始人应当定期撰写并公开发表企业价值观博客、个人生活日记，将冰冷的企业品牌转化为一个有温度、讲道德、追求极简的“主权个人”形象。</li><li><strong>示例</strong>：科技公司 CEO 在个人社交媒体持续连载《一个崇尚效率与家庭陪伴的 CEO 的日常》，分享如何平衡工作与生活，不带广告却为公司吸纳大量高粘性中产用户。</li><p>---</p>"}, {"id": "R1", "module": "M4", "moduleName": "冷启动与地缘婚姻网", "color": "#7A7A7A", "title": "1817年继承危机与 1818年王子婚姻竞赛 [Page 1108-1110]", "body": "<li><strong>情境</strong>：1817年夏洛特公主逝世，王室面临旁支绝嗣危机。乔治三世几位年过半百、债务缠身的王子被迫与长年的同居情人分手，紧急展开地缘联姻。</li><li><strong>决策</strong>：通过并行的多轨联姻竞赛，克拉伦斯与肯特两公爵于1818年同时结婚。肯特公爵甚至冒着临盆危险租马车飞奔回英国，以对赌方式在英国本土诞下维多利亚，最终成功冷启动了继承人系统。</li><li><strong>启示</strong>：核心资产面临停摆时，必须有准备承受巨大个人牺牲和多节点备份对赌的决心，以最终成活率阻断系统性崩溃。</li>"}, {"id": "R2", "module": "M1", "moduleName": "COO中台与内廷整置", "color": "#4E6E8F", "title": "1844年白金汉宫多头行政重组 [Page 1176]", "body": "<li><strong>情境</strong>：白金汉宫由于缺乏行政中台，被总务官、宫务大臣、林务处等大贵人瓜分权力，导致“总务官备煤，宫务大臣点火”使得女王挨冻，窗户室内室外分由两家擦拭。</li><li><strong>决策</strong>：王夫艾伯特强推内廷行政大重组，将多头割裂的宫廷事务统一收归到以他为核心的行政中台，重新划定职责物理边界，建立严格的预算与审计路由器。</li><li><strong>启示</strong>：组织内耗的根本原因在于没有界限分明的流程锁定。解决之道是将公摊职能实体中台化，严禁多头干预。</li>"}, {"id": "R3", "module": "M3", "moduleName": "孀居隐退与悲情防御", "color": "#A76565", "title": "1862年孀居信件拦截德比勋爵 [Page 1225]", "body": "<li><strong>情境</strong>：艾伯特亲王去世后，女王陷入深重悲痛隐退孀居。首相和反对派领袖德比勋爵试图在下议院联合逼宫，强推有利于议会集权的法案。</li><li><strong>决策</strong>：女王绕过内阁，直接给反对派领袖德比勋爵送去私人信件，警告说如果他推翻现政权导致政府变动，“将送了她的命”。德比勋爵大为惊愕，不得不放弃逼宫计划，皇权得以孀居形式非对称存续。</li><li><strong>启示</strong>：当物理控制力衰退至低谷时，把“脆弱与悲情”符号化并拉到道德最顶点，能够形成最强的一票否决壁垒。</li><p>---</p>"}, {"id": "T1", "module": "M1", "moduleName": "COO中台与内廷整置", "color": "#4E6E8F", "title": "组织跨部门公摊职能整合表", "body": "<li><strong>目的</strong>：出清组织内部多部门参与、重叠交叉导致的效率推推诿与公摊费用流失。</li><li><strong>方法</strong>：</li><li>1. <strong>交叉链条清查</strong>：列出目前公司所有需要两个部门以上高管“共同签字”或“协同执行”的流程（如：产品上线需要开发和测试同时确认）。</li><li>2. <strong>中台权责归口</strong>：撤销原有的“协调委员会”，将交叉流程的裁决权划归统一的行政/运营中台，由中台统一分派任务。</li><li>3. <strong>物理边界锁死</strong>：制定“前置条件清单”，上一节点未达成 100% 交付标准的，中台自动驳回，下一节点无需参与讨论。</li>"}, {"id": "T2", "module": "M1", "moduleName": "COO中台与内廷整置", "color": "#4E6E8F", "title": "CEO 行政路由器运作手册", "body": "<li><strong>目的</strong>：建立信息过滤器，将创始人从日常执行摩擦中解放出来，确保决策的高频与纯净。</li><li><strong>方法</strong>：</li><li>1. <strong>设定路由器节点</strong>：指定总办主任或 COO 担任路由器，阻断所有部门主管与 CEO 的非预约式单独汇报。</li><li>2. <strong>公文摘要标准化</strong>：所有汇报文件必须精简为 1 页 A4，结构强制为：客观现状（150字）- 核心卡点（100字）- A/B对赌方案（各100字，含预算与风险对照）。</li><li>3. <strong>画圈审批制</strong>：CEO 每日用红墨水在 A/B 方案中画圈确认，不写长篇评语，只做方向性审批，其余交由中台路由器执行。</li>"}, {"id": "T3", "module": "M2", "moduleName": "内阁赛马与官僚平衡", "color": "#5D8061", "title": "业务高管“赛马与在野质询”评估量表", "body": "<li><strong>目的</strong>：防范核心业务线负责人掌控供应链和客户要挟总部，利用内部竞争爆破信息瞒报。</li><li><strong>方法</strong>：</li><li>1. <strong>AB组业务分治</strong>：将公司的核心业务线一拆为二，平行配置两个销售总监或研发总监，数据相对透明。</li><li>2. <strong>在野红队质询</strong>：在月度经营分析会上，A组总监必须指出B组项目的 3 个潜在合规风险或业务隐患，B组亦然，信息直接呈报 CEO。</li><li>3. <strong>竞争出清对赌</strong>：规定连续两个季度核心业绩落后的团队，其 20% 的公摊预算将被直接划拨给优胜团队，落后总监将面临岗位降级。</li>"}, {"id": "T4", "module": "M3", "moduleName": "孀居隐退与悲情防御", "color": "#A76565", "title": "弱势创始人非对称一票否决权设置协议", "body": "<li><strong>目的</strong>：创始人在持股比例降至 20% 以下时，确保公司不会被资本合谋篡改核心价值观和强行清退。</li><li><strong>方法</strong>：</li><li>1. <strong>创始人精神一票否决权</strong>：在公司章程中设立“特别表决事项”，凡涉及品牌精神人设变更、公司重大重组及核心资产售卖，必须创始人单方签字同意。</li><li>2. <strong>道德熔断退出机制</strong>：协议规定，若董事会多数席位强推违背最初道德底线的项目，创始人有权召集公开发布会，并以账面现金回购其核心 IP 品牌，行使最终的脆弱熔断威慑。</li><li>3. <strong>价值观同盟绑定</strong>：联合中小股东和核心研发骨干签署《价值观共识互保协议》，在重大方向性博弈中，与创始人保持投票一致。</li>"}];
+    let activeModule = 'all';
+    let searchQuery = '';
+
+    function renderCards() {
+        const grid = document.getElementById('cardsGrid');
+        grid.innerHTML = '';
+        
+        const filtered = cards.filter(card => {
+            const matchesModule = activeModule === 'all' || card.module === activeModule;
+            const matchesSearch = card.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                  card.body.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                  card.id.toLowerCase().includes(searchQuery.toLowerCase());
+            return matchesModule && matchesSearch;
+        });
+
+        filtered.forEach(card => {
+            const div = document.createElement('div');
+            div.className = 'card';
+            div.style.setProperty('--card-color', card.color);
+            div.onclick = () => showModal(card);
+            
+            // extract preview text
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = card.body;
+            const previewText = tempDiv.innerText || tempDiv.textContent || '';
+
+            div.innerHTML = `
+                <div class="card-header">
+                    <span class="card-id" style="color: ${card.color}">${card.id}</span>
+                    <span class="card-module">${card.moduleName}</span>
+                </div>
+                <div class="card-title">${card.title}</div>
+                <div class="card-preview">${previewText}</div>
+            `;
+            grid.appendChild(div);
+        });
+    }
+
+    function filterModule(mod, btn) {
+        document.querySelectorAll('.controls .btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeModule = mod;
+        renderCards();
+    }
+
+    function filterCards() {
+        searchQuery = document.getElementById('searchInput').value;
+        renderCards();
+    }
+
+    function showModal(card) {
+        const modal = document.getElementById('cardModal');
+        const mId = document.getElementById('modalId');
+        const mTitle = document.getElementById('modalTitle');
+        const mBody = document.getElementById('modalBody');
+        
+        mId.innerText = card.id;
+        mId.style.color = card.color;
+        mTitle.innerText = card.title;
+        mTitle.style.borderLeftColor = card.color;
+        mBody.innerHTML = card.body;
+        
+        modal.style.setProperty('--modal-accent', card.color);
+        modal.classList.add('active');
+    }
+
+    function hideModal() {
+        document.getElementById('cardModal').classList.remove('active');
+    }
+
+    function closeModal(e) {
+        hideModal();
+    }
+
+    // Initial render
+    renderCards();
+</script>
+
+</body>
+</html>

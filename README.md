@@ -4,7 +4,7 @@
 > 
 > **A high-density cheatsheet system bridging the gap between technical excellence (Hardcore Systems) and organizational leadership. Speedrun workplace dynamics, cognitive psychology, and systems thinking.**
 
-[![GitHub Stars](https://img.shields.io/github/stars/bsjzmj/developer-soft-skills-guide?style=for-the-badge&color=purple)](https://github.com/bsjzmj/developer-soft-skills-guide)
+[![GitHub Stars](https://img.shields.io/github/stars/developer-mind-OS/developer-soft-skills-guide?style=for-the-badge&color=purple)](https://github.com/developer-mind-OS/developer-soft-skills-guide)
 [![Get Bundle on Gumroad](https://img.shields.io/badge/Gumroad-Get%20Bundle-orange?style=for-the-badge&logo=gumroad)](https://gumroad.com)
 
 ---
@@ -26,15 +26,18 @@
 
 | 主题类别 | 书籍/主题名称 | PDF 速查卡 (矢量) | 在线知识图谱 | 交互心智工作坊 / 沙盒 |
 |:---:|:---|:---:|:---:|:---:|
-| **职场管理** | 向上管理 (`Managing Up`) | [PDF 下载](./docs/managing_up/cheatsheet.pdf) | [Map 在线图谱](https://bsjzmj.github.io/developer-soft-skills-guide/managing_up/map.html) | [Sandbox 互动演练](https://bsjzmj.github.io/developer-soft-skills-guide/managing_up/sandbox.html) |
-| **心理认知** | 思考，快与慢 (`Thinking, Fast and Slow`) | [PDF 下载](./docs/thinking_fast_and_slow/cheatsheet.pdf) | - | [Sandbox 偏差审计](https://bsjzmj.github.io/developer-soft-skills-guide/thinking_fast_and_slow/sandbox.html) |
-| **个人自救** | 摆脱精神内耗 (`Mental Burnout`) | [PDF 下载](./docs/mental_burnout/cheatsheet.pdf) | - | [Sandbox 心理防线](https://bsjzmj.github.io/developer-soft-skills-guide/mental_burnout/sandbox.html) |
-| **人性操纵** | 影响力 (`Influence`) | [PDF 下载](./docs/influence/cheatsheet.pdf) | - | [Sandbox 说服审计](https://bsjzmj.github.io/developer-soft-skills-guide/influence/sandbox.html) |
-| **人际关系** | 亲密关系 (`Intimate Relationships`) | [PDF 下载](./docs/intimate_relationships/cheatsheet.pdf) | - | [Sandbox 依恋工作坊](https://bsjzmj.github.io/developer-soft-skills-guide/intimate_relationships/sandbox.html) |
-| **博弈抗衡** | 权力 (`Power`) | [PDF 下载](./docs/power/cheatsheet.pdf) | [Map 在线图谱](https://bsjzmj.github.io/developer-soft-skills-guide/power/map.html) | [Sandbox 交互沙盒](https://bsjzmj.github.io/developer-soft-skills-guide/power/sandbox.html) |
-| **结构沟通** | 结构表达力 (`Structured Expression`) | [PDF 下载](./docs/structured_expression/cheatsheet.pdf) | - | [Sandbox 交互演练](https://bsjzmj.github.io/developer-soft-skills-guide/structured_expression/sandbox.html) |
+| **职场管理** | 向上管理 (`Managing Up`) | [PDF 下载](./docs/managing_up/cheatsheet.pdf) | [Map 在线图谱](https://developer-mind-OS.github.io/developer-soft-skills-guide/managing_up/map.html) | [Sandbox 互动演练](https://developer-mind-OS.github.io/developer-soft-skills-guide/managing_up/sandbox.html) |
+| **心理认知** | 思考，快与慢 (`Thinking, Fast and Slow`) | [PDF 下载](./docs/thinking_fast_and_slow/cheatsheet.pdf) | - | [Sandbox 偏差审计](https://developer-mind-OS.github.io/developer-soft-skills-guide/thinking_fast_and_slow/sandbox.html) |
+| **个人自救** | 摆脱精神内耗 (`Mental Burnout`) | [PDF 下载](./docs/mental_burnout/cheatsheet.pdf) | - | [Sandbox 心理防线](https://developer-mind-OS.github.io/developer-soft-skills-guide/mental_burnout/sandbox.html) |
+| **人性操纵** | 影响力 (`Influence`) | [PDF 下载](./docs/influence/cheatsheet.pdf) | - | [Sandbox 说服审计](https://developer-mind-OS.github.io/developer-soft-skills-guide/influence/sandbox.html) |
+| **人际关系** | 亲密关系 (`Intimate Relationships`) | [PDF 下载](./docs/intimate_relationships/cheatsheet.pdf) | - | [Sandbox 依恋工作坊](https://developer-mind-OS.github.io/developer-soft-skills-guide/intimate_relationships/sandbox.html) |
+| **博弈抗衡** | 权力 (`Power`) | [PDF 下载](./docs/power/cheatsheet.pdf) | [Map 在线图谱](https://developer-mind-OS.github.io/developer-soft-skills-guide/power/map.html) | [Sandbox 交互沙盒](https://developer-mind-OS.github.io/developer-soft-skills-guide/power/sandbox.html) |
+| **结构沟通** | 结构表达力 (`Structured Expression`) | [PDF 下载](./docs/structured_expression/cheatsheet.pdf) | - | [Sandbox 交互演练](https://developer-mind-OS.github.io/developer-soft-skills-guide/structured_expression/sandbox.html) |
 | **系统思维** | 系统之美 (`Thinking in Systems`) | [PDF 下载](./docs/thinking_in_systems/cheatsheet.pdf) | - | - |
 | **底层逻辑** | 反脆弱 (`Antifragile`) | [PDF 下载](./docs/antifragile/cheatsheet.pdf) | - | [Page 1](./docs/antifragile/page_1.png) / [Page 2](./docs/antifragile/page_2.png) / [Page 3](./docs/antifragile/page_3.png) |
+| **博弈抗衡** | 潜规则 (`Hidden Rules`) | [PDF 下载](./docs/hidden_rules/cheatsheet.pdf) | - | - |
+| **精神成长** | 从不妥协-法拉奇传 (`Never Compromise`) | [PDF 下载](./docs/never_compromise/cheatsheet.pdf) | [Map 在线图谱](https://developer-mind-OS.github.io/developer-soft-skills-guide/never_compromise/map.html) | [Sandbox 互动演练](https://developer-mind-OS.github.io/developer-soft-skills-guide/never_compromise/sandbox.html) |
+| **博弈与领导** | 维多利亚女王传 (`Queen Victoria`) | [PDF 下载](./docs/queen_victoria/cheatsheet.pdf) | [Map 在线图谱](https://developer-mind-OS.github.io/developer-soft-skills-guide/queen_victoria/map.html) | [Sandbox 互动演练](https://developer-mind-OS.github.io/developer-soft-skills-guide/queen_victoria/sandbox.html) |
 
 ---
 
@@ -48,6 +51,14 @@
 ## 💎 Unlock Paid Bundle (解锁商业高级包)
 
 如果您需要获取高解析度无水印矢量 PDF（适合 A3/A2 超大画幅海报打印挂在办公室）、离线单文件 HTML 运行包、以及 **XeLaTeX + Python Compiler 完整编译脚本源码**，可前往我们的 [Gumroad 商业包链接](https://gumroad.com) 获取全量升级版。
+
+---
+
+## 🔗 Technical Counterpart (硬核技术系统工程)
+
+如果您需要提升您的技术深度与架构视野，欢迎访问我们的硬核技术可视化海报项目：
+👉 **[Hardcore Systems Cheatsheet (硬核系统工程可视化速查海报)](https://github.com/hardcore-systems/hardcore-systems-cheatsheet)**
+*(包含 37 个标杆开源项目如 Linux, Redis, Kafka, Kubernetes, V8 等的高清速查卡与交互沙盒。)*
 
 ---
 

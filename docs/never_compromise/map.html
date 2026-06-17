@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>从不妥协-法拉奇传 知识图谱速查 | 开发者心智系统 developer-mind-OS</title>
+    <meta name="description" content="《从不妥协——法拉奇传》高频信息博弈 OS 知识图谱，涵盖非对称质询协议、现场第一性法则、风险主权边界与逆向重塑框架。">
+    <meta name="keywords" content="从不妥协, 法拉奇传, 谈判博弈, 情报获取, 现场第一性, 风险主权, 知识图谱, 商业同构">
+    <meta name="author" content="Antigravity">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "《从不妥协——法拉奇传》高频信息博弈 OS 知识图谱",
+      "description": "基于《从不妥协——法拉奇传》谈判与信息博弈 OS 框架，提供面具刺破、两难陷阱、物理前推哨兵及逆向契约锁定模型。",
+      "inLanguage": "zh-CN",
+      "author": {
+        "@type": "Organization",
+        "name": "Antigravity Team"
+      }
+    }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0c0d10;
+            --card-bg: #14151c;
+            --text-color: #e2e8f0;
+            --accent-color: #A76565;
+            --border-color: #22232c;
+            --theme-slate: #4E6E8F;
+            --theme-green: #5D8061;
+            --theme-red: #A76565;
+            --theme-grey: #7A7A7A;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Outfit', 'Noto Sans SC', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 3rem 2rem;
+            line-height: 1.6;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #fca5a5, #f43f5e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            color: #94a3b8;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        .btn {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.25s ease;
+        }
+        .btn:hover, .btn.active {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto 3rem auto;
+        }
+        .search-input {
+            width: 100%;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.25s ease;
+        }
+        .search-input:focus {
+            border-color: var(--accent-color);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: var(--card-color);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            border-color: var(--card-color);
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .card-id {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.08);
+            color: var(--card-color);
+        }
+        .card-module {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+        }
+        .card-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: white;
+        }
+        .card-preview {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            backdrop-filter: blur(8px);
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            max-width: 650px;
+            width: 100%;
+            border-radius: 16px;
+            padding: 2.5rem;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            animation: modalScale 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes modalScale {
+            from { transform: scale(0.9) translateY(20px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        .close-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            color: #64748b;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .close-btn:hover {
+            color: white;
+        }
+        .modal-id {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.3rem 0.7rem;
+            border-radius: 6px;
+            background-color: rgba(255, 255, 255, 0.08);
+            margin-bottom: 1rem;
+        }
+        .modal-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--modal-accent);
+            padding-left: 0.8rem;
+        }
+        .modal-body {
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+        .modal-body p {
+            margin-bottom: 1rem;
+        }
+        .modal-body li {
+            margin-left: 1.2rem;
+            margin-bottom: 0.5rem;
+            list-style-type: decimal;
+        }
+        .modal-body strong {
+            color: white;
+        }
+        .modal-body code {
+            font-family: monospace;
+            background-color: rgba(255,255,255,0.06);
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>《从不妥协——法拉奇传》谈判与信息博弈 OS 知识图谱</h1>
+    <p class="subtitle">通过非平衡提问、物理现场穿透、红线资产保护与逆向议题重塑，锁定高难度博弈话语主导权</p>
+</header>
+
+<div class="search-container">
+    <input type="text" id="searchInput" class="search-input" placeholder="输入关键词搜索卡片（如：面具、两难、红线、牛仔）..." oninput="filterCards()">
+</div>
+
+<div class="controls">
+    <button class="btn active" onclick="filterModule('all', this)">全部</button>
+    <button class="btn" onclick="filterModule('M1', this)" style="border-left-color: var(--theme-slate)">高频采访博弈与情报获取</button>
+    <button class="btn" onclick="filterModule('M2', this)" style="border-left-color: var(--theme-green)">现场第一性与空间穿透</button>
+    <button class="btn" onclick="filterModule('M3', this)" style="border-left-color: var(--theme-red)">风险主权与可信红线</button>
+    <button class="btn" onclick="filterModule('M4', this)" style="border-left-color: var(--theme-grey)">逆向重塑与共识爆破</button>
+</div>
+
+<div class="grid" id="cardsGrid"></div>
+
+<!-- Modal Container -->
+<div class="modal" id="cardModal" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <span class="close-btn" onclick="hideModal()">&times;</span>
+        <div id="modalId" class="modal-id"></div>
+        <div id="modalTitle" class="modal-title"></div>
+        <div id="modalBody" class="modal-body"></div>
+    </div>
+</div>
+
+<script>
+    const cards = [{"id": "EP1", "module": "M1", "moduleName": "高频采访博弈与情报获取", "color": "#4E6E8F", "title": "非对称质询协议", "body": "<li><strong>定义</strong>：高壁垒沟通绝非温水式的社交客套，而是一场无退路的信息战争。博弈开始即须通过非平衡态问题打破对方公关防线。</li><li><strong>机制</strong>：主动剥除无意义的社交铺垫，以直奔底线的判别式问题（是/否）击穿对方预设的防守辞令，迫使其在零缓冲下展示真实意图。</li><li><strong>历史回源</strong>：[Page 1015] 法拉奇将采访视为政治格斗，拒绝常规应答，强行将受访者拉入她设定的质询法庭。</li>"}, {"id": "EP2", "module": "M2", "moduleName": "现场第一性与空间穿透", "color": "#5D8061", "title": "现场第一性法则", "body": "<li><strong>定义</strong>：信息纯度随地理与汇报链条呈指数级衰减。所有决策必须物理下沉至第一生产现场，防止总部被脱水数据蒙蔽。</li><li><strong>机制</strong>：切断对中间商、汇报人、二手报告的过度依赖，直接将项目前哨或审计节点打入一线，采集未经修饰的现场低频噪音。</li><li><strong>历史回源</strong>：[Page 986] 在西贡期间，法拉奇拒绝参加美军后方的每日战报发布会（俗称“五点钟疯人院”），而是直接去前线战壕。</li>"}, {"id": "EP3", "module": "M3", "moduleName": "风险主权与可信红线", "color": "#A76565", "title": "风险主权边界", "body": "<li><strong>定义</strong>：在极端威逼或死局博弈中，防线不倒的唯一前提是核心资产不受制于人。拥有独立的主权锚点才能获得真正的谈判筹码。</li><li><strong>机制</strong>：在谈判开始前进行“主权切割”，将不可折损的信用资产（如商业机密、核心团队、技术IP）进行物理隔离，以准备承受最坏破局为代价建立威慑。</li><li><strong>历史回源</strong>：[Page 911] 1943年法拉奇在佛罗伦萨帮助掩护盟军士兵，面对法西斯搜捕和死刑威胁，全家严守防线，绝不妥协。</li>"}, {"id": "EP4", "module": "M4", "moduleName": "逆向重塑与共识爆破", "color": "#7A7A7A", "title": "逆向重塑框架", "body": "<li><strong>定义</strong>：坚决拒绝在对手给定的逻辑沙盒和合同模板里起舞，必须通过道德解构和反向契约强行重设博弈边界。</li><li><strong>机制</strong>：在商务对质中，主动解构对方的话语优势（如品牌溢价、行业惯例），以己方标准（如交付率、审计穿透）反向考核对方。</li><li><strong>历史回源</strong>：[Page 1024] 采访 Khomeini 时，面对伊斯兰女装的道德说教，当面摘掉 chador（黑纱），彻底爆破了对方的叙事控制权。</li><p>---</p>"}, {"id": "ACM1", "module": "M3", "moduleName": "风险主权与可信红线", "color": "#A76565", "title": "非道德附庸对决", "body": "<li><strong>核心冲突</strong>：商业合作中，弱势方习惯于对大客户或资源方进行逢迎，导致谈判地位极度倾斜，最终利益受损。</li><li><strong>反常识主张</strong>：博弈的成败取决于实物资产与可信度对赌，而非情感依附。越是面对资源垄断者，越要剔除情绪谄媚，将其视为对等实体进行事实盘问。</li><li><strong>同构动作</strong>：在商务会谈中，严禁下属对大客户高管使用带有崇拜意味的言辞，所有汇报与纪要只关注“可度量的实物指标”与“违约赔偿条款”。</li>"}, {"id": "ACM2", "module": "M4", "moduleName": "逆向重塑与共识爆破", "color": "#7A7A7A", "title": "拒绝伪善的道德共谋", "body": "<li><strong>核心冲突</strong>：为维持表面合作或获取短期利益，企业对行业内公认的潜规则或欺诈行为选择默许，埋下毁灭性合规隐患。</li><li><strong>反常识主张</strong>：道德共谋是系统崩塌的隐性传染病。主动揭露潜规则、打破勾结联盟（Collusion），以极限透明爆破旧体系，往往能抢占新规则的红利。</li><li><strong>同构动作</strong>：拒绝参与大客户采购环节的灰色回扣，主动将其曝光，并联合行业合规组织建立新型“透明招投标标准件”，反向收割市场。</li><p>---</p>"}, {"id": "M1", "module": "M1", "moduleName": "高频采访博弈与情报获取", "color": "#4E6E8F", "title": "社交面具刺破机制", "body": "<li><strong>场景</strong>：对方谈判代表使用滴水不漏的官僚术语、公关套路，导致关键合作卡点被无限期拖延。</li><li><strong>原理</strong>：情绪镜像与突袭。在对方自如宣讲时，通过毫无征兆的冷场、对细节的直接质疑，在零点几秒内扯下对方的职业伪装。</li><li><strong>动作</strong>：在对方陈述公关话术时，突然保持 5 秒静默，然后抛出：“如果去掉这套官方辞令，你们今年真实的亏损到底是多少？”</li>"}, {"id": "M2", "module": "M1", "moduleName": "高频采访博弈与情报获取", "color": "#4E6E8F", "title": "两难抉择陷阱", "body": "<li><strong>场景</strong>：供应商或竞品在核心参数、瑕疵问题或财务数据上打太极，顾左右而言他。</li><li><strong>原理</strong>：设定边界单调的判别式提问，排除任何“灰色过渡区”，逼迫对方在两个对等损失的极值中做出选择。</li><li><strong>动作</strong>：提出问题：“这笔交易，你们是要确保在下月 1 号前全额退款，还是现在就签署违约起诉协议？请直接回答选项。”</li>"}, {"id": "M3", "module": "M1", "moduleName": "高频采访博弈与情报获取", "color": "#4E6E8F", "title": "情报盲区突入机制", "body": "<li><strong>场景</strong>：竞品实力强大且防御严密，无法刺探到其核心研发进度或供应链底线。</li><li><strong>原理</strong>：高空虚荣诱导。利用对方核心负责人在声誉最高、极度自满时的虚荣心理，诱使其说出带有暴露性的低频真实信号。</li><li><strong>动作</strong>：在行业沙龙中赞美竞品负责人的某项个人外交或管理成就，顺应其自夸倾向，套取其底层团队的离职率及外包比例。</li>"}, {"id": "M4", "module": "M2", "moduleName": "现场第一性与空间穿透", "color": "#5D8061", "title": "物理现场前哨", "body": "<li><strong>场景</strong>：分公司或核心代理商利益与总部相悖，层层瞒报业务现状，导致总部面临系统性暴雷。</li><li><strong>原理</strong>：信息源头第一性。绕过汇报链条，将具有完全审计主权的特种项目组直接物理派驻第一现场。</li><li><strong>动作</strong>：跳过代理商的月度报表，总部派遣合规技术官常驻代工厂流水线，实时抓取真实的合格率及退货数据。</li>"}, {"id": "M5", "module": "M2", "moduleName": "现场第一性与空间穿透", "color": "#5D8061", "title": "降维防线构建", "body": "<li><strong>场景</strong>：大厂或垄断渠道以“断流量”、“下架”为威胁，逼迫企业接受极苛刻的排他条款。</li><li><strong>原理</strong>：组织解耦。通过将核心交付物标准化、模块化，摆脱对单一发行渠道的寄生依赖，建立独立生存网络。</li><li><strong>动作</strong>：将产品 API 接口完全抽象化，支持 30 分钟内切换至备用云计算服务，确保在大厂断服威胁下拥有无限期对峙底气。</li>"}, {"id": "M6", "module": "M3", "moduleName": "风险主权与可信红线", "color": "#A76565", "title": "可信红线拦截", "body": "<li><strong>场景</strong>：合作伙伴不断越界侵蚀毛利，或在合规边缘试探企业的容忍底线。</li><li><strong>原理</strong>：确立不可逾越的熔断条件，通过执行一次代价巨大的“自杀性”惩罚，树立绝对可信的长期防御威慑。</li><li><strong>动作</strong>：一旦代理商发生一次串货行为，立刻终止占其总营收 30% 的核心代理协议，哪怕我方局部受损，也要物理出清违规节点。</li>"}, {"id": "M7", "module": "M4", "moduleName": "逆向重塑与共识爆破", "color": "#7A7A7A", "title": "议题反客为主", "body": "<li><strong>场景</strong>：企业因产品缺陷遭遇客诉或公关危机，被媒体和对手围剿，陷入防御性自证清白的死循环。</li><li><strong>原理</strong>：逻辑重构。拒绝就对方设定的漏洞进行解释，主动上升维度，指明行业共性痛点并给出“下一代行业标准”。</li><li><strong>动作</strong>：不解释当前的系统漏洞细节，转而召开行业安全发布会，宣布开源全新的自研加密协议，强行把“危机”塑造成“标准制定者”的发布会。</li>"}, {"id": "M8", "module": "M4", "moduleName": "逆向重塑与共识爆破", "color": "#7A7A7A", "title": "檄文级共识爆炸", "body": "<li><strong>场景</strong>：新品牌在红海市场突围，常规投流获客成本高昂且用户免疫，无法低成本撕开大众心智。</li><li><strong>原理</strong>：极度情绪化的反常识叙事。通过极具争议、直刺本质的文字炸弹，绕过理性过滤层，直接引爆行业舆论。</li><li><strong>动作</strong>：发布行业白皮书，直白揭露“行业排名前三的竞品材料掺假内幕”，利用自黑和硬核检测数据直接爆破市场既有格局。</li><p>---</p>"}, {"id": "A1", "module": "M1", "moduleName": "高频采访博弈与情报获取", "color": "#4E6E8F", "title": "逼质性直白提问", "body": "<li><strong>操作指南</strong>：剔除所有“我认为”、“通常情况下”、“我们希望”等修饰性模糊词。直接使用“是、否、确定、具体数值”作为提问的终点。</li><li><strong>示例</strong>：在项目评审中，直接问开发主管：“下周五 18 点前，系统能否上线？请回答‘能’或‘不能’，不要解释技术难点。”</li>"}, {"id": "A2", "module": "M4", "moduleName": "逆向重塑与共识爆破", "color": "#7A7A7A", "title": "道德符号爆破", "body": "<li><strong>操作指南</strong>：当谈判对手用“社会责任”、“行业生态”等道德大旗压制我方价格时，通过指出其底层剥削事实，物理剥离其道德光环。</li><li><strong>示例</strong>：对方说“我们是为了维持平台的生态健康”，我方直接出具“平台扣点比例从 10% 提升至 25%，导致 40% 商家破产”的审计报告。</li>"}, {"id": "A3", "module": "M2", "moduleName": "现场第一性与空间穿透", "color": "#5D8061", "title": "第一现场物理前推", "body": "<li><strong>操作指南</strong>：在战略规划前，决策人必须物理常驻一线（如仓库、客服现场、极前线门店）至少 48 小时，获取未经中层修饰的原生态脏数据。</li><li><strong>示例</strong>：CEO 连续 3 天亲自在售后部接听客诉电话，提取到“80% 退货源于说明书翻译错误”的真实硬件信号。</li>"}, {"id": "A4", "module": "M3", "moduleName": "风险主权与可信红线", "color": "#A76565", "title": "主权资产隔离", "body": "<li><strong>操作指南</strong>：通过公司架构和法律信托，将企业的核心 IP 资产与日常运营账户隔离，防止在合规诉讼中被对方“一波封锁”。</li><li><strong>示例</strong>：将核心软件专利权存放在独立的资产持有公司，运营公司仅通过授权使用。即使运营公司陷入巨额诉讼，专利资产依然安全。</li>"}, {"id": "A5", "module": "M4", "moduleName": "逆向重塑与共识爆破", "color": "#7A7A7A", "title": "反向契约锁定", "body": "<li><strong>操作指南</strong>：在大客户下单前，强制要求对方在采购合同中签署“7 天无条件付款，若逾期则每日承担 1% 违约金”的刚性条款，否则拒绝接单。</li><li><strong>示例</strong>：在商务博弈中，以我方产能紧张为由，强制锁定大客户预付款，打破其长期压款的行规。</li>"}, {"id": "A6", "module": "M4", "moduleName": "逆向重塑与共识爆破", "color": "#7A7A7A", "title": "反常识舆论裂变", "body": "<li><strong>操作指南</strong>：抛弃平庸的产品广告，主动在公共媒体撰写带有强烈个人色彩、挑战主流共识的深度长文，吸引核心高质量粘性受众。</li><li><strong>示例</strong>：创始人亲自撰写万字长文《为什么我们决定砍掉 90% 华而不实的功能》，戳破行业拼功能的多余话术，重塑产品心智。</li><p>---</p>"}, {"id": "R1", "module": "M3", "moduleName": "风险主权与可信红线", "color": "#A76565", "title": "1943年佛罗伦萨跳车逃兵掩护事件 [Page 911-912]", "body": "<li><strong>情境</strong>：1943年十一月，法拉奇的父亲收留了两名从佛罗伦萨跳车逃跑的英国士兵（奈切尔与戈登），藏在奥莉娅娜的房间中整整一个月。</li><li><strong>决策</strong>：在法西斯严密搜捕、一旦发现全家死刑的死局下，法拉奇全家保持绝对沉默。奥莉娅娜（当时仅14岁）在摆钟聒噪的报时和月光阴影中睡在走廊，白天用并不自然的英语与士兵交流，坚守保护生命与自由的红线。</li><li><strong>核心启示</strong>：在系统级压迫下，守住底线红线需要极度的心理韧性和对系统重置代价的心理预备。</li>"}, {"id": "R2", "module": "M4", "moduleName": "逆向重塑与共识爆破", "color": "#7A7A7A", "title": "1972年基辛格“牛仔”公关危机 [Page 1017-1018]", "body": "<li><strong>情境</strong>：1972年11月，法拉奇在华盛顿采访基辛格。</li><li><strong>决策</strong>：法拉奇捕捉到基辛格在连任和中美破冰后的自满情绪，通过层层诱导，提问“您是如何取得如此高的声望的？”基辛格陷入虚荣陷阱，说出了“我是那个骑着马单枪匹马走在马车队最前头的牛仔”这一自满比喻。</li><li><strong>核心启示</strong>：再严密的公关防线，在骄傲与虚荣的情绪盲区前也会自爆。博弈者必须保持绝对的情感内敛，防止被顺水推舟套取底牌。</li>"}, {"id": "R3", "module": "M4", "moduleName": "逆向重塑与共识爆破", "color": "#7A7A7A", "title": "1979年德黑兰霍梅尼“摘头巾”博弈 [Page 1051-1052]", "body": "<li><strong>情境</strong>：1979年9月，法拉奇在库姆采访伊朗最高领袖霍梅尼。</li><li><strong>决策</strong>：面对必须穿着伊斯兰黑纱（chador）的强制规定和霍梅尼对妇女服饰的强硬辩护，法拉奇当面反驳：“这种衣服就像是中世纪的黑罩，是反女性的抹布。”在霍梅尼宣称“如果你不喜欢可以不穿”的一瞬间，法拉奇立刻动手，当面将黑纱扯掉，在伊斯兰世界的权力中心物理爆破了其道德说教。</li><li><strong>核心启示</strong>：道德绑架和符号压制在遭遇决绝的物理破坏行为时，会瞬间失去神圣感，重回平等的筹码博弈。</li><p>---</p>"}, {"id": "T1", "module": "M1", "moduleName": "高频采访博弈与情报获取", "color": "#4E6E8F", "title": "企业非对称情报侦察表 (突破PR面具)", "body": "<li><strong>目的</strong>：在商务谈判或竞品调研中，突破对方的标准公关说辞，获取其真实成本和业务隐患。</li><li><strong>方法</strong>：</li><li>1. <strong>基准过滤</strong>：整理对方已公开发表的全部报告，列出其“高频出现的自夸词汇”（如“生态健康”、“技术领先”），谈判中一旦对方使用这些词，立刻无视。</li><li>2. <strong>判别提问设计</strong>：准备 3 个只能回答“是/否”的核心矛盾问题，例如：“你们的自研芯片，当前量产合格率是否达到了 85%？”</li><li>3. <strong>情绪盲区诱导</strong>：在谈判闲聊阶段，赞美对方技术负责人的个人权威，引诱其在自负状态下透露其外包开发和供应链的真实短板。</li>"}, {"id": "T2", "module": "M1", "moduleName": "高频采访博弈与情报获取", "color": "#4E6E8F", "title": "第一现场审计前推指南 (阻断汇报瞒报)", "body": "<li><strong>目的</strong>：消除跨国公司或分支机构在供应链、质量或市场销售上的谎报，防止总部产生战略盲区。</li><li><strong>方法</strong>：</li><li>1. <strong>哨兵常驻</strong>：总部不定期向关键工厂、大区仓储物理派驻“独立特遣审计员”，其考评和汇报线直属总部合规委员会。</li><li>2. <strong>脏数据直呈</strong>：在核心业务节点（如客诉后台、退货处理现场）安装硬件终端或独立采集系统，跳过分公司经理人的报表合并环节，直接向总部轮播原始客诉录音。</li><li>3. <strong>破坏性抽检</strong>：每月由总部合规员在不通知的情况下，对核心出货渠道进行“匿名神秘客采购”和破坏性测试，以实际出清数据对赌地方主管的绩效金。</li>"}, {"id": "T3", "module": "M2", "moduleName": "现场第一性与空间穿透", "color": "#5D8061", "title": "企业主权资产隔离协议 (防范诉讼勒索)", "body": "<li><strong>目的</strong>：确保中小科技企业或出海项目在面临行业巨头恶性诉讼或政策封锁时，核心技术和生存资本不受波及。</li><li><strong>方法</strong>：</li><li>1. <strong>资产持有与运营分离</strong>：将所有的底层核心代码、发明专利所有权划归独立的“主权资产信托公司”（不参与实际经营），日常运营公司仅通过独占性许可使用。</li><li>2. <strong>跨司法管辖冗余</strong>：将核心备份数据库和结算接口部署在不同的、无直接引渡和司法穿透协议的国家/沙盒中，确保在遭遇单方制裁或封锁时，系统能瞬间在线切换。</li><li>3. <strong>熔断对赌合同</strong>：在与大型渠道合作时，在合同中写入“若遭遇不可抗力封锁或恶意断服，我方有权在 24 小时内免费收回全部用户数据，且对方需支付双倍清算赔偿”的硬合同。</li>"}, {"id": "T4", "module": "M3", "moduleName": "风险主权与可信红线", "color": "#A76565", "title": "反常识行业心智爆破动作卡 (红海声量穿透)", "body": "<li><strong>目的</strong>：初创品牌在缺乏投流预算、行业巨头垄断大众媒介的红海中，瞬间击穿用户心智，建立极高品牌辨识度。</li><li><strong>方法</strong>：</li><li>1. <strong>爆破行业伪善</strong>：在公共渠道发表《为什么我们要戳破XX行业3个不可告人的伪概念》，直接自黑并指引用户如何检测材料。</li><li>2. <strong>原子情绪锁定</strong>：提炼并锁定一个极具杀伤力的“情感核词”（如“反对智商税”、“消灭伪定制”），将其物理固化在每一张产品包装盒上。</li><li>3. <strong>爆款长文自愈</strong>：创始人亲自出面，以公开日记形式叙述企业“为了拒绝大厂压价而选择独立生存”的艰难历程，将商业博弈成功转化为“主权独立对威权垄断”的叙事，获取高价值忠诚心智。</li>"}];
+    let activeModule = 'all';
+    let searchQuery = '';
+
+    function renderCards() {
+        const grid = document.getElementById('cardsGrid');
+        grid.innerHTML = '';
+        
+        const filtered = cards.filter(card => {
+            const matchesModule = activeModule === 'all' || card.module === activeModule;
+            const matchesSearch = card.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                  card.body.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                  card.id.toLowerCase().includes(searchQuery.toLowerCase());
+            return matchesModule && matchesSearch;
+        });
+
+        filtered.forEach(card => {
+            const div = document.createElement('div');
+            div.className = 'card';
+            div.style.setProperty('--card-color', card.color);
+            div.onclick = () => showModal(card);
+            
+            // extract preview text
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = card.body;
+            const previewText = tempDiv.innerText || tempDiv.textContent || '';
+
+            div.innerHTML = `
+                <div class="card-header">
+                    <span class="card-id" style="color: ${card.color}">${card.id}</span>
+                    <span class="card-module">${card.moduleName}</span>
+                </div>
+                <div class="card-title">${card.title}</div>
+                <div class="card-preview">${previewText}</div>
+            `;
+            grid.appendChild(div);
+        });
+    }
+
+    function filterModule(mod, btn) {
+        document.querySelectorAll('.controls .btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeModule = mod;
+        renderCards();
+    }
+
+    function filterCards() {
+        searchQuery = document.getElementById('searchInput').value;
+        renderCards();
+    }
+
+    function showModal(card) {
+        const modal = document.getElementById('cardModal');
+        const mId = document.getElementById('modalId');
+        const mTitle = document.getElementById('modalTitle');
+        const mBody = document.getElementById('modalBody');
+        
+        mId.innerText = card.id;
+        mId.style.color = card.color;
+        mTitle.innerText = card.title;
+        mTitle.style.borderLeftColor = card.color;
+        mBody.innerHTML = card.body;
+        
+        modal.style.setProperty('--modal-accent', card.color);
+        modal.classList.add('active');
+    }
+
+    function hideModal() {
+        document.getElementById('cardModal').classList.remove('active');
+    }
+
+    function closeModal(e) {
+        hideModal();
+    }
+
+    // Initial render
+    renderCards();
+</script>
+
+</body>
+</html>
