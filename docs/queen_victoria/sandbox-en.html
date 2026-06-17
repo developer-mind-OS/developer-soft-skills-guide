@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queen Victoria Will to Power & Governance Sandbox | Developer Mind OS developer-mind-OS</title>
+    <meta name="description" content="《维多利亚女王传》权力意志与帝国权力博弈沙盒，提供 11 个关于白金汉宫行政中台、内阁赛马、孀居悲情防御和多轨对赌继承的商业/组织同构填空审计模版。">
+    <meta name="keywords" content="维多利亚女王传, 权力博弈, 组织架构, 行政中台, 赛马机制, Corporate Isomorphism, 审计模板, 填空沙盒">
+    <meta name="author" content="Antigravity">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-slate: #4E6E8F;   /* COO中台 (Blue) */
+            --color-green: #5D8061;   /* 内阁赛马 (Green) */
+            --color-red: #A76565;     /* 孀居悲情 (Red) */
+            --color-grey: #7A7A7A;    /* 冷启动联姻 (Grey) */
+            --color-bg-light: #f4f6f8;
+            --color-bg-dark: #e8ebef;
+            --color-card-bg: rgba(255, 255, 255, 0.9);
+            --color-text-main: #2e353b;
+            --color-text-muted: #5e666e;
+            --border-radius-sm: 8px;
+            --border-radius-md: 16px;
+            --border-radius-lg: 24px;
+            --box-shadow: 0 10px 30px rgba(78, 110, 143, 0.05);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, var(--color-bg-light) 0%, var(--color-bg-dark) 100%);
+            color: var(--color-text-main);
+            min-height: 100vh;
+            line-height: 1.6;
+            display: flex;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 320px;
+            background-color: #FFFFFF;
+            border-right: 1px solid #dcdfe6;
+            padding: 30px 24px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            overflow-y: auto;
+        }
+
+        .sidebar-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--color-slate);
+            margin-bottom: 4px;
+            letter-spacing: -0.5px;
+        }
+
+        .sidebar-subtitle {
+            font-size: 11px;
+            color: var(--color-text-muted);
+            margin-bottom: 24px;
+            border-bottom: 1px solid #eaeefb;
+            padding-bottom: 12px;
+        }
+
+        .nav-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .nav-category {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--color-slate);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 18px;
+            margin-bottom: 4px;
+            padding: 4px 6px;
+            border-bottom: 1px dashed #eaeefb;
+        }
+        .nav-category:first-of-type {
+            margin-top: 0;
+        }
+
+        .nav-item {
+            padding: 10px 14px;
+            font-size: 12.5px;
+            font-weight: 500;
+            color: var(--color-text-muted);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-item:hover {
+            background-color: #f5f7fa;
+            color: var(--color-slate);
+        }
+
+        .nav-item.active {
+            background-color: rgba(78, 110, 143, 0.08);
+            color: var(--color-slate);
+            font-weight: 600;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 24px;
+            font-size: 11px;
+            color: var(--color-text-muted);
+            border-top: 1px solid #eaeefb;
+        }
+
+        /* Main Content Area */
+        .content {
+            margin-left: 320px;
+            flex-grow: 1;
+            padding: 40px 60px;
+            max-width: 1200px;
+            width: calc(100% - 320px);
+        }
+
+        .header {
+            margin-bottom: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .book-meta {
+            font-size: 12px;
+            color: var(--color-slate);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .title {
+            font-size: 26px;
+            font-weight: 800;
+            color: #1f2d3d;
+        }
+
+        .actions-bar {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-action {
+            padding: 8px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid #dcdfe6;
+            border-radius: 6px;
+            cursor: pointer;
+            background-color: #FFFFFF;
+            color: var(--color-text-main);
+            transition: var(--transition);
+        }
+
+        .btn-action:hover {
+            border-color: var(--color-slate);
+            background-color: #f5f7fa;
+            color: var(--color-slate);
+        }
+
+        .btn-primary {
+            background-color: var(--color-slate);
+            color: #FFFFFF;
+            border-color: var(--color-slate);
+        }
+
+        .btn-primary:hover {
+            background-color: #3d5670;
+            border-color: #3d5670;
+            color: white;
+        }
+
+        /* Template Cards */
+        .template-panel {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .template-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .template-card {
+            background: var(--color-card-bg);
+            border: 1px solid rgba(220, 223, 230, 0.7);
+            border-radius: var(--border-radius-md);
+            padding: 32px;
+            box-shadow: var(--box-shadow);
+            backdrop-filter: blur(10px);
+            margin-bottom: 30px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #eaeefb;
+            padding-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1f2d3d;
+        }
+
+        .card-title span {
+            color: var(--theme-color, var(--color-slate));
+            margin-right: 8px;
+        }
+
+        .card-badge {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background-color: var(--bg-badge, rgba(78, 110, 143, 0.1));
+            color: var(--theme-color, var(--color-slate));
+            text-transform: uppercase;
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: var(--color-text-muted);
+            margin-bottom: 24px;
+            background-color: rgba(0, 0, 0, 0.02);
+            padding: 12px 18px;
+            border-radius: 8px;
+            border-left: 3px solid var(--theme-color, var(--color-slate));
+        }
+
+        .input-group {
+            margin-bottom: 24px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            background-color: #FFFFFF;
+            border: 1px solid #dcdfe6;
+            border-radius: var(--border-radius-sm);
+            padding: 12px 16px;
+            font-size: 13px;
+            font-family: inherit;
+            color: var(--color-text-main);
+            outline: none;
+            resize: vertical;
+            transition: var(--transition);
+        }
+
+        textarea:focus {
+            border-color: var(--theme-color, var(--color-slate));
+            box-shadow: 0 0 8px rgba(78, 110, 143, 0.15);
+        }
+
+        /* Checkbox lists */
+        .checkbox-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            margin-top: 4px;
+        }
+
+        .checkbox-label {
+            font-size: 13px;
+            color: var(--color-text-main);
+        }
+
+        /* Toast message */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #303133;
+            color: #FFFFFF;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        @media print {
+            .sidebar { display: none; }
+            .content { margin-left: 0; width: 100%; padding: 0; }
+            .template-panel { display: block !important; page-break-after: always; }
+            .btn-action { display: none; }
+            textarea { border: none; border-bottom: 1px solid #333; height: auto; min-height: 50px; background: transparent; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="sidebar-title">Game Simulation & Audit Sandbox</div>
+    <div class="sidebar-subtitle">《维多利亚女王传》大英帝国权力制衡系统</div>
+    
+    <div class="nav-list">
+        <div class="nav-category">中台重置与路由器</div>
+        <div class="nav-item active" onclick="showPanel(1)">模板 1：白金汉宫多头权责分割</div>
+        <div class="nav-item" onclick="showPanel(2)">模板 2：行政路由器决策摘要卡</div>
+        <div class="nav-item" onclick="showPanel(3)">模板 3：低效冗余代理人出清表</div>
+        
+        <div class="nav-category">内阁赛马与平衡</div>
+        <div class="nav-item" onclick="showPanel(4)">模板 4：Cabinet Racing & Opposition Matrix</div>
+        <div class="nav-item" onclick="showPanel(5)">模板 5：外交否决措辞缓和器</div>
+        
+        <div class="nav-category">孀居防御与软实力</div>
+        <div class="nav-item" onclick="showPanel(6)">模板 6：孀居悲情与脆弱防御地图</div>
+        <div class="nav-item" onclick="showPanel(7)">模板 7：高地生活价值观心智共鸣</div>
+        
+        <div class="nav-category">冷启动与存续对赌</div>
+        <div class="nav-item" onclick="showPanel(8)">模板 8：继承危机对赌多备份模型</div>
+        <div class="nav-item" onclick="showPanel(9)">模板 9：创始人一票否决权设置协议</div>
+        <div class="nav-item" onclick="showPanel(10)">模板 10：组织协同物理边界锁定卡</div>
+        <div class="nav-item" onclick="showPanel(11)">模板 11：Persona & Brand Values Marketing Compass</div>
+    </div>
+    
+    <div class="sidebar-footer">
+        大英帝国权力治理操作系统<br>Power Balancing OS v1.0
+    </div>
+</div>
+
+<div class="content">
+    <div class="header">
+        <div>
+            <div class="book-meta">Queen Victoria Biography</div>
+            <div class="title">帝国权力意志与组织治理沙盒</div>
+        </div>
+        <div class="actions-bar">
+            <button class="btn-action" onclick="resetData()">Reset Data</button>
+            <button class="btn-action btn-primary" onclick="window.print()">打印 / 导出 PDF</button>
+        </div>
+    </div>
+
+    <!-- Template 1 -->
+    <div id="panel1" class="template-panel active" style="--theme-color: var(--color-slate); --bg-badge: rgba(78, 110, 143, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>模板 1</span> 白金汉宫多头权责物理分割表</div>
+                <span class="card-badge">中台重置</span>
+            </div>
+            <div class="card-desc">针对组织跨部门协同中的推诿、交叉内耗事务，锁定各自职责物理界面。</div>
+            <div class="input-group">
+                <label class="input-label">1. 目前公司内最典型的跨部门多头交叉、相互扯皮内耗的工作情境是什么？</label>
+                <textarea id="t1_friction" oninput="saveData()" placeholder="Example: 产品上线故障时，研发声称是运维的服务器问题，运维指责是研发的代码 Bug，双方扯皮..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. 设定物理交割线——如何重划职责边界，并设置单一中台出口？</label>
+                <textarea id="t1_lock" oninput="saveData()" placeholder="Example: 成立统一的“合规运维中台”，只要故障发生，中台一键回滚代码。回回滚后双方各自提交日志由合规官独立核实，严禁线上吵架..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 2 -->
+    <div id="panel2" class="template-panel" style="--theme-color: var(--color-slate); --bg-badge: rgba(78, 110, 143, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>模板 2</span> Administrative Router & Decision Card</div>
+                <span class="card-badge">噪声过滤</span>
+            </div>
+            <div class="card-desc">as founder or CEO架设总办路由器，物理过滤日常小事噪声。</div>
+            <div class="input-group">
+                <label class="input-label">1. CEO 每天接到的最无聊、最应该被过滤的琐碎日常请示有哪些？</label>
+                <textarea id="t2_noise" oninput="saveData()" placeholder="Example: 员工出差报销超出 50 元该不该特批、研发加班买什么零食、美工修改了几稿依然不满意要 CEO 选..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. Router specification: All presented proposals must be compressed to 1 page for “画圈选择”？</label>
+                <textarea id="t2_router" oninput="saveData()" placeholder="Example: 总办将方案过滤为：客观背景（150字）- 核心冲突（100字）- 方案A（预算及风险）- 方案B（预算及风险），CEO 只需画圈，不需打字解释..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 3 -->
+    <div id="panel3" class="template-panel" style="--theme-color: var(--color-slate); --bg-badge: rgba(78, 110, 143, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>模板 3</span> Inefficient Agent Eviction Audit Table</div>
+                <span class="card-badge">代理人出清</span>
+            </div>
+            <div class="card-desc">以效率审计和安全隐患为借口，强行清退阻碍变革的老臣与裙带人员。</div>
+            <div class="input-group">
+                <label class="input-label">1. 组织内有哪些资历极深、无实质业务贡献，但阻碍制度推行并结成圈子的老臣/关系户？</label>
+                <textarea id="t3_old_agents" oninput="saveData()" placeholder="识别那些依仗资历阻碍中台集权和预算锁定的关键人物..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. 合理的出清理由与替代中台队伍规划：</label>
+                <textarea id="t3_eviction" oninput="saveData()" placeholder="Example: 以常态化系统安全漏洞、全流程财务报销审计为理由，审计出老臣项目的多处越界开支，以此为理由将其调离至虚职，换上标准化中台团队..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 4 -->
+    <div id="panel4" class="template-panel" style="--theme-color: var(--color-green); --bg-badge: rgba(93, 128, 97, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>模板 4</span> 内阁代理人赛马与在野质询矩阵</div>
+                <span class="card-badge">代理人赛马</span>
+            </div>
+            <div class="card-desc">防止业务高管垄断客户和供应链，在内部配置在朝与在野的竞争。</div>
+            <div class="input-group">
+                <label class="input-label">1. 业务线 A 团队及其负责人：</label>
+                <textarea id="t4_team_a" oninput="saveData()" placeholder="销售一部或主营创新产品 A 组..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. 配对的在野 B 团队（拥有同等资源，起监督和赛马竞争作用）：</label>
+                <textarea id="t4_team_b" oninput="saveData()" placeholder="销售二部或平行研发 B 组。在周会上，B 组可以直接对 A QA team's hidden bugs and unreported downtime under red-team inquiry...."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 5 -->
+    <div id="panel5" class="template-panel" style="--theme-color: var(--color-green); --bg-badge: rgba(93, 128, 97, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>模板 5</span> 外交否决措辞缓和器</div>
+                <span class="card-badge">软实力拦截</span>
+            </div>
+            <div class="card-desc">When executives push high-risk expansion and founders lack veto power, utilize document protocols to perform soft interception.。</div>
+            <div class="input-group">
+                <label class="input-label">1. 代理高管拟定并试图发送给大客户/竞品的挑衅或冒险性决策文书：</label>
+                <textarea id="t5_raw_doc" oninput="saveData()" placeholder="如：向竞品全面发起专利诉讼战、单方面通告大客户不付预付款即停止供货..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. 注入缓和及退回谈判的修辞（保留底线但取消战争引线）：</label>
+                <textarea id="t5_mitigated" oninput="saveData()" placeholder="修饰为：“我们十分关注当前专利边界，希望能与贵司在下月前安排专家磋商” / “由于产能调配，我们对部分账期进行微调”..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 6 -->
+    <div id="panel6" class="template-panel" style="--theme-color: var(--color-red); --bg-badge: rgba(167, 101, 101, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>模板 6</span> 孀居悲情与脆弱符号防御地图</div>
+                <span class="card-badge">悲情否决</span>
+            </div>
+            <div class="card-desc">在硬实力和股份极弱时，将自身的脆弱、悲情转化为一票否决权。</div>
+            <div class="input-group">
+                <label class="input-label">1. 外部资本或联合阵线对大股东发起的最大法理逼宫（如：削减创始人年金、强制改组董事会）：</label>
+                <textarea id="t6_threat" oninput="saveData()" placeholder="描述逼宫情境..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. Vulnerability defense script (signal absolute exit and moral high ground): </label>
+                <textarea id="t6_哀兵" oninput="saveData()" placeholder="话术：“如果剥夺我这最后一项否决权，就等于要了创始团队的命，我们将集体注销技术IP并永久离职，让品牌成为空壳。”..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 7 -->
+    <div id="panel7" class="template-panel" style="--theme-color: var(--color-red); --bg-badge: rgba(167, 101, 101, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>模板 7</span> 高地生活价值观心智共鸣册</div>
+                <span class="card-badge">价值观存续</span>
+            </div>
+            <div class="card-desc">脱离性价比和物理功能拼杀，将企业和创始人的人设转化为中产阶级道德价值观共鸣。</div>
+            <div class="input-group">
+                <label class="input-label">1. 创始人/企业拟公开披露的“极简工作日记、社会公益责任”场景：</label>
+                <textarea id="t7_lifestyle" oninput="saveData()" placeholder="Example: 连载创始人每天早起写代码、深夜陪伴家人、拒绝奢华宴会而选择在平价餐厅与员工聚餐的日常..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. How this persona forms brand value premium (why users buy values): </label>
+                <textarea id="t7_premium" oninput="saveData()" placeholder="答：将性价比竞争升格为道德共识——用户购买我们的软件，代表他认同“专注、家庭、不压榨员工”的生活态度，形成情感壁垒..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 8 -->
+    <div id="panel8" class="template-panel" style="--theme-color: var(--color-grey); --bg-badge: rgba(122, 122, 122, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>模板 8</span> 继承危机对赌多备份模型</div>
+                <span class="card-badge">继承冷启动</span>
+            </div>
+            <div class="card-desc">启动高风险项目或面临接班人危机时，以多轨外部引进和对赌淘汰获取最终成活率。</div>
+            <div class="input-group">
+                <label class="input-label">1. 被隔离且没有交集的三个备用开发/代理团队：</label>
+                <textarea id="t8_tracks" oninput="saveData()" placeholder="杭州外包组 A、深圳外包组 B、武汉研发组 C..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. 冷启动对赌协议：两周内以什么核心数据判定谁能生存（其余出清）？</label>
+                <textarea id="t8_bet" oninput="saveData()" placeholder="Example: 以出海首周买量转化成本低于 1.5 美元且 7 日留存率达 40% As clawback milestone: the achiever gets the entire budget, while the other is terminated immediately...."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 9 -->
+    <div id="panel9" class="template-panel" style="--theme-color: var(--color-grey); --bg-badge: rgba(122, 122, 122, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>模板 9</span> 创始人一票否决权设置协议</div>
+                <span class="card-badge">主权隔离</span>
+            </div>
+            <div class="card-desc">Establish asymmetrical control umbrellas in legal contracts for the founding team.。</div>
+            <div class="input-group">
+                <label class="input-label">1. 特别表决事项清单（必须由创始人一致同意）：</label>
+                <textarea id="t9_veto_items" oninput="saveData()" placeholder="Example: 修改公司章程中的品牌道德价值观宣言、出售底层核心加密算法所有权、更换创始总监..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. 对赌回购退出约定（董事会强推违规项目时的熔断路径）：</label>
+                <textarea id="t9_exit" oninput="saveData()" placeholder="Example: If the Board makes decisions violating privacy/safety standards, the Founder has the right to repurchase all patents at par value and liquidate the operating company...."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 10 -->
+    <div id="panel10" class="template-panel" style="--theme-color: var(--color-grey); --bg-badge: rgba(122, 122, 122, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>模板 10</span> 组织协同物理边界锁定卡</div>
+                <span class="card-badge">边界锁定</span>
+            </div>
+            <div class="card-desc">将跨部门的摩擦转化为流程前置合规判断。</div>
+            <div class="input-group">
+                <label class="input-label">1. 协同中的核心模糊区域（如“运维觉得代码不合格，研发觉得服务器参数配置错”）：</label>
+                <textarea id="t10_ambiguity" oninput="saveData()" placeholder="描述模糊扯皮区域..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. 刚性前置交割标准（上一节点必须达到什么硬指标，下一节点才准许接入）：</label>
+                <textarea id="t10_barrier" oninput="saveData()" placeholder="Example: 研发提交上线，必须出具单元测试覆盖率 90% 以上且零高危漏洞的检测报告，否则系统后台自动拦截上线申请，无需运维人工审核..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 11 -->
+    <div id="panel11" class="template-panel" style="--theme-color: var(--color-grey); --bg-badge: rgba(122, 122, 122, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>模板 11</span> Persona & Brand Values Marketing Compass</div>
+                <span class="card-badge">心智占领</span>
+            </div>
+            <div class="card-desc">通过展示高尚、纯粹的企业道德，重获国民和高端市场尊重。</div>
+            <div class="input-group">
+                <label class="input-label">1. 我们的品牌在行业内可以宣示的“高尚道德与行业合规”价值观：</label>
+                <textarea id="t11_values" oninput="saveData()" placeholder="Example: 拒绝使用低廉危害健康的代糖，全部采用天然水果提炼；拒绝用户隐私倒卖，坚持数据端到端加密..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. 与用户建立情感对赌交互动作：</label>
+                <textarea id="t11_action" oninput="saveData()" placeholder="Example: 定期发布独立第三方的无添加质检报告、printed on packaging “为了您的健康，我们多付出了 20% 成本”的诚实宣言..."></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toastMsg">已自动保存到本地缓存</div>
+
+<script>
+    function showPanel(index) {
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.template-panel').forEach(el => el.classList.remove('active'));
+        
+        const navItems = document.querySelectorAll('.nav-item');
+        if (navItems[index - 1]) {
+            navItems[index - 1].classList.add('active');
+        }
+        const panel = document.getElementById('panel' + index);
+        if (panel) {
+            panel.classList.add('active');
+        }
+    }
+
+    const fields = [
+        't1_friction', 't1_lock',
+        't2_noise', 't2_router',
+        't3_old_agents', 't3_eviction',
+        't4_team_a', 't4_team_b',
+        't5_raw_doc', 't5_mitigated',
+        't6_threat', 't6_哀兵',
+        't7_lifestyle', 't7_premium',
+        't8_tracks', 't8_bet',
+        't9_veto_items', 't9_exit',
+        't10_ambiguity', 't10_barrier',
+        't11_values', 't11_action'
+    ];
+
+    function saveData() {
+        fields.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                localStorage.setItem('vic_sb_' + id, el.value);
+            }
+        });
+        showToast();
+    }
+
+    function loadData() {
+        fields.forEach(id => {
+            const val = localStorage.getItem('vic_sb_' + id);
+            const el = document.getElementById(id);
+            if (el && val) {
+                el.value = val;
+            }
+        });
+    }
+
+    let toastTimer;
+    function showToast() {
+        const toast = document.getElementById('toastMsg');
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+            toast.classList.remove('show');
+        }, 1500);
+    }
+
+    function resetData() {
+        if (confirm("确定要重置所有填空数据吗？这会清除本地缓存。")) {
+            fields.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+                localStorage.removeItem('vic_sb_' + id);
+            });
+            showPanel(1);
+            alert("数据已重置！");
+        }
+    }
+
+    // Load data on startup
+    window.onload = loadData;
+</script>
+
+</body>
+</html>

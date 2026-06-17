@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>维多利亚女王传 Knowledge Map | 开发者心智系统 developer-mind-OS</title>
+    <meta name="description" content="《维多利亚女王传》权力制衡与代理人治理 OS 知识图谱，涵盖白金汉宫行政中台、内阁首相赛马平衡、孀居悲情符号防御与欧洲地缘婚姻冷启动网。">
+    <meta name="keywords" content="维多利亚女王传, 权力制衡, 代理人治理, 行政中台, 赛马制衡, 软实力防御, 知识图谱, 商业同构">
+    <meta name="author" content="Antigravity">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "《维多利亚女王传》权力制衡与代理人治理 OS 知识图谱",
+      "description": "基于《维多利亚女王传》组织权力制衡与代理人治理 OS 框架，提供白金汉宫中台整顿、首相赛马、孀居悲情防御和联姻多备份冷启动模型。",
+      "inLanguage": "zh-CN",
+      "author": {
+        "@type": "Organization",
+        "name": "Antigravity Team"
+      }
+    }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0d0e12;
+            --card-bg: #14161e;
+            --text-color: #e2e8f0;
+            --accent-color: #4E6E8F;
+            --border-color: #222533;
+            --theme-slate: #4E6E8F;
+            --theme-green: #5D8061;
+            --theme-red: #A76565;
+            --theme-grey: #7A7A7A;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Outfit', 'Noto Sans SC', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 3rem 2rem;
+            line-height: 1.6;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #a5b4fc, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            color: #94a3b8;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        .btn {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.25s ease;
+        }
+        .btn:hover, .btn.active {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto 3rem auto;
+        }
+        .search-input {
+            width: 100%;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.25s ease;
+        }
+        .search-input:focus {
+            border-color: var(--accent-color);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: var(--card-color);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            border-color: var(--card-color);
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .card-id {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.08);
+            color: var(--card-color);
+        }
+        .card-module {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+        }
+        .card-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: white;
+        }
+        .card-preview {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            backdrop-filter: blur(8px);
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            max-width: 650px;
+            width: 100%;
+            border-radius: 16px;
+            padding: 2.5rem;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            animation: modalScale 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes modalScale {
+            from { transform: scale(0.9) translateY(20px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        .close-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            color: #64748b;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .close-btn:hover {
+            color: white;
+        }
+        .modal-id {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.3rem 0.7rem;
+            border-radius: 6px;
+            background-color: rgba(255, 255, 255, 0.08);
+            margin-bottom: 1rem;
+        }
+        .modal-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--modal-accent);
+            padding-left: 0.8rem;
+        }
+        .modal-body {
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+        .modal-body p {
+            margin-bottom: 1rem;
+        }
+        .modal-body li {
+            margin-left: 1.2rem;
+            margin-bottom: 0.5rem;
+            list-style-type: decimal;
+        }
+        .modal-body strong {
+            color: white;
+        }
+        .modal-body code {
+            font-family: monospace;
+            background-color: rgba(255,255,255,0.06);
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>《维多利亚女王传》权力制衡与代理人治理 OS 知识图谱</h1>
+    <p class="subtitle">通过 COO 行政中台、首相赛马、孀居悲情防御和地缘婚姻冷启动，透视大英帝国的系统级权力控制机制</p>
+</header>
+
+<div class="search-container">
+    <input type="text" id="searchInput" class="search-input" placeholder="输入关键词搜索卡片（如：中台、赛马、孀居）..." oninput="filterCards()">
+</div>
+
+<div class="controls">
+    <button class="btn active" onclick="filterModule('all', this)">全部</button>
+    <button class="btn" onclick="filterModule('M1', this)" style="border-left-color: var(--theme-slate)">COO中台与内廷整置</button>
+    <button class="btn" onclick="filterModule('M2', this)" style="border-left-color: var(--theme-green)">内阁赛马与官僚平衡</button>
+    <button class="btn" onclick="filterModule('M3', this)" style="border-left-color: var(--theme-red)">孀居隐退与悲情防御</button>
+    <button class="btn" onclick="filterModule('M4', this)" style="border-left-color: var(--theme-grey)">冷启动与地缘婚姻网</button>
+</div>
+
+<div class="grid" id="cardsGrid"></div>
+
+<!-- Modal Container -->
+<div class="modal" id="cardModal" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <span class="close-btn" onclick="hideModal()">&times;</span>
+        <div id="modalId" class="modal-id"></div>
+        <div id="modalTitle" class="modal-title"></div>
+        <div id="modalBody" class="modal-body"></div>
+    </div>
+</div>
+
+<script>
+    const cards = [{"id": "EP1", "module": "M1", "moduleName": "COO Platform & Palace Restructuring", "color": "#4E6E8F", "title": "Agent Isolation & Platform Routing Rule", "body": "<li><strong>Definition</strong>: The owner (major shareholder) should not directly intervene in mundane daily operations, but must establish a strong administrative center and use professional routing to isolate external noise and prevent systemic burnouts at the decision-making level.</li><li><strong>Mechanism</strong>: Set up a professional COO operational system as the sole upstream/downstream \"information hub.\" It filters low-frequency noise and operational friction, presenting only professionally summarized, key decisions requiring sign-off.</li><li><strong>History</strong>: Albert the Prince Consort, acting as the royal COO, tidied up the palace's multi-stakeholder buck-passing. All cabinet documents were first reviewed, summarized, and sorted by the Prince, leaving the Queen to hear summaries and sign off.</li>"}, {"id": "EP2", "module": "M2", "moduleName": "Cabinet Balancing & Bureaucratic Equilibrium", "color": "#5D8061", "title": "Dynamic Racing & Balance Rule", "body": "<li><strong>Definition</strong>: To prevent a single agent (CEO/professional manager) from monopolizing information and holding the company hostage due to absolute power, parallel opposition forces must be utilized to maintain multi-line checks.</li><li><strong>Mechanism</strong>: Set up two or more competing lines within the same business ecosystem to activate efficiency through open competition. Use opposition audit and multi-line reporting to break agents' \"mutual good news protection.\"</li><li><strong>History</strong>: The Queen played political PMs against each other (Melbourne, Palmerston, Peel, Disraeli), using the opposition party to perform political snipes, ensuring the Crown could not be sidelined by any single strongman.</li>"}, {"id": "EP3", "module": "M3", "moduleName": "Widowed Rule & Brand Value Marketing", "color": "#A76565", "title": "Soft Power Moral Premium Rule", "body": "<li><strong>Definition</strong>: When the organization's hard power (market dividends, financial advantage, physical sovereignty) is at a low point, the survival of the organization depends on value output and an undisputed brand moral consensus.</li><li><strong>Mechanism</strong>: Retreat to the psychological line of defense, converting hard confrontation into soft defense. Establish an un-stealable moat through transparent storytelling, lifestyle publicization, and values declarations.</li><li><strong>History</strong>: In her later years, when the Crown lost substantial intervention rights in legislation, the Queen retreated to Balmoral. By publishing bestsellers like *Leaves from the Journal of Our Life in the Highlands* showing simple family values, she successfully resonated with the public.</li>"}, {"id": "EP4", "module": "M4", "moduleName": "Cold Start & Geopolitical Marriage Network", "color": "#7A7A7A", "title": "Milestone-based Cold Start Rule", "body": "<li><strong>Definition</strong>: In core assets facing absolute stagnation or succession crises, milestone-based clawback and escrow mechanisms must be established through parallel multi-node resources to secure the system's survival.</li><li><strong>Mechanism</strong>: Abandon centralized betting. Set up multiple external alliance lines at nodes where single-point failures might occur, hedging risk via probability and milestone clawbacks.</li><li><strong>History</strong>: The Duke of Kent took a milestone bet, renting a carriage to rush back to the UK so Victoria would be born on British soil to secure succession rights, successfully cold-starting the royal lineage system.</li>"}];
+    let activeModule = 'all';
+    let searchQuery = '';
+
+    function renderCards() {
+        const grid = document.getElementById('cardsGrid');
+        grid.innerHTML = '';
+        
+        const filtered = cards.filter(card => {
+            const matchesModule = activeModule === 'all' || card.module === activeModule;
+            const matchesSearch = card.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                  card.body.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                  card.id.toLowerCase().includes(searchQuery.toLowerCase());
+            return matchesModule && matchesSearch;
+        });
+
+        filtered.forEach(card => {
+            const div = document.createElement('div');
+            div.className = 'card';
+            div.style.setProperty('--card-color', card.color);
+            div.onclick = () => showModal(card);
+            
+            // extract preview text
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = card.body;
+            const previewText = tempDiv.innerText || tempDiv.textContent || '';
+
+            div.innerHTML = `
+                <div class="card-header">
+                    <span class="card-id" style="color: ${card.color}">${card.id}</span>
+                    <span class="card-module">${card.moduleName}</span>
+                </div>
+                <div class="card-title">${card.title}</div>
+                <div class="card-preview">${previewText}</div>
+            `;
+            grid.appendChild(div);
+        });
+    }
+
+    function filterModule(mod, btn) {
+        document.querySelectorAll('.controls .btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeModule = mod;
+        renderCards();
+    }
+
+    function filterCards() {
+        searchQuery = document.getElementById('searchInput').value;
+        renderCards();
+    }
+
+    function showModal(card) {
+        const modal = document.getElementById('cardModal');
+        const mId = document.getElementById('modalId');
+        const mTitle = document.getElementById('modalTitle');
+        const mBody = document.getElementById('modalBody');
+        
+        mId.innerText = card.id;
+        mId.style.color = card.color;
+        mTitle.innerText = card.title;
+        mTitle.style.borderLeftColor = card.color;
+        mBody.innerHTML = card.body;
+        
+        modal.style.setProperty('--modal-accent', card.color);
+        modal.classList.add('active');
+    }
+
+    function hideModal() {
+        document.getElementById('cardModal').classList.remove('active');
+    }
+
+    function closeModal(e) {
+        hideModal();
+    }
+
+    // Initial render
+    renderCards();
+</script>
+
+</body>
+</html>

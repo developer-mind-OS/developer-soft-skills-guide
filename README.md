@@ -37,7 +37,7 @@
 | **底层逻辑** | 反脆弱 (`Antifragile`) | [PDF 下载](./docs/antifragile/cheatsheet.pdf) | - | [Page 1](./docs/antifragile/page_1.png) / [Page 2](./docs/antifragile/page_2.png) / [Page 3](./docs/antifragile/page_3.png) |
 | **博弈抗衡** | 潜规则 (`Hidden Rules`) | [PDF 下载](./docs/hidden_rules/cheatsheet.pdf) | - | [Sandbox 互动演练](https://developer-mind-OS.github.io/developer-soft-skills-guide/hidden_rules/sandbox.html) |
 | **精神成长** | 从不妥协-法拉奇传 (`Never Compromise`) | [PDF 下载](./docs/never_compromise/cheatsheet.pdf) | [Map 在线图谱](https://developer-mind-OS.github.io/developer-soft-skills-guide/never_compromise/map.html) | [Sandbox 互动演练](https://developer-mind-OS.github.io/developer-soft-skills-guide/never_compromise/sandbox.html) |
-| **博弈与领导** | 维多利亚女王传 (`Queen Victoria`) | [PDF 下载](./docs/queen_victoria/cheatsheet.pdf) | [Map 在线图谱](https://developer-mind-OS.github.io/developer-soft-skills-guide/queen_victoria/map.html) | [Sandbox 互动演练](https://developer-mind-OS.github.io/developer-soft-skills-guide/queen_victoria/sandbox.html) |
+| **博弈与领导** | 维多利亚女王传 (`Queen Victoria`) | [PDF 下载](./docs/queen_victoria/cheatsheet.pdf) | [Map (CN)](https://developer-mind-OS.github.io/developer-soft-skills-guide/queen_victoria/map.html) / [(EN)](https://developer-mind-OS.github.io/developer-soft-skills-guide/queen_victoria/map-en.html) | [Sandbox (CN)](https://developer-mind-OS.github.io/developer-soft-skills-guide/queen_victoria/sandbox.html) / [(EN)](https://developer-mind-OS.github.io/developer-soft-skills-guide/queen_victoria/sandbox-en.html) |
 
 ---
 
