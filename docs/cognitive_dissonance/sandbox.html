@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>认知失调 冲突监测与行动对齐工作坊 | 开发者心智系统 developer-mind-OS</title>
+    <meta name="description" content="《认知失调》冲突对齐与心理防御工作坊，提供 6 个关于行动对齐、自我肯定缓冲、不良后果责任防御及决策后自矫正的交互填空模板。">
+    <meta name="keywords" content="认知失调, 心理防御, 行动对齐, 责任审计, 填空沙盒, 商业同构">
+    <meta name="author" content="Antigravity">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-slate: #4E6E8F;   /* 行动导向 (Blue) */
+            --color-green: #319795;   /* 自我肯定 (Teal) */
+            --color-red: #DD6B20;     /* 后果防御 (Orange) */
+            --color-grey: #7A7A7A;    /* 诱导顺从 (Grey) */
+            --color-bg-light: #f5f6f8;
+            --color-bg-dark: #ebeef5;
+            --color-card-bg: rgba(255, 255, 255, 0.9);
+            --color-text-main: #303133;
+            --color-text-muted: #606266;
+            --border-radius-sm: 8px;
+            --border-radius-md: 16px;
+            --border-radius-lg: 24px;
+            --box-shadow: 0 10px 30px rgba(49, 130, 206, 0.05);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, var(--color-bg-light) 0%, var(--color-bg-dark) 100%);
+            color: var(--color-text-main);
+            min-height: 100vh;
+            line-height: 1.6;
+            display: flex;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 320px;
+            background-color: #FFFFFF;
+            border-right: 1px solid #dcdfe6;
+            padding: 30px 24px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            overflow-y: auto;
+        }
+
+        .sidebar-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--color-slate);
+            margin-bottom: 4px;
+            letter-spacing: -0.5px;
+        }
+
+        .sidebar-subtitle {
+            font-size: 11px;
+            color: var(--color-text-muted);
+            margin-bottom: 24px;
+            border-bottom: 1px solid #eaeefb;
+            padding-bottom: 12px;
+        }
+
+        .nav-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .nav-category {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--color-slate);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 18px;
+            margin-bottom: 4px;
+            padding: 4px 6px;
+            border-bottom: 1px dashed #eaeefb;
+        }
+        .nav-category:first-of-type {
+            margin-top: 0;
+        }
+
+        .nav-item {
+            padding: 10px 14px;
+            font-size: 12.5px;
+            font-weight: 500;
+            color: var(--color-text-muted);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-item:hover {
+            background-color: #f5f7fa;
+            color: var(--color-slate);
+        }
+
+        .nav-item.active {
+            background-color: rgba(49, 130, 206, 0.08);
+            color: var(--color-slate);
+            font-weight: 600;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 24px;
+            font-size: 11px;
+            color: var(--color-text-muted);
+            border-top: 1px solid #eaeefb;
+        }
+
+        /* Main Content Area */
+        .content {
+            margin-left: 320px;
+            flex-grow: 1;
+            padding: 40px 60px;
+            max-width: 1200px;
+            width: calc(100% - 320px);
+        }
+
+        .header {
+            margin-bottom: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .book-meta {
+            font-size: 12px;
+            color: var(--color-slate);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .title {
+            font-size: 26px;
+            font-weight: 800;
+            color: #1f2d3d;
+        }
+
+        .actions-bar {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-action {
+            padding: 8px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid #dcdfe6;
+            border-radius: 6px;
+            cursor: pointer;
+            background-color: #FFFFFF;
+            color: var(--color-text-main);
+            transition: var(--transition);
+        }
+
+        .btn-action:hover {
+            border-color: var(--color-slate);
+            background-color: #f5f7fa;
+            color: var(--color-slate);
+        }
+
+        .btn-primary {
+            background-color: var(--color-slate);
+            color: #FFFFFF;
+            border-color: var(--color-slate);
+        }
+
+        .btn-primary:hover {
+            background-color: #2b6cb0;
+            border-color: #2b6cb0;
+            color: white;
+        }
+
+        /* Template Cards */
+        .template-panel {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .template-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .template-card {
+            background: var(--color-card-bg);
+            border: 1px solid rgba(220, 223, 230, 0.7);
+            border-radius: var(--border-radius-md);
+            padding: 32px;
+            box-shadow: var(--box-shadow);
+            backdrop-filter: blur(10px);
+            margin-bottom: 30px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #eaeefb;
+            padding-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1f2d3d;
+        }
+
+        .card-title span {
+            color: var(--theme-color, var(--color-slate));
+            margin-right: 8px;
+        }
+
+        .card-badge {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background-color: var(--bg-badge, rgba(49, 130, 206, 0.1));
+            color: var(--theme-color, var(--color-slate));
+            text-transform: uppercase;
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: var(--color-text-muted);
+            margin-bottom: 24px;
+            background-color: rgba(0, 0, 0, 0.02);
+            padding: 12px 18px;
+            border-radius: 8px;
+            border-left: 3px solid var(--theme-color, var(--color-slate));
+        }
+
+        .input-group {
+            margin-bottom: 24px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            background-color: #FFFFFF;
+            border: 1px solid #dcdfe6;
+            border-radius: var(--border-radius-sm);
+            padding: 12px 16px;
+            font-size: 13px;
+            font-family: inherit;
+            color: var(--color-text-main);
+            outline: none;
+            resize: vertical;
+            transition: var(--transition);
+        }
+
+        textarea:focus {
+            border-color: var(--theme-color, var(--color-slate));
+            box-shadow: 0 0 8px rgba(49, 130, 206, 0.15);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #303133;
+            color: #FFFFFF;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        @media print {
+            .sidebar { display: none; }
+            .content { margin-left: 0; width: 100%; padding: 0; }
+            .template-panel { display: block !important; page-break-after: always; }
+            .btn-action { display: none; }
+            textarea { border: none; border-bottom: 1px solid #333; height: auto; min-height: 50px; background: transparent; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="sidebar-title">冲突对齐工作坊</div>
+    <div class="sidebar-subtitle">《认知失调》心智自审计沙盒</div>
+    
+    <div class="nav-list">
+        <div class="nav-category">行动一致性审计</div>
+        <div class="nav-item active" onclick="showPanel(1)">模板 1：行动对齐信念重塑</div>
+        <div class="nav-item" onclick="showPanel(2)">模板 2：无关维度自我肯定安全阀</div>
+        
+        <div class="nav-category">责任边界与诱导顺从</div>
+        <div class="nav-item" onclick="showPanel(3)">模板 3：不良后果责任审计防线</div>
+        <div class="nav-item" onclick="showPanel(4)">模板 4：强制顺从自我觉察表</div>
+        
+        <div class="nav-category">决策锁定与自矫正</div>
+        <div class="nav-item" onclick="showPanel(5)">模板 5：决策后偏误客观矫正矩阵</div>
+        <div class="nav-item" onclick="showPanel(6)">模板 6：Ego Cushion 缓冲恢复日记</div>
+    </div>
+    
+    <div class="sidebar-footer">
+        认知一致性对齐 OS<br>Consistency OS v1.0
+    </div>
+</div>
+
+<div class="content">
+    <div class="header">
+        <div>
+            <div class="book-meta">Cognitive Dissonance Theory</div>
+            <div class="title">认知失调与冲突自愈沙盒</div>
+        </div>
+        <div class="actions-bar">
+            <button class="btn-action" onclick="resetData()">重置数据</button>
+            <button class="btn-action btn-primary" onclick="window.print()">打印 / 导出 PDF</button>
+        </div>
+    </div>
+
+    <!-- Template 1 -->
+    <div id="panel1" class="template-panel active" style="--theme-color: var(--color-slate); --bg-badge: rgba(78, 110, 143, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>模板 1</span> 行动导向对齐与业务需求重塑表</div>
+                <span class="card-badge">行动对齐</span>
+            </div>
+            <div class="card-desc">当被迫执行无大商业价值的琐碎事务时，通过重构其对于自身技能成长的技术信念，对齐行动线程，消除内心抗拒。</div>
+            <div class="input-group">
+                <label class="input-label">1. 目前让你最痛苦、最没有认同感、但由于权威压制又不得不做的工作任务是什么？</label>
+                <textarea id="t1_task" oninput="saveData()" placeholder="例：被迫去编写一个明显会被抛弃的活动促销页面，技术上无任何挑战，感到时间被严重浪费..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. 信念重构：如何在其中找到对自身技术成长或系统边界测试有价值的角度，重新设定大脑执行信念？</label>
+                <textarea id="t1_reframe" oninput="saveData()" placeholder="例：不把它看作“无聊的伪需求”，而是在其中实践“极限前端加载优化”和“一键自动化部署流水线模板”，借此沉淀可复用的基础工程模板..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 2 -->
+    <div id="panel2" class="template-panel" style="--theme-color: var(--color-green); --bg-badge: rgba(49, 151, 149, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>模板 2</span> 无关维度自我肯定安全阀</div>
+                <span class="card-badge">自我肯定</span>
+            </div>
+            <div class="card-desc">在核心技术尊严（如 PR 被拒、重构方案被否）遭遇重大威胁时，通过宣告无关的闪光维度，重建整体自尊。</div>
+            <div class="input-group">
+                <label class="input-label">1. 描述你最近遭遇的、最让你产生心理冲突或严重内耗的局部失败事件：</label>
+                <textarea id="t2_threat" oninput="saveData()" placeholder="例：自己主导的重构方案在技术评审会被其他组架构师挑刺，最终被高管搁置，感到职业能力受质疑..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. 无关价值宣告：列举 3 个与此挫败完全无关、但你拥有绝对掌控力的个人成就或核心价值：</label>
+                <textarea id="t2_affirm" oninput="saveData()" placeholder="例：1. 我是某核心开源项目的核心维护者；2. 我精通数据库调优并多次救火；3. 我是家庭的坚实支柱且家人深度信任我的智慧。这些闪光点证明我的整体自我是完整的。"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 3 -->
+    <div id="panel3" class="template-panel" style="--theme-color: var(--color-red); --bg-badge: rgba(221, 107, 32, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>模板 3</span> 不良后果责任审计防线 (Jira 防御盾)</div>
+                <span class="card-badge">后果防御</span>
+            </div>
+            <div class="card-desc">当被管理者强推高危上线或违规指令时，通过刚性合规证据链排除预见性，阻断未来的自责与连带失调。</div>
+            <div class="input-group">
+                <label class="input-label">1. 目前正在推进的、可能引发严重生产事故（如宕机、严重数据流失）的高风险指令详情：</label>
+                <textarea id="t3_incident" oninput="saveData()" placeholder="例：业务方催促在未经过全链路压力测试的情况下，趁着大促强推某段核心数据库改写代码上线..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. 责任隔离与预见性剥离动作：你如何在 Jira、文档中发起“强制风险确权签字”？</label>
+                <textarea id="t3_shield" oninput="saveData()" placeholder="例：在提单中备注：“由于未做全链路压测，此代码直接上线有 80% 几率引发 DB 锁死。请业务负责人审批明确：‘已评估此宕机风险，授权强行部署’。”将 foreseability（可预见性）和连带责任物理移出自身边界。"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 4 -->
+    <div id="panel4" class="template-panel" style="--theme-color: var(--color-grey); --bg-badge: rgba(122, 122, 122, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>模板 4</span> 诱导顺从与合理化倾向审计表</div>
+                <span class="card-badge">诱导顺从</span>
+            </div>
+            <div class="card-desc">审计在公司的微薄奖励或虚假口头承诺下，自己是否已经被迫开始对不公平环境进行“自我洗脑”。</div>
+            <div class="input-group">
+                <label class="input-label">1. 组织对你做出的微小奖励（或画大饼口头许诺），同时要求你长期忍受的无理加班或降薪降权行为是什么？</label>
+                <textarea id="t4_inducement" oninput="saveData()" placeholder="例：年终奖大幅度砍掉，但画饼“今年挺过去，明年有期权”，同时要求你兼顾两个组的外包开发管理..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. 合理化自检：写下你目前正用来安慰自己的说辞，并客观剥离出其中的“虚假借口”：</label>
+                <textarea id="t4_rationalize" oninput="saveData()" placeholder="自省：“我是否在心里劝自己‘其实外包管理学到很多跨团队协同，这很有价值’？这是否只是我的脑子因为无法逃避剥削而产生的自我洗脑合理化？”"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 5 -->
+    <div id="panel5" class="template-panel" style="--theme-color: var(--color-slate); --bg-badge: rgba(78, 110, 143, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>模板 5</span> 决策后偏误客观矫正矩阵 (红队客观审计)</div>
+                <span class="card-badge">对赌锁定</span>
+            </div>
+            <div class="card-desc">当面临架构、库、甚至团队管理方向的二选一重决后，打破脑部强制过滤机制，保留备用切换余量。</div>
+            <div class="input-group">
+                <label class="input-label">1. 你们近期做出的、高排他性且沉没成本巨大的技术方案选择（如：数据库选型选择 ClickHouse 放弃 ES）：</label>
+                <textarea id="t5_choice" oninput="saveData()" placeholder="描述已经做出承诺并投入开发的技术选型..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. 强制紅队客观报告（列举对方方案被你们掩盖的 3 大优势，以及自己方案的 3 大不可隐瞒劣势）：</label>
+                <textarea id="t5_redteam" oninput="saveData()" placeholder="例：ClickHouse 在多表关联极其困难且不支持实时索引修改（劣势），而被放弃的 ES 却天然支持全文秒级动态检索（优势）。防止大脑自动执行“夸大优点、过滤缺点”的偏误滤波器。"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 6 -->
+    <div id="panel6" class="template-panel" style="--theme-color: var(--color-green); --bg-badge: rgba(49, 151, 149, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>模板 6</span> Ego Cushion 缓冲恢复日记</div>
+                <span class="card-badge">心智复原</span>
+            </div>
+            <div class="card-desc">在职业挫败当晚，物理切断工作场景，以低成本、完全掌控的个人技术或家庭爱好中和心理内耗。</div>
+            <div class="input-group">
+                <label class="input-label">1. 你目前能绝对掌控、并产生即时正反馈的无关技能领域（如：打磨个人博客、修剪绿植、手推小算法模型）：</label>
+                <textarea id="t6_anchors" oninput="saveData()" placeholder="盘点你的绝对自主性避风港..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. 挫败当晚的 2 小时物理脱离与心智缓冲计划：</label>
+                <textarea id="t6_action" oninput="saveData()" placeholder="例：强行在 19 点关机下班，不参与群组讨论，回家花 2 小时独立重构自己的开源主页，获取绝对的自主权反馈，中和在公司被压制产生的心理冲突。"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toastMsg">已自动保存到本地缓存</div>
+
+<script>
+    function showPanel(index) {
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.template-panel').forEach(el => el.classList.remove('active'));
+        
+        const navItems = document.querySelectorAll('.nav-item');
+        if (navItems[index - 1]) {
+            navItems[index - 1].classList.add('active');
+        }
+        const panel = document.getElementById('panel' + index);
+        if (panel) {
+            panel.classList.add('active');
+        }
+    }
+
+    const fields = [
+        't1_task', 't1_reframe',
+        't2_threat', 't2_affirm',
+        't3_incident', 't3_shield',
+        't4_inducement', 't4_rationalize',
+        't5_choice', 't5_redteam',
+        't6_anchors', 't6_action'
+    ];
+
+    function saveData() {
+        fields.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                localStorage.setItem('cog_sb_' + id, el.value);
+            }
+        });
+        showToast();
+    }
+
+    function loadData() {
+        fields.forEach(id => {
+            const val = localStorage.getItem('cog_sb_' + id);
+            const el = document.getElementById(id);
+            if (el && val) {
+                el.value = val;
+            }
+        });
+    }
+
+    let toastTimer;
+    function showToast() {
+        const toast = document.getElementById('toastMsg');
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+            toast.classList.remove('show');
+        }, 1500);
+    }
+
+    function resetData() {
+        if (confirm("确定要重置所有填空数据吗？这会清除本地缓存。")) {
+            fields.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+                localStorage.removeItem('cog_sb_' + id);
+            });
+            showPanel(1);
+            alert("数据已重置！");
+        }
+    }
+
+    // Load data on startup
+    window.onload = loadData;
+</script>
+
+</body>
+</html>

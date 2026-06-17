@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cognitive Dissonance Conflict Resolution Workshop | Developer Mind OS developer-mind-OS</title>
+    <meta name="description" content="Cognitive Dissonance Conflict-Monitoring and Mental Defense Workshop, providing 6 templates for action alignment, self-affirmation, liability defense, and post-decision bias correction.">
+    <meta name="keywords" content="Cognitive Dissonance, Mental Defense, Action Alignment, Self-Affirmation, Sandbox, Corporate Isomorphism">
+    <meta name="author" content="Antigravity">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-slate: #4E6E8F;   /* Action-Based Model (Blue) */
+            --color-green: #319795;   /* Self-Affirmation (Teal) */
+            --color-red: #DD6B20;     /* New Look (Orange) */
+            --color-grey: #7A7A7A;    /* Forced Compliance (Grey) */
+            --color-bg-light: #f5f6f8;
+            --color-bg-dark: #ebeef5;
+            --color-card-bg: rgba(255, 255, 255, 0.9);
+            --color-text-main: #303133;
+            --color-text-muted: #606266;
+            --border-radius-sm: 8px;
+            --border-radius-md: 16px;
+            --border-radius-lg: 24px;
+            --box-shadow: 0 10px 30px rgba(49, 130, 206, 0.05);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, var(--color-bg-light) 0%, var(--color-bg-dark) 100%);
+            color: var(--color-text-main);
+            min-height: 100vh;
+            line-height: 1.6;
+            display: flex;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 320px;
+            background-color: #FFFFFF;
+            border-right: 1px solid #dcdfe6;
+            padding: 30px 24px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            overflow-y: auto;
+        }
+
+        .sidebar-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--color-slate);
+            margin-bottom: 4px;
+            letter-spacing: -0.5px;
+        }
+
+        .sidebar-subtitle {
+            font-size: 11px;
+            color: var(--color-text-muted);
+            margin-bottom: 24px;
+            border-bottom: 1px solid #eaeefb;
+            padding-bottom: 12px;
+        }
+
+        .nav-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .nav-category {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--color-slate);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 18px;
+            margin-bottom: 4px;
+            padding: 4px 6px;
+            border-bottom: 1px dashed #eaeefb;
+        }
+        .nav-category:first-of-type {
+            margin-top: 0;
+        }
+
+        .nav-item {
+            padding: 10px 14px;
+            font-size: 12.5px;
+            font-weight: 500;
+            color: var(--color-text-muted);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-item:hover {
+            background-color: #f5f7fa;
+            color: var(--color-slate);
+        }
+
+        .nav-item.active {
+            background-color: rgba(49, 130, 206, 0.08);
+            color: var(--color-slate);
+            font-weight: 600;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 24px;
+            font-size: 11px;
+            color: var(--color-text-muted);
+            border-top: 1px solid #eaeefb;
+        }
+
+        /* Main Content Area */
+        .content {
+            margin-left: 320px;
+            flex-grow: 1;
+            padding: 40px 60px;
+            max-width: 1200px;
+            width: calc(100% - 320px);
+        }
+
+        .header {
+            margin-bottom: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .book-meta {
+            font-size: 12px;
+            color: var(--color-slate);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .title {
+            font-size: 26px;
+            font-weight: 800;
+            color: #1f2d3d;
+        }
+
+        .actions-bar {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-action {
+            padding: 8px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid #dcdfe6;
+            border-radius: 6px;
+            cursor: pointer;
+            background-color: #FFFFFF;
+            color: var(--color-text-main);
+            transition: var(--transition);
+        }
+
+        .btn-action:hover {
+            border-color: var(--color-slate);
+            background-color: #f5f7fa;
+            color: var(--color-slate);
+        }
+
+        .btn-primary {
+            background-color: var(--color-slate);
+            color: #FFFFFF;
+            border-color: var(--color-slate);
+        }
+
+        .btn-primary:hover {
+            background-color: #2b6cb0;
+            border-color: #2b6cb0;
+            color: white;
+        }
+
+        /* Template Cards */
+        .template-panel {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .template-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .template-card {
+            background: var(--color-card-bg);
+            border: 1px solid rgba(220, 223, 230, 0.7);
+            border-radius: var(--border-radius-md);
+            padding: 32px;
+            box-shadow: var(--box-shadow);
+            backdrop-filter: blur(10px);
+            margin-bottom: 30px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #eaeefb;
+            padding-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1f2d3d;
+        }
+
+        .card-title span {
+            color: var(--theme-color, var(--color-slate));
+            margin-right: 8px;
+        }
+
+        .card-badge {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background-color: var(--bg-badge, rgba(49, 130, 206, 0.1));
+            color: var(--theme-color, var(--color-slate));
+            text-transform: uppercase;
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: var(--color-text-muted);
+            margin-bottom: 24px;
+            background-color: rgba(0, 0, 0, 0.02);
+            padding: 12px 18px;
+            border-radius: 8px;
+            border-left: 3px solid var(--theme-color, var(--color-slate));
+        }
+
+        .input-group {
+            margin-bottom: 24px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            background-color: #FFFFFF;
+            border: 1px solid #dcdfe6;
+            border-radius: var(--border-radius-sm);
+            padding: 12px 16px;
+            font-size: 13px;
+            font-family: inherit;
+            color: var(--color-text-main);
+            outline: none;
+            resize: vertical;
+            transition: var(--transition);
+        }
+
+        textarea:focus {
+            border-color: var(--theme-color, var(--color-slate));
+            box-shadow: 0 0 8px rgba(49, 130, 206, 0.15);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #303133;
+            color: #FFFFFF;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        @media print {
+            .sidebar { display: none; }
+            .content { margin-left: 0; width: 100%; padding: 0; }
+            .template-panel { display: block !important; page-break-after: always; }
+            .btn-action { display: none; }
+            textarea { border: none; border-bottom: 1px solid #333; height: auto; min-height: 50px; background: transparent; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="sidebar-title">Conflict Alignment Sandbox</div>
+    <div class="sidebar-subtitle">Cognitive Dissonance Worksheets</div>
+    
+    <div class="nav-list">
+        <div class="nav-category">Action Consistency</div>
+        <div class="nav-item active" onclick="showPanel(1)">Template 1: Action Alignment & Reframe</div>
+        <div class="nav-item" onclick="showPanel(2)">Template 2: Unrelated Self-Affirmation Safety Valve</div>
+        
+        <div class="nav-category">Risk & Forced Compliance</div>
+        <div class="nav-item" onclick="showPanel(3)">Template 3: Aversive Consequence Liability Shield</div>
+        <div class="nav-item" onclick="showPanel(4)">Template 4: Forced Compliance Self-Audits</div>
+        
+        <div class="nav-category">Choice & Restoration</div>
+        <div class="nav-item" onclick="showPanel(5)">Template 5: Post-Decision Bias Correction Matrix</div>
+        <div class="nav-item" onclick="showPanel(6)">Template 6: Ego Cushion & Restoration Log</div>
+    </div>
+    
+    <div class="sidebar-footer">
+        Cognitive Consistency OS<br>Consistency OS v1.0
+    </div>
+</div>
+
+<div class="content">
+    <div class="header">
+        <div>
+            <div class="book-meta">Cognitive Dissonance Theory</div>
+            <div class="title">Dissonance Resolution Sandbox</div>
+        </div>
+        <div class="actions-bar">
+            <button class="btn-action" onclick="resetData()">Reset Data</button>
+            <button class="btn-action btn-primary" onclick="window.print()">Print / Export PDF</button>
+        </div>
+    </div>
+
+    <!-- Template 1 -->
+    <div id="panel1" class="template-panel active" style="--theme-color: var(--color-slate); --bg-badge: rgba(78, 110, 143, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>Template 1</span> Action Alignment & Requirement Reframe</div>
+                <span class="card-badge">Action Alignment</span>
+            </div>
+            <div class="card-desc">When forced to code trivial features of little commercial value, align execution threads by reframing the technical beliefs to eliminate friction.</div>
+            <div class="input-group">
+                <label class="input-label">1. What is the most frustrating, low-value requirement you are currently mandated to execute?</label>
+                <textarea id="t1_task" oninput="saveData()" placeholder="Example: Forced to build a throwaway promotional page with zero technical challenge, feeling my engineering time is wasted..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. Belief Reframe: How can you find a technical or architectural value in this work to re-align your execution thread?</label>
+                <textarea id="t1_reframe" oninput="saveData()" placeholder="Example: Reframe it not as 'useless code', but as a sandbox to test 'extreme frontend optimization' and practice writing reusable CI/CD deployment scripts..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 2 -->
+    <div id="panel2" class="template-panel" style="--theme-color: var(--color-green); --bg-badge: rgba(49, 151, 149, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>Template 2</span> Unrelated Self-Affirmation Safety Valve</div>
+                <span class="card-badge">Self-Affirmation</span>
+            </div>
+            <div class="card-desc">When core professional competence is threatened (e.g. major PR rejected), restore overall self-integrity by declaring unrelated high-value strengths.</div>
+            <div class="input-group">
+                <label class="input-label">1. Describe a recent local failure or event that caused intense self-doubt or cognitive dissonance:</label>
+                <textarea id="t2_threat" oninput="saveData()" placeholder="Example: My refactoring design was picked apart by other teams at the architecture review, and ultimately shelved by management..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. Unrelated Value Declaration: List 3 key achievements or values you possess that are completely unaffected by this event:</label>
+                <textarea id="t2_affirm" oninput="saveData()" placeholder="Example: 1. I am a primary maintainer of a widely-used open-source library; 2. I have saved the company from multiple production DB outages; 3. I am a reliable partner at home, highly trusted by family. This failure does not define me."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 3 -->
+    <div id="panel3" class="template-panel" style="--theme-color: var(--color-red); --bg-badge: rgba(221, 107, 32, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>Template 3</span> Aversive Consequence Liability Shield (Jira Defense)</div>
+                <span class="card-badge">Consequence Shield</span>
+            </div>
+            <div class="card-desc">When management pushes unsafe deployments, exclude foreseeability using audit trails to block post-mortem self-blame.</div>
+            <div class="input-group">
+                <label class="input-label">1. Details of the high-risk instruction forced upon you that could trigger production outages:</label>
+                <textarea id="t3_incident" oninput="saveData()" placeholder="Example: Pushing a major database migration script to production during peak hours without full integration and load testing..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. Responsibility Insulation: How will you document risk variables and request explicit stakeholder sign-off?</label>
+                <textarea id="t3_shield" oninput="saveData()" placeholder="Example: Add ticket comment: 'Deploying this without load tests carries an 80% risk of DB lockouts. Please authorize: Business stakeholders acknowledge the downtime risk and authorize instant deploy.' This moves foreseeability outside my boundary."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 4 -->
+    <div id="panel4" class="template-panel" style="--theme-color: var(--color-grey); --bg-badge: rgba(122, 122, 122, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>Template 4</span> Forced Compliance & Self-Rationalization Audit</div>
+                <span class="card-badge">Forced Compliance</span>
+            </div>
+            <div class="card-desc">Audit whether minor organizational rewards or empty promises have forced you to 'self-brainwash' and accept poor treatment.</div>
+            <div class="input-group">
+                <label class="input-label">1. What minor incentive (or verbal promise) is the organization using to justify making you tolerate overtime or reduced pay?</label>
+                <textarea id="t4_inducement" oninput="saveData()" placeholder="Example: Cut target bonus by 50% but promised 'equity allocations next year if we pull through', while making me manage two extra teams..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. Rationalization Check: Write down the excuses you tell yourself, and objectively separate facts from rationalizations:</label>
+                <textarea id="t4_rationalize" oninput="saveData()" placeholder="Check: 'Am I telling myself that managing offshore teams is great for my leadership profile? Or is my brain inventing this value because I cannot escape this exploitation?'"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 5 -->
+    <div id="panel5" class="template-panel" style="--theme-color: var(--color-slate); --bg-badge: rgba(78, 110, 143, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>Template 5</span> Post-Decision Bias Correction Matrix (Red-Team Audit)</div>
+                <span class="card-badge">Post-Decision Audit</span>
+            </div>
+            <div class="card-desc">Correct the brain's post-decision filtering ('exaggerate pros, ignore cons') after picking one system design or tech stack over another.</div>
+            <div class="input-group">
+                <label class="input-label">1. The high-sunk-cost technology choice your team recently made (e.g. picking ClickHouse over Elasticsearch):</label>
+                <textarea id="t5_choice" oninput="saveData()" placeholder="Describe the committed tech stack selection..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. Mandatory Red-Team Audit: List 3 key disadvantages of your choice and 3 advantages of the rejected option:</label>
+                <textarea id="t5_redteam" oninput="saveData()" placeholder="Example: ClickHouse makes multi-table joins extremely slow and lacks real-time index edits (disadvantage), whereas the rejected ES natively supports dynamic full-text indexing (advantage). Prevents cognitive lock-in."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 6 -->
+    <div id="panel6" class="template-panel" style="--theme-color: var(--color-green); --bg-badge: rgba(49, 151, 149, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>Template 6</span> Ego Cushion & Restoration Log</div>
+                <span class="card-badge">Mind Restoration</span>
+            </div>
+            <div class="card-desc">After professional failures, physically disconnect from work and spend time on completely autonomous tech hobbies or activities to restore energy.</div>
+            <div class="input-group">
+                <label class="input-label">1. What skill or activity can you absolutely control that provides instant positive feedback (e.g. building personal H5 pages, refactoring personal repositories)?</label>
+                <textarea id="t6_anchors" oninput="saveData()" placeholder="Identify your sovereign feedback loop..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. Your 2-hour physical disconnect plan for the evening of a workplace failure:</label>
+                <textarea id="t6_action" oninput="saveData()" placeholder="Example: Shut down Slack at 7 PM. Spend 2 hours cleaning my local script toolbox or adding features to my home server, generating clean signals of autonomy to override office stress."></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toastMsg">Automatically saved to local storage</div>
+
+<script>
+    function showPanel(index) {
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.template-panel').forEach(el => el.classList.remove('active'));
+        
+        const navItems = document.querySelectorAll('.nav-item');
+        if (navItems[index - 1]) {
+            navItems[index - 1].classList.add('active');
+        }
+        const panel = document.getElementById('panel' + index);
+        if (panel) {
+            panel.classList.add('active');
+        }
+    }
+
+    const fields = [
+        't1_task', 't1_reframe',
+        't2_threat', 't2_affirm',
+        't3_incident', 't3_shield',
+        't4_inducement', 't4_rationalize',
+        't5_choice', 't5_redteam',
+        't6_anchors', 't6_action'
+    ];
+
+    function saveData() {
+        fields.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                localStorage.setItem('cog_sb_' + id, el.value);
+            }
+        });
+        showToast();
+    }
+
+    function loadData() {
+        fields.forEach(id => {
+            const val = localStorage.getItem('cog_sb_' + id);
+            const el = document.getElementById(id);
+            if (el && val) {
+                el.value = val;
+            }
+        });
+    }
+
+    let toastTimer;
+    function showToast() {
+        const toast = document.getElementById('toastMsg');
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+            toast.classList.remove('show');
+        }, 1500);
+    }
+
+    function resetData() {
+        if (confirm("Are you sure you want to reset all inputs? This will clear local storage.")) {
+            fields.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+                localStorage.removeItem('cog_sb_' + id);
+            });
+            showPanel(1);
+            alert("Data has been reset!");
+        }
+    }
+
+    // Load data on startup
+    window.onload = loadData;
+</script>
+
+</body>
+</html>

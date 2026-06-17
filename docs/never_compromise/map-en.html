@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Never Compromise: Oriana Fallaci Biography Knowledge Map | Developer Mind OS developer-mind-OS</title>
+    <meta name="description" content="Never Compromise: Oriana Fallaci Biography Knowledge Map of Asymmetric Negotiation & Information Warfare OS.">
+    <meta name="keywords" content="Oriana Fallaci, Never Compromise, Negotiation, Information Warfare, Knowledge Map">
+    <meta name="author" content="Antigravity">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "Never Compromise: Oriana Fallaci Biography - Negotiation & Information Warfare OS Knowledge Map",
+      "description": "Based on the Never Compromise biography, providing corporate-isomorphic models for mask piercing, double-bind traps, frontline outposts, and reverse contract locks.",
+      "inLanguage": "en",
+      "author": {
+        "@type": "Organization",
+        "name": "Antigravity Team"
+      }
+    }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0c0d10;
+            --card-bg: #14151c;
+            --text-color: #e2e8f0;
+            --accent-color: #A76565;
+            --border-color: #22232c;
+            --theme-slate: #4E6E8F;
+            --theme-green: #5D8061;
+            --theme-red: #A76565;
+            --theme-grey: #7A7A7A;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Outfit', 'Noto Sans SC', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 3rem 2rem;
+            line-height: 1.6;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #fca5a5, #f43f5e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            color: #94a3b8;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        .btn {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.25s ease;
+        }
+        .btn:hover, .btn.active {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto 3rem auto;
+        }
+        .search-input {
+            width: 100%;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.25s ease;
+        }
+        .search-input:focus {
+            border-color: var(--accent-color);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: var(--card-color);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            border-color: var(--card-color);
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .card-id {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.08);
+            color: var(--card-color);
+        }
+        .card-module {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+        }
+        .card-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: white;
+        }
+        .card-preview {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            backdrop-filter: blur(8px);
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            max-width: 650px;
+            width: 100%;
+            border-radius: 16px;
+            padding: 2.5rem;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            animation: modalScale 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes modalScale {
+            from { transform: scale(0.9) translateY(20px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        .close-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            color: #64748b;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .close-btn:hover {
+            color: white;
+        }
+        .modal-id {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.3rem 0.7rem;
+            border-radius: 6px;
+            background-color: rgba(255, 255, 255, 0.08);
+            margin-bottom: 1rem;
+        }
+        .modal-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--modal-accent);
+            padding-left: 0.8rem;
+        }
+        .modal-body {
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+        .modal-body p {
+            margin-bottom: 1rem;
+        }
+        .modal-body li {
+            margin-left: 1.2rem;
+            margin-bottom: 0.5rem;
+            list-style-type: decimal;
+        }
+        .modal-body strong {
+            color: white;
+        }
+        .modal-body code {
+            font-family: monospace;
+            background-color: rgba(255,255,255,0.06);
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Never Compromise: Oriana Fallaci Biography - Negotiation & Information Warfare OS</h1>
+    <p class="subtitle">Master high-stake narratives via asymmetrical questioning, frontline auditing, and sovereign asset isolation</p>
+</header>
+
+<div class="search-container">
+    <input type="text" id="searchInput" class="search-input" placeholder="Search cards (e.g. mask, double-bind, red-line, cowboy)..." oninput="filterCards()">
+</div>
+
+<div class="controls">
+    <button class="btn active" onclick="filterModule('all', this)">All</button>
+    <button class="btn" onclick="filterModule('M1', this)" style="border-left-color: var(--theme-slate)">M1: Asymmetric Auditing & Intel Capture</button>
+    <button class="btn" onclick="filterModule('M2', this)" style="border-left-color: var(--theme-green)">M2: Field Primacy & Site Auditing</button>
+    <button class="btn" onclick="filterModule('M3', this)" style="border-left-color: var(--theme-red)">M3: Sovereign Risk & Credible Veto</button>
+    <button class="btn" onclick="filterModule('M4', this)" style="border-left-color: var(--theme-grey)">M4: Reverse Reframing & Narrative Explosion</button>
+</div>
+
+<div class="grid" id="cardsGrid"></div>
+
+<!-- Modal Container -->
+<div class="modal" id="cardModal" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <span class="close-btn" onclick="hideModal()">&times;</span>
+        <div id="modalId" class="modal-id"></div>
+        <div id="modalTitle" class="modal-title"></div>
+        <div id="modalBody" class="modal-body"></div>
+    </div>
+</div>
+
+<script>
+    const cards = [{"id": "EP1", "module": "M1", "moduleName": "M1: Asymmetric Auditing & Intel Capture", "color": "#4E6E8F", "title": "Asymmetrical Interrogation Protocol", "body": "<li><strong>定义</strong>：高壁垒沟通绝非温水式的社交客套，而是一场无退路的信息战争。博弈开始即须通过非平衡态问题打破对方公关防线。</li><li><strong>机制</strong>：Remove meaningless social preambles. Direct-impact with binary (Yes/No) questions to bypass defensive PR narratives, forcing the counterparty to expose true intent with zero buffers.</li><li><strong>历史回源</strong>：[Page 1015] Fallaci viewed interviews as political combat. She rejected standard Q&A, pulling interviewees into her custom-configured court of interrogation.</li>"}, {"id": "EP2", "module": "M2", "moduleName": "M2: Field Primacy & Site Auditing", "color": "#5D8061", "title": "First-Hand Field Primacy Rule", "body": "<li><strong>定义</strong>：Information purity decays exponentially through management layers. All critical evaluations must be physically routed to the source frontline to avoid dry data filterings.</li><li><strong>机制</strong>：Sever reliance on middlemen, proxies, and reports. Position independent audit nodes or project outposts directly at the operational frontline to capture raw low-frequency noise.</li><li><strong>历史回源</strong>：[Page 986] In Saigon, Fallaci refused to attend the daily official military briefings (known as "The Five O'Clock Follies"), choosing instead to go straight to frontline trenches.</li>"}, {"id": "EP3", "module": "M3", "moduleName": "M3: Sovereign Risk & Credible Veto", "color": "#A76565", "title": "Risk Sovereignty Boundary Rule", "body": "<li><strong>定义</strong>：In high-pressure games or deadlocks, survival depends on core assets not being compromised. Sovereign anchors must be isolated to establish credible bargaining chips.</li><li><strong>机制</strong>：Perform sovereign isolation prior to negotiation. Physically segregate uncompromisable assets (such as core technology, key engineers, capital reserves) to establish deterrence by showing readiness to walk away.</li><li><strong>历史回源</strong>：[Page 911] In Florence, 1943, Fallaci's family hid Allied escapees. Despite fascist searches and death threats, they protected the life-line, refusing to compromise.</li>"}, {"id": "EP4", "module": "M4", "moduleName": "M4: Reverse Reframing & Narrative Explosion", "color": "#7A7A7A", "title": "Reverse Reframe Rule", "body": "<li><strong>定义</strong>：Never dance within the opponent's sandbox or contract templates. Deconstruct their moral assumptions and impose reverse audit structures to reshape boundaries.</li><li><strong>机制</strong>：In commercial confrontations, active-deconstruct the other side's advantages (e.g. brand markup, industry habits) and impose reverse compliance parameters (e.g. delivery rate, audit access).</li><li><strong>历史回源</strong>：[Page 1024] In Tehran, 1979, interviewing Khomeini, Fallaci challenged the mandatory chador dress code. She ripped off the chador, shattering his moral narrative controls.</li><p>---</p>"}, {"id": "ACM1", "module": "M3", "moduleName": "M3: Sovereign Risk & Credible Veto", "color": "#A76565", "title": "Non-servile Interlock", "body": "<li><strong>核心冲突</strong>：In partnerships, weak players tend to flatter clients/sponsors, causing lopsided positions and loss of interest.</li><li><strong>反常识主张</strong>：Negotiation depends on physical assets and escrow parameters, not emotional dependency. Remove sycophancy when dealing with monopoly nodes, treating them as equal entities.</li><li><strong>同构动作</strong>：In meetings, ban sycophantic praise towards client executives; keep minutes focused on measurable outcomes and contract penalty enforcement.</li>"}, {"id": "ACM2", "module": "M4", "moduleName": "M4: Reverse Reframing & Narrative Explosion", "color": "#7A7A7A", "title": "Rejecting Hypocritical Collusion", "body": "<li><strong>核心冲突</strong>：For short-term benefits, companies tolerate industry-wide "hidden agreements" or compliance omissions, building systemic risks.</li><li><strong>反常识主张</strong>：Collusion is a silent institutional disease. Actively expose hidden agreements and break collusion alliances. Establishing radical transparency captures the new compliance premiums.</li><li><strong>同构动作</strong>：Reject under-the-table kickbacks. Expose them and build a "radical transparency bidding standard" to force compliance on competitors.</li><p>---</p>"}, {"id": "M1", "module": "M1", "moduleName": "M1: Asymmetric Auditing & Intel Capture", "color": "#4E6E8F", "title": "Mask-Piercing Attack", "body": "<li><strong>场景</strong>：The representative uses diplomatic jargon or PR scripts, delaying key project decisions indefinitely.</li><li><strong>原理</strong>：Emotional mirroring and shock. Break their self-assurance by introducing sudden silences or point-blank detail audits.</li><li><strong>动作</strong>：Pause for 5 seconds of silence, then ask: "If we drop this PR script, what is your team's actual budget deficit this quarter?"</li>"}, {"id": "M2", "module": "M1", "moduleName": "M1: Asymmetric Auditing & Intel Capture", "color": "#4E6E8F", "title": "Double-Bind Dilemma Trap", "body": "<li><strong>场景</strong>：The vendor/competitor plays evasive with key parameters, defects, or financial audits.</li><li><strong>原理</strong>：Set single-variable binary questions, blocking grey zones, forcing them to select between two equal-loss outcomes.</li><li><strong>动作</strong>：Ask: "Will you wire the full refund by Monday 6 PM, or should we execute the breach-of-contract lawsuit now? Choose option A or B."</li>"}, {"id": "M3", "module": "M1", "moduleName": "M1: Asymmetric Auditing & Intel Capture", "color": "#4E6E8F", "title": "Inducement Auditing", "body": "<li><strong>场景</strong>：Competitor is highly defensive, blocking access to core dev timelines or supplier costs.</li><li><strong>原理</strong>：High-altitude pride trap. Leverage the lead's ego at their peak vanity to induce accidental leaks of low-frequency signals.</li><li><strong>动作</strong>：Praise the lead's architecture design in public, then remark: "Only you could manage this. But since you outsource core dev now, how do you handle security?"</li>"}, {"id": "M4", "module": "M2", "moduleName": "M2: Field Primacy & Site Auditing", "color": "#5D8061", "title": "Physical Outpost Routing", "body": "<li><strong>场景</strong>：Branches or agents report inflated sales or quality data, masking systemic collapses from headquarters.</li><li><strong>原理</strong>：Field primacy. Bypass the reporting chain, sending a specialized audit squad with absolute authority directly to the site.</li><li><strong>动作</strong>：Skip agency reports. Deploy a compliance officer to live at the factory line to track actual defect rates.</li>"}, {"id": "M5", "module": "M2", "moduleName": "M2: Field Primacy & Site Auditing", "color": "#5D8061", "title": "Decoupled Infrastructure Defense", "body": "<li><strong>场景</strong>：Large platforms threaten to shut down traffic or delist the service to force exclusive, high-cut agreements.</li><li><strong>原理</strong>：Architecture decoupling. Standardize and componentize deliverables to sever dependency on a single distribution node.</li><li><strong>动作</strong>：Decouple API backends to enable hot-swapping to backup cloud providers within 30 minutes, securing unlimited leverage in disputes.</li>"}, {"id": "M6", "module": "M3", "moduleName": "M3: Sovereign Risk & Credible Veto", "color": "#A76565", "title": "Credible Meltdown Enforcement", "body": "<li><strong>场景</strong>：Partners continuously erode margins or test compliance limits.</li><li><strong>原理</strong>：Rigid triggering conditions. Execute a costly "self-harming" penalty once to establish absolute defense credibility.</li><li><strong>动作</strong>：The moment a distributor violates price agreements, terminate their contract immediately (even if it costs 30% of sales), evicting the bad node.</li>"}, {"id": "M7", "module": "M4", "moduleName": "M4: Reverse Reframing & Narrative Explosion", "color": "#7A7A7A", "title": "Crisis Reframing", "body": "<li><strong>场景</strong>：The company is attacked for bugs or public crises, stuck in defensive self-justification loops.</li><li><strong>原理</strong>：Dimension shifting. Reject explaining details; lift the scope to present the new industry-wide standard.</li><li><strong>动作</strong>：Instead of debating the bug details, open-source a new security protocol, turning the crisis into a standards release event.</li>"}, {"id": "M8", "module": "M4", "moduleName": "M4: Reverse Reframing & Narrative Explosion", "color": "#7A7A7A", "title": "Manifesto Marketing Campaign", "body": "<li><strong>场景</strong>：A startup struggles to acquire users in a crowded market where traditional ads are ignored.</li><li><strong>原理</strong>：Counter-intuitive narrative. Write a highly controversial, truth-telling manifesto that bypasses rational filters and sparks debate.</li><li><strong>动作</strong>：Publish a whitepaper detailing "3 Industry Tricks Used by Competitors to Fake Metrics," using absolute truth to break market consolidation.</li><p>---</p>"}, {"id": "A1", "module": "M1", "moduleName": "M1: Asymmetric Auditing & Intel Capture", "color": "#4E6E8F", "title": "Binary Direct questioning", "body": "<li><strong>操作指南</strong>：剔除所有“我认为”、“通常情况下”、“我们希望”等修饰性模糊词。直接使用“是、否、确定、具体数值”作为提问的终点。</li><li><strong>示例</strong>：In reviews, ask the dev lead: "Can we deploy by Friday 6 PM? Yes or No. Do not explain technical details."</li>"}, {"id": "A2", "module": "M4", "moduleName": "M4: Reverse Reframing & Narrative Explosion", "color": "#7A7A7A", "title": "Moral Shield Deconstruction", "body": "<li><strong>操作指南</strong>：当谈判对手用“社会责任”、“行业生态”等道德大旗压制我方价格时，通过指出其底层剥削事实，物理剥离其道德光环。</li><li><strong>示例</strong>：When the platform says "we do this for the eco-system", present audit data showing they raised fees from 10% to 25%, causing 40% of merchants to fail.</li>"}, {"id": "A3", "module": "M2", "moduleName": "M2: Field Primacy & Site Auditing", "color": "#5D8061", "title": "Frontline Immersion Route", "body": "<li><strong>操作指南</strong>：在战略规划前，决策人必须物理常驻一线（如仓库、客服现场、极前线门店）至少 48 小时，获取未经中层修饰的原生态脏数据。</li><li><strong>示例</strong>：The CEO spends 3 days taking customer service calls, discovering that 80% of returns are due to poor manuals.</li>"}, {"id": "A4", "module": "M3", "moduleName": "M3: Sovereign Risk & Credible Veto", "color": "#A76565", "title": "Sovereign Asset Isolation", "body": "<li><strong>操作指南</strong>：通过公司架构和法律信托，将企业的核心 IP 资产与日常运营账户隔离，防止在合规诉讼中被对方“一波封锁”。</li><li><strong>示例</strong>：Store software patents in an asset-holding company, licensing them to the operating company. If the operating company is sued, patents remain safe.</li>"}, {"id": "A5", "module": "M4", "moduleName": "M4: Reverse Reframing & Narrative Explosion", "color": "#7A7A7A", "title": "Reverse Contract Lock", "body": "<li><strong>操作指南</strong>：在大客户下单前，强制要求对方在采购合同中签署“7 天无条件付款，若逾期则每日承担 1% 违约金”的刚性条款，否则拒绝接单。</li><li><strong>示例</strong>：Lock upfront payments using capacity shortages as leverage, breaking the industry habit of delayed payments.</li>"}, {"id": "A6", "module": "M4", "moduleName": "M4: Reverse Reframing & Narrative Explosion", "color": "#7A7A7A", "title": "Counter-Intuitive Narrative", "body": "<li><strong>操作指南</strong>：抛弃平庸的产品广告，主动在公共媒体撰写带有强烈个人色彩、挑战主流共识的深度长文，吸引核心高质量粘性受众。</li><li><strong>示例</strong>：The founder writes: "Why We Deleted 90% of Our Product's Features," shattering the bloatware race.</li><p>---</p>"}, {"id": "R1", "module": "M3", "moduleName": "M3: Sovereign Risk & Credible Veto", "color": "#A76565", "title": "1943 Florence Escapee Escrow Incident [Page 911-912]", "body": "<li><strong>情境</strong>：1943年十一月，法拉奇的父亲收留了两名从佛罗伦萨跳车逃跑的英国士兵（奈切尔与戈登），藏在奥莉娅娜的房间中整整一个月。</li><li><strong>决策</strong>：在法西斯严密搜捕、一旦发现全家死刑的死局下，法拉奇全家保持绝对沉默。奥莉娅娜（当时仅14岁）在摆钟聒噪的报时和月光阴影中睡在走廊，白天用并不自然的英语与士兵交流，坚守保护生命与自由的红线。</li><li><strong>核心启示</strong>：Protecting a sovereignty line requires extreme mental fortitude and readiness to face systemic fallout.</li>"}, {"id": "R2", "module": "M4", "moduleName": "M4: Reverse Reframing & Narrative Explosion", "color": "#7A7A7A", "title": "1972 Kissinger \"Cowboy\" PR Catastrophe [Page 1017-1018]", "body": "<li><strong>情境</strong>：1972年11月，法拉奇在华盛顿采访基辛格。</li><li><strong>决策</strong>：法拉奇捕捉到基辛格在连任和中美破冰后的自满情绪，通过层层诱导，提问“您是如何取得如此高的声望的？”基辛格陷入虚荣陷阱，说出了“我是那个骑着马单枪匹马走在马车队最前头的牛仔”这一自满比喻。</li><li><strong>核心启示</strong>：Even elite diplomats self-destruct in vanity blind spots. Maintain absolute emotional neutrality to guard key positions.</li>"}, {"id": "R3", "module": "M4", "moduleName": "M4: Reverse Reframing & Narrative Explosion", "color": "#7A7A7A", "title": "1979 Tehran Khomeini Chador Clash [Page 1051-1052]", "body": "<li><strong>情境</strong>：1979年9月，法拉奇在库姆采访伊朗最高领袖霍梅尼。</li><li><strong>决策</strong>：面对必须穿着伊斯兰黑纱（chador）的强制规定和霍梅尼对妇女服饰的强硬辩护，法拉奇当面反驳：“这种衣服就像是中世纪的黑罩，是反女性的抹布。”在霍梅尼宣称“如果你不喜欢可以不穿”的一瞬间，法拉奇立刻动手，当面将黑纱扯掉，在伊斯兰世界的权力中心物理爆破了其道德说教。</li><li><strong>核心启示</strong>：Moral intimidation collapses when met with direct, decisive physical action, returning the conflict to basic leverage.</li><p>---</p>"}, {"id": "T1", "module": "M1", "moduleName": "M1: Asymmetric Auditing & Intel Capture", "color": "#4E6E8F", "title": "Corporate Asymmetric Intelligence Audit (Piercing PR Masks)", "body": "<li><strong>目的</strong>：在商务谈判或竞品调研中，突破对方的标准公关说辞，获取其真实成本和业务隐患。</li><li><strong>方法</strong>：</li><li>1. <strong>基准过滤</strong>：整理对方已公开发表的All报告，列出其“高频出现的自夸词汇”（如“生态健康”、“技术领先”），谈判中一旦对方使用这些词，立刻无视。</li><li>2. <strong>Binary Audit</strong>: Prep 3 core Yes/No questions, e.g., "Has your chip yield reached 85% in mass production?"</li><li>3. <strong>Ego Inducement</strong>: Praise their lead's design in casual talk, inducing them to leak outsource ratios or dev delays.</li>"}, {"id": "T2", "module": "M1", "moduleName": "M1: Asymmetric Auditing & Intel Capture", "color": "#4E6E8F", "title": "Frontline Audit Routing SOP (Blocking Inflated Reports)", "body": "<li><strong>目的</strong>：消除跨国公司或分支机构在供应链、质量或市场销售上的谎报，防止总部产生战略盲区。</li><li><strong>方法</strong>：</li><li>1. <strong>Outpost Setup</strong>: Deploy independent auditors reporting directly to HQ compliance to key factories or hubs.</li><li>2. <strong>Raw Feed Routing</strong>: Install direct terminals (e.g. raw support lines) to stream unfiltered customer complains to the CEO.</li><li>3. <strong>Mystery Audits</strong>: Run anonymous mystery orders and destructive tests regularly to benchmark local performance.</li>"}, {"id": "T3", "module": "M2", "moduleName": "M2: Field Primacy & Site Auditing", "color": "#5D8061", "title": "Sovereign Asset Isolation SOP (Defending Against Hostile Suits)", "body": "<li><strong>目的</strong>：确保中小科技企业或出海项目在面临行业巨头恶性诉讼或政策封锁时，核心技术和生存资本不受波及。</li><li><strong>方法</strong>：</li><li>1. <strong>IP/Ops Division</strong>: Separate core code/patent holding (trust company) from daily operation company (licensee).</li><li>2. <strong>Multi-Cloud Redundancy</strong>: Deploy database mirrors in isolated legal jurisdictions to enable hot-swapping under sanctions.</li><li>3. <strong>熔断对赌合同</strong>：在与大型渠道合作时，在合同中写入“若遭遇不可抗力封锁或恶意断服，我方有权在 24 小时内免费收回All用户数据，且对方需支付双倍清算赔偿”的硬合同。</li>"}, {"id": "T4", "module": "M3", "moduleName": "M3: Sovereign Risk & Credible Veto", "color": "#A76565", "title": "Counter-Intuitive Industry Mindshare Explosion (Red Ocean Penetration)", "body": "<li><strong>目的</strong>：初创品牌在缺乏投流预算、行业巨头垄断大众媒介的红海中，瞬间击穿用户心智，建立极高品牌辨识度。</li><li><strong>方法</strong>：</li><li>1. <strong>Expose Secrets</strong>: Publish articles like "3 Tricks the Industry Uses to Sell Fake Custom Code", telling users how to inspect.</li><li>2. <strong>Atomic Word Lock</strong>: Print a counter-intuitive slogan (e.g. "We refuse artificial bloatware") on all package designs.</li><li>3. <strong>Founder Narrative</strong>: Share the founder's struggle to stay independent rather than selling out, turning business into a sovereignty crusade.</li>"}];
+    let activeModule = 'all';
+    let searchQuery = '';
+
+    function renderCards() {
+        const grid = document.getElementById('cardsGrid');
+        grid.innerHTML = '';
+        
+        const filtered = cards.filter(card => {
+            const matchesModule = activeModule === 'all' || card.module === activeModule;
+            const matchesSearch = card.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                  card.body.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                  card.id.toLowerCase().includes(searchQuery.toLowerCase());
+            return matchesModule && matchesSearch;
+        });
+
+        filtered.forEach(card => {
+            const div = document.createElement('div');
+            div.className = 'card';
+            div.style.setProperty('--card-color', card.color);
+            div.onclick = () => showModal(card);
+            
+            // extract preview text
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = card.body;
+            const previewText = tempDiv.innerText || tempDiv.textContent || '';
+
+            div.innerHTML = `
+                <div class="card-header">
+                    <span class="card-id" style="color: ${card.color}">${card.id}</span>
+                    <span class="card-module">${card.moduleName}</span>
+                </div>
+                <div class="card-title">${card.title}</div>
+                <div class="card-preview">${previewText}</div>
+            `;
+            grid.appendChild(div);
+        });
+    }
+
+    function filterModule(mod, btn) {
+        document.querySelectorAll('.controls .btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeModule = mod;
+        renderCards();
+    }
+
+    function filterCards() {
+        searchQuery = document.getElementById('searchInput').value;
+        renderCards();
+    }
+
+    function showModal(card) {
+        const modal = document.getElementById('cardModal');
+        const mId = document.getElementById('modalId');
+        const mTitle = document.getElementById('modalTitle');
+        const mBody = document.getElementById('modalBody');
+        
+        mId.innerText = card.id;
+        mId.style.color = card.color;
+        mTitle.innerText = card.title;
+        mTitle.style.borderLeftColor = card.color;
+        mBody.innerHTML = card.body;
+        
+        modal.style.setProperty('--modal-accent', card.color);
+        modal.classList.add('active');
+    }
+
+    function hideModal() {
+        document.getElementById('cardModal').classList.remove('active');
+    }
+
+    function closeModal(e) {
+        hideModal();
+    }
+
+    // Initial render
+    renderCards();
+</script>
+
+</body>
+</html>

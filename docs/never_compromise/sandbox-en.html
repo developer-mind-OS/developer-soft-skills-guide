@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Never Compromise: Oriana Fallaci Biography Sandbox | Developer Mind OS developer-mind-OS</title>
+    <meta name="description" content="Never Compromise: Oriana Fallaci Biography Sandbox, providing 11 templates for asymmetric questioning, mask piercing, frontline routing, and sovereign asset isolation.">
+    <meta name="keywords" content="Oriana Fallaci, Never Compromise, Negotiation, Sandbox, Corporate Isomorphism">
+    <meta name="author" content="Antigravity">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-slate: #4E6E8F;   /* 采访博弈 (Blue) */
+            --color-green: #5D8061;   /* 现场第一性 (Green) */
+            --color-red: #A76565;     /* 风险自立与红线 (Red) */
+            --color-grey: #7A7A7A;    /* 逆向重塑 (Grey) */
+            --color-bg-light: #f5f6f8;
+            --color-bg-dark: #ebeef5;
+            --color-card-bg: rgba(255, 255, 255, 0.9);
+            --color-text-main: #303133;
+            --color-text-muted: #606266;
+            --border-radius-sm: 8px;
+            --border-radius-md: 16px;
+            --border-radius-lg: 24px;
+            --box-shadow: 0 10px 30px rgba(167, 101, 101, 0.05);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, var(--color-bg-light) 0%, var(--color-bg-dark) 100%);
+            color: var(--color-text-main);
+            min-height: 100vh;
+            line-height: 1.6;
+            display: flex;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 320px;
+            background-color: #FFFFFF;
+            border-right: 1px solid #dcdfe6;
+            padding: 30px 24px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            overflow-y: auto;
+        }
+
+        .sidebar-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--color-red);
+            margin-bottom: 4px;
+            letter-spacing: -0.5px;
+        }
+
+        .sidebar-subtitle {
+            font-size: 11px;
+            color: var(--color-text-muted);
+            margin-bottom: 24px;
+            border-bottom: 1px solid #eaeefb;
+            padding-bottom: 12px;
+        }
+
+        .nav-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .nav-category {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--color-red);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 18px;
+            margin-bottom: 4px;
+            padding: 4px 6px;
+            border-bottom: 1px dashed #eaeefb;
+        }
+        .nav-category:first-of-type {
+            margin-top: 0;
+        }
+
+        .nav-item {
+            padding: 10px 14px;
+            font-size: 12.5px;
+            font-weight: 500;
+            color: var(--color-text-muted);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-item:hover {
+            background-color: #f5f7fa;
+            color: var(--color-red);
+        }
+
+        .nav-item.active {
+            background-color: rgba(167, 101, 101, 0.08);
+            color: var(--color-red);
+            font-weight: 600;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 24px;
+            font-size: 11px;
+            color: var(--color-text-muted);
+            border-top: 1px solid #eaeefb;
+        }
+
+        /* Main Content Area */
+        .content {
+            margin-left: 320px;
+            flex-grow: 1;
+            padding: 40px 60px;
+            max-width: 1200px;
+            width: calc(100% - 320px);
+        }
+
+        .header {
+            margin-bottom: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .book-meta {
+            font-size: 12px;
+            color: var(--color-red);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .title {
+            font-size: 26px;
+            font-weight: 800;
+            color: #1f2d3d;
+        }
+
+        .actions-bar {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-action {
+            padding: 8px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid #dcdfe6;
+            border-radius: 6px;
+            cursor: pointer;
+            background-color: #FFFFFF;
+            color: var(--color-text-main);
+            transition: var(--transition);
+        }
+
+        .btn-action:hover {
+            border-color: var(--color-red);
+            background-color: #f5f7fa;
+            color: var(--color-red);
+        }
+
+        .btn-primary {
+            background-color: var(--color-red);
+            color: #FFFFFF;
+            border-color: var(--color-red);
+        }
+
+        .btn-primary:hover {
+            background-color: #925353;
+            border-color: #925353;
+            color: white;
+        }
+
+        /* Template Cards */
+        .template-panel {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .template-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .template-card {
+            background: var(--color-card-bg);
+            border: 1px solid rgba(220, 223, 230, 0.7);
+            border-radius: var(--border-radius-md);
+            padding: 32px;
+            box-shadow: var(--box-shadow);
+            backdrop-filter: blur(10px);
+            margin-bottom: 30px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #eaeefb;
+            padding-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1f2d3d;
+        }
+
+        .card-title span {
+            color: var(--theme-color, var(--color-red));
+            margin-right: 8px;
+        }
+
+        .card-badge {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background-color: var(--bg-badge, rgba(167, 101, 101, 0.1));
+            color: var(--theme-color, var(--color-red));
+            text-transform: uppercase;
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: var(--color-text-muted);
+            margin-bottom: 24px;
+            background-color: rgba(0, 0, 0, 0.02);
+            padding: 12px 18px;
+            border-radius: 8px;
+            border-left: 3px solid var(--theme-color, var(--color-red));
+        }
+
+        .input-group {
+            margin-bottom: 24px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            background-color: #FFFFFF;
+            border: 1px solid #dcdfe6;
+            border-radius: var(--border-radius-sm);
+            padding: 12px 16px;
+            font-size: 13px;
+            font-family: inherit;
+            color: var(--color-text-main);
+            outline: none;
+            resize: vertical;
+            transition: var(--transition);
+        }
+
+        textarea:focus {
+            border-color: var(--theme-color, var(--color-red));
+            box-shadow: 0 0 8px rgba(167, 101, 101, 0.15);
+        }
+
+        /* Checkbox lists */
+        .checkbox-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            margin-top: 4px;
+        }
+
+        .checkbox-label {
+            font-size: 13px;
+            color: var(--color-text-main);
+        }
+
+        /* Toast message */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #303133;
+            color: #FFFFFF;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        @media print {
+            .sidebar { display: none; }
+            .content { margin-left: 0; width: 100%; padding: 0; }
+            .template-panel { display: block !important; page-break-after: always; }
+            .btn-action { display: none; }
+            textarea { border: none; border-bottom: 1px solid #333; height: auto; min-height: 50px; background: transparent; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="sidebar-title">Negotiation & Persuasion Sandbox</div>
+    <div class="sidebar-subtitle">Audit Sheets based on Never Compromise</div>
+    
+    <div class="nav-list">
+        <div class="nav-category">Auditing & Mask Piercing</div>
+        <div class="nav-item active" onclick="showPanel(1)">Template 1: Asymmetrical Questions & Mask Piercing</div>
+        <div class="nav-item" onclick="showPanel(2)">Template 2: Double-Bind Evasion & Evasion Block</div>
+        <div class="nav-item" onclick="showPanel(3)">Template 3: Intel Gaps & Pride Inducement</div>
+        
+        <div class="nav-category">Field Primacy & Decoupling</div>
+        <div class="nav-item" onclick="showPanel(4)">Template 4: Frontline Outposts & Raw Feeds</div>
+        <div class="nav-item" onclick="showPanel(5)">Template 5: Infrastructure Decoupling & Leverage</div>
+        <div class="nav-item" onclick="showPanel(6)">Template 6: Red-Team Audits & QA Inquiries</div>
+        
+        <div class="nav-category">Sovereign Risk & Meltdown</div>
+        <div class="nav-item" onclick="showPanel(7)">Template 7: Sovereign Asset Isolation & Trust SOP</div>
+        <div class="nav-item" onclick="showPanel(8)">Template 8: Credible Veto & Meltdown SOP</div>
+        
+        <div class="nav-category">Reframing & Narrative Explosion</div>
+        <div class="nav-item" onclick="showPanel(9)">Template 9: Crisis Reframing & PR Remake</div>
+        <div class="nav-item" onclick="showPanel(10)">Template 10: Atomic Copywriting & Manifesto SOP</div>
+        <div class="nav-item" onclick="showPanel(11)">Template 11: Reverse Contract Lock & Penalty SOP</div>
+    </div>
+    
+    <div class="sidebar-footer">
+        Fallaci Communication OS<br>Communication OS v1.0
+    </div>
+</div>
+
+<div class="content">
+    <div class="header">
+        <div>
+            <div class="book-meta">Oriana Fallaci Biography</div>
+            <div class="title">Negotiation, Persuasion & Mental Defense Sandbox</div>
+        </div>
+        <div class="actions-bar">
+            <button class="btn-action" onclick="resetData()">Reset Data</button>
+            <button class="btn-action btn-primary" onclick="window.print()">Print / Export PDF</button>
+        </div>
+    </div>
+
+    <!-- Template 1 -->
+    <div id="panel1" class="template-panel active" style="--theme-color: var(--color-slate); --bg-badge: rgba(78, 110, 143, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>Template 1</span> Asymmetrical Questions & Mask Piercing Audit</div>
+                <span class="card-badge">Mask Piercing</span>
+            </div>
+            <div class="card-desc">Tear through bureaucratic small talk and corporate PR scripts, hitting the negotiation essence.</div>
+            <div class="input-group">
+                <label class="input-label">1. What PR scripts, bureaucratic excuses, or masks is the counterparty using to stall you?</label>
+                <textarea id="t1_mask" oninput="saveData()" placeholder="e.g. Large platform procurement says: \"We highly value this partnership, but the internal approval takes 2 months\"...\""></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. Mask Piercing: Write a binary, blunt question addressing their exact delay loop:</label>
+                <textarea id="t1_punchline" oninput="saveData()" placeholder="e.g. \"If you value this, why has payment been overdue for 3 months? What is your actual cash flow gap this quarter?\"...\""></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 2 -->
+    <div id="panel2" class="template-panel" style="--theme-color: var(--color-slate); --bg-badge: rgba(78, 110, 143, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>Template 2</span> Double-Bind Dilemma & Evasion Block</div>
+                <span class="card-badge">Double-Bind Trap</span>
+            </div>
+            <div class="card-desc">Force the other party to select between two equal-loss options, blocking any escape into ambiguous grey zones.</div>
+            <div class="input-group">
+                <label class="input-label">1. How is the other party playing evasive regarding price, payment, or breach liabilities?</label>
+                <textarea id="t2_evasion" oninput="saveData()" placeholder="Describe their ambiguous statements or left-out clauses..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. Binary Decision: Design a double-bind question to lock their stance:</label>
+                <textarea id="t2_trap" oninput="saveData()" placeholder="e.g. \"Will you wire the outstanding interest by Monday 6 PM, or should we file the lawsuit now? Select option A or B. No extra comments.\"...\""></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 3 -->
+    <div id="panel3" class="template-panel" style="--theme-color: var(--color-slate); --bg-badge: rgba(78, 110, 143, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>Template 3</span> Intel Gaps & Pride Inducement</div>
+                <span class="card-badge">Intel Capture</span>
+            </div>
+            <div class="card-desc">Leverage the counterparty lead's ego during their high-status, self-satisfied state to capture core data.</div>
+            <div class="input-group">
+                <label class="input-label">1. What critical intelligence do we need to extract (e.g. core codebase release date, actual wholesale floor price, engineer turnover)?</label>
+                <textarea id="t3_target" oninput="saveData()" placeholder="Define the target intelligence node..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. Pride Inducement: How to praise their status to induce an accidental leak?</label>
+                <textarea id="t3_induce" oninput="saveData()" placeholder="例：在行业交流会赞美其某项架构设计，并叹息：“这种设计国内也只有您能做，不过听说您最近把核心外包给中介了，想必一定有极强的控制技巧吧？”诱导其说出真实开发细节..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 4 -->
+    <div id="panel4" class="template-panel" style="--theme-color: var(--color-green); --bg-badge: rgba(93, 128, 97, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>Template 4</span> Frontline Outposts & Raw Feeds</div>
+                <span class="card-badge">Field Primacy</span>
+            </div>
+            <div class="card-desc">Block managers' sugar-coated reporting and establish an unfiltered, raw data link from frontline to CEO.</div>
+            <div class="input-group">
+                <label class="input-label">1. In which pipelines (e.g. customer refunds, support logs, shipment delays) are you relying on polished slides, risking info cocoons?</label>
+                <textarea id="t4_cocoon" oninput="saveData()" placeholder="Describe the filtered second-hand report channels..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. Frontline Outposts: How to deploy audit points directly to capture raw data?</label>
+                <textarea id="t4_frontline" oninput="saveData()" placeholder="e.g. Setup a raw support audio feed where the CEO must listen to 5 random uncut tickets daily; station a quality inspector permanently at the contractor factory line..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 5 -->
+    <div id="panel5" class="template-panel" style="--theme-color: var(--color-green); --bg-badge: rgba(93, 128, 97, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>Template 5</span> Infrastructure Decoupling & Leverage</div>
+                <span class="card-badge">Decoupled Defense</span>
+            </div>
+            <div class="card-desc">When massive distribution channels or platforms threaten to delist or squeeze your margins, build defense via component decoupling.</div>
+            <div class="input-group">
+                <label class="input-label">1. Which single traffic platform, distributor, or supplier are you fatally dependent on?</label>
+                <textarea id="t5_dependency" oninput="saveData()" placeholder="Identify the single point of failure..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. 物理重组：如何以“主权个人/独立节点”形式实现 API 解耦？</label>
+                <textarea id="t5_decouple" oninput="saveData()" placeholder="e.g. Package core microservices to support hot-swapping to alternate cloud providers; launch an independent H5 payments web-app outside the main app store..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 6 -->
+    <div id="panel6" class="template-panel" style="--theme-color: var(--color-green); --bg-badge: rgba(93, 128, 97, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>Template 6</span> Red-Team Audits & QA Inquiries</div>
+                <span class="card-badge">Red-Team Audits</span>
+            </div>
+            <div class="card-desc">Expose internal manager cover-ups by introducing parallel audit nodes or external red teams.</div>
+            <div class="input-group">
+                <label class="input-label">1. Which departments are highly vulnerable to colluding and reporting false stats (e.g. Sales, Marketing PR)?</label>
+                <textarea id="t6_collusion" oninput="saveData()" placeholder="Describe the high-risk collusion area..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. Red-Team Rules: How to authorize red teams to perform raw sampling and audit tests?</label>
+                <textarea id="t6_redteam" oninput="saveData()" placeholder="e.g. Form an independent red team. Randomly sample marketing agency payouts against actual conversions. A single fake lead triggers penalty clawbacks on the marketing director..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 7 -->
+    <div id="panel7" class="template-panel" style="--theme-color: var(--color-red); --bg-badge: rgba(167, 101, 101, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>Template 7</span> Sovereign Asset Isolation & Trust SOP</div>
+                <span class="card-badge">Asset Isolation</span>
+            </div>
+            <div class="card-desc">确保在面临行业巨头恶性诉讼或政策封锁时，企业的核心知识产权和生存资本不受波及。</div>
+            <div class="input-group">
+                <label class="input-label">1. What is the single point of failure asset that would paralyze operations if frozen (e.g. payout merchant, domain name, host server)?</label>
+                <textarea id="t7_danger" oninput="saveData()" placeholder="List the vulnerable target assets..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. Sovereign Isolation: How to separate IP ownership from the operating licensee?</label>
+                <textarea id="t7_isolation" oninput="saveData()" placeholder="e.g. Transfer all core IP and codebases to an offshore asset-holding trust company. The operating unit remains a licensee. If operations face hostile lawsuits, IP assets cannot be frozen..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 8 -->
+    <div id="panel8" class="template-panel" style="--theme-color: var(--color-red); --bg-badge: rgba(167, 101, 101, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>Template 8</span> Credible Veto & Meltdown SOP</div>
+                <span class="card-badge">Veto Trigger</span>
+            </div>
+            <div class="card-desc">Define absolute red-lines and execute a costly, visible penalty once to establish credible defensive deterrence.</div>
+            <div class="input-group">
+                <label class="input-label">1. What is the counterparty's most common boundary-testing behavior regarding prices or compliance?</label>
+                <textarea id="t8_border" oninput="saveData()" placeholder="Describe their incremental boundary-pushing..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. Veto Meltdown: The moment they cross the line, what automated penalty is triggered?</label>
+                <textarea id="t8_meltdown" oninput="saveData()" placeholder="e.g. The moment a distributor violates price limits, automatically lock their database access and freeze shipments. Even if we lose 30% of sales, evict the bad node instantly..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 9 -->
+    <div id="panel9" class="template-panel" style="--theme-color: var(--color-grey); --bg-badge: rgba(122, 122, 122, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>Template 9</span> Crisis Reframing & PR Remake</div>
+                <span class="card-badge">Crisis Reframing</span>
+            </div>
+            <div class="card-desc">When facing public crises or customer complaints, reject self-defending loops; elevate the scope to redefine industry standards.</div>
+            <div class="input-group">
+                <label class="input-label">1. What public relations crisis or bug exploit is currently attacking the firm?</label>
+                <textarea id="t9_crisis" oninput="saveData()" placeholder="Describe the details of the crisis..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. Narrative Reframing: How to shape \"self-defense\" into \"introducing a superior industry standard\"?</label>
+                <textarea id="t9_reframe" oninput="saveData()" placeholder="e.g. In response to a bug under rare conditions, declare: \"Instead of debating code details, we are open-sourcing our stress-testing framework, calling on competitors to match this security standard.\"...\""></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 10 -->
+    <div id="panel10" class="template-panel" style="--theme-color: var(--color-grey); --bg-badge: rgba(122, 122, 122, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>Template 10</span> Atomic Copywriting & Manifesto SOP</div>
+                <span class="card-badge">Narrative Explosion</span>
+            </div>
+            <div class="card-desc">Breakthrough crowded markets at zero cost by exposing industry secrets in a sharp, counter-intuitive manifesto.</div>
+            <div class="input-group">
+                <label class="input-label">1. What widely accepted industry secret or false marketing claims are misleading users?</label>
+                <textarea id="t10_lie" oninput="saveData()" placeholder="e.g. \"Additive-free\" bread using hidden chemical preservatives; \"in-house custom AI algorithms\" that are simple wrappers around open-source APIs..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. The Manifesto: Write an atomic, truth-telling opening line from the founder:</label>
+                <textarea id="t10_atomic" oninput="saveData()" placeholder="e.g. \"Why are we open-sourcing this audit? Because we refuse to let competitors mislead clients with wrappers. Here are 3 terminal commands to check...\"..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template 11 -->
+    <div id="panel11" class="template-panel" style="--theme-color: var(--color-grey); --bg-badge: rgba(122, 122, 122, 0.1)">
+        <div class="template-card">
+            <div class="card-header">
+                <div class="card-title"><span>Template 11</span> Reverse Contract Lock & Penalty SOP</div>
+                <span class="card-badge">Contract Lock</span>
+            </div>
+            <div class="card-desc">Before onboarding clients or distributors, secure strict payment locks and automated veto clauses to prevent exploitation.</div>
+            <div class="input-group">
+                <label class="input-label">1. What common excuse does the counterparty use to delay payments or audits (e.g. internal review, manager away)?</label>
+                <textarea id="t11_excuse" oninput="saveData()" placeholder="e.g. Awaiting final audit, invoices not processed, secondary inspections needed..."></textarea>
+            </div>
+            <div class="input-group">
+                <label class="input-label">2. Penalty Lock: How to establish automated database lockouts or high interest penalties in the contract?</label>
+                <textarea id="t11_lock" oninput="saveData()" placeholder="e.g. \"If payment is overdue by 3 days, we reserve the right to lock databases. In case of breach, client agrees to pay double the contract sum as liquidated damages...\"...\""></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toastMsg">Automatically saved to local storage</div>
+
+<script>
+    function showPanel(index) {
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.template-panel').forEach(el => el.classList.remove('active'));
+        
+        const navItems = document.querySelectorAll('.nav-item');
+        if (navItems[index - 1]) {
+            navItems[index - 1].classList.add('active');
+        }
+        const panel = document.getElementById('panel' + index);
+        if (panel) {
+            panel.classList.add('active');
+        }
+    }
+
+    const fields = [
+        't1_mask', 't1_punchline',
+        't2_evasion', 't2_trap',
+        't3_target', 't3_induce',
+        't4_cocoon', 't4_frontline',
+        't5_dependency', 't5_decouple',
+        't6_collusion', 't6_redteam',
+        't7_danger', 't7_isolation',
+        't8_border', 't8_meltdown',
+        't9_crisis', 't9_reframe',
+        't10_lie', 't10_atomic',
+        't11_excuse', 't11_lock'
+    ];
+
+    function saveData() {
+        fields.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                localStorage.setItem('fal_sb_' + id, el.value);
+            }
+        });
+        showToast();
+    }
+
+    function loadData() {
+        fields.forEach(id => {
+            const val = localStorage.getItem('fal_sb_' + id);
+            const el = document.getElementById(id);
+            if (el && val) {
+                el.value = val;
+            }
+        });
+    }
+
+    let toastTimer;
+    function showToast() {
+        const toast = document.getElementById('toastMsg');
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+            toast.classList.remove('show');
+        }, 1500);
+    }
+
+    function resetData() {
+        if (confirm("Are you sure you want to reset all inputs? This will clear local storage.")) {
+            fields.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+                localStorage.removeItem('fal_sb_' + id);
+            });
+            showPanel(1);
+            alert("Data has been reset!");
+        }
+    }
+
+    // Load data on startup
+    window.onload = loadData;
+</script>
+
+</body>
+</html>
